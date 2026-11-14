@@ -12,7 +12,7 @@ export default function About() {
       >
         <a
           className="button"
-          href="https://github.com/Shouktick/Accident_atlas"
+          href="https://github.com/Shouktick/RoadSentinel"
           target="_blank"
           rel="noreferrer"
         >

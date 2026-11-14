@@ -37,3 +37,11 @@ Node npm audit reports zero known vulnerabilities, including development depende
 All independent implementation phases have been carried out. Data-dependent acceptance remains explicitly blocked: original dataset/codebook, verified severity meanings/units, real held-out performance/model comparison, source dataset analytics, observed India hotspots, and representative global/dependence SHAP. Persistent hosted history additionally needs a durable volume or PostgreSQL; the default deployment reports unverified durability. Cross-validation/calibration, an actual geographic density heat layer, account-based authentication, distributed rate limiting and automatic retention remain documented follow-up work.
 
 Repository push and production rollout are verified separately below; a prepared workflow does not prove GitHub Actions has run.
+
+## New standalone repository and hosting
+
+The user requested a fresh RoadSentinel GitHub repository and new Vercel/Render projects. The selected GitHub owner is Shouktick; the Render workspace is My Workspace. Vercel project roadsentinel was created in hazrashouktick-1391s-projects. Original Accident Atlas resources are retained.
+
+Deployment preparation found that the old Render service pointed to a different repository owner than the code edited earlier. The new services will point directly to the new source. Full-forest SHAP also exceeded the free instance RAM budget locally; streaming artifact loading and exact per-tree SHAP averaging reduce measured peak memory to about 366 MiB and resident memory to about 288 MiB. Twenty backend tests, six frontend tests, lint/typecheck/format/build and six desktop/mobile browser tests pass after this change. A regression test verifies bounded SHAP equals full-forest SHAP. These are engineering checks, not fabricated held-out evaluation.
+
+Final new repository/deployment URLs and terminal verification status are recorded in DEPLOYMENT.md when observed.

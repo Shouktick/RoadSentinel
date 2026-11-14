@@ -1,0 +1,11 @@
+.git/**
+.venv/**
+backend/**
+docs/**
+.github/**
+output/**
+tmp/**
+**/node_modules/**
+**/.next/**
+**/.vercel/**
+**/.env*

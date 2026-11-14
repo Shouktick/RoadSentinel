@@ -4,6 +4,7 @@ import hashlib
 import io
 import json
 import logging
+import tempfile
 import threading
 import time
 import zipfile
@@ -22,6 +23,27 @@ logger = logging.getLogger("roadsentinel.model")
 
 class ModelUnavailable(Exception):
     pass
+
+
+class BoundedForestExplainer:
+    """Exact Tree SHAP without duplicating the whole forest into dense SHAP arrays."""
+
+    def __init__(self, model):
+        self.model = model
+        self.expected_value = None
+
+    def shap_values(self, frame, check_additivity=True):
+        import shap
+
+        values = np.zeros((len(frame), self.model.n_features_in_, len(self.model.classes_)))
+        expected = np.zeros(len(self.model.classes_))
+        for tree in self.model.estimators_:
+            explainer = shap.TreeExplainer(tree, feature_perturbation="tree_path_dependent")
+            values += np.asarray(explainer.shap_values(frame, check_additivity=check_additivity))
+            expected += np.asarray(explainer.expected_value)
+        count = len(self.model.estimators_)
+        self.expected_value = expected / count
+        return values / count
 
 
 def severity_index(probabilities: list[dict], verified: bool) -> float | None:
@@ -47,21 +69,30 @@ class ModelService:
             m = self.manifest
             if sklearn.__version__ != m["sklearn_version"]:
                 raise ValueError("Model runtime version does not match its manifest")
-            blob = self.settings.model_archive.read_bytes()
-            if hashlib.sha256(blob).hexdigest() != m["archive_sha256"]:
-                raise ValueError("Model archive checksum mismatch")
-            with zipfile.ZipFile(io.BytesIO(blob)) as archive:
+            with self.settings.model_archive.open("rb") as archive_file:
+                if hashlib.file_digest(archive_file, "sha256").hexdigest() != m["archive_sha256"]:
+                    raise ValueError("Model archive checksum mismatch")
+            with zipfile.ZipFile(self.settings.model_archive) as archive:
                 if set(archive.namelist()) != {"rf_model.pkl", "feature_names.pkl"}:
                     raise ValueError("Unexpected archive members")
                 if sum(i.file_size for i in archive.infolist()) > 200 * 1024 * 1024:
                     raise ValueError("Model archive expands beyond its budget")
-                model_bytes, names_bytes = archive.read("rf_model.pkl"), archive.read("feature_names.pkl")
-            if hashlib.sha256(model_bytes).hexdigest() != m["model_sha256"]:
-                raise ValueError("Model checksum mismatch")
-            if hashlib.sha256(names_bytes).hexdigest() != m["features_sha256"]:
-                raise ValueError("Feature checksum mismatch")
-            # Only the repository's explicitly pinned trusted artifact reaches deserialization.
-            model, names = joblib.load(io.BytesIO(model_bytes)), joblib.load(io.BytesIO(names_bytes))
+                names_bytes = archive.read("feature_names.pkl")
+                if hashlib.sha256(names_bytes).hexdigest() != m["features_sha256"]:
+                    raise ValueError("Feature checksum mismatch")
+                # Stream the large member to an anonymous temporary file. Holding its
+                # full bytes alongside deserialization creates an avoidable RAM peak.
+                with tempfile.TemporaryFile() as model_file, archive.open("rf_model.pkl") as member:
+                    digest = hashlib.sha256()
+                    while chunk := member.read(1024 * 1024):
+                        digest.update(chunk)
+                        model_file.write(chunk)
+                    if digest.hexdigest() != m["model_sha256"]:
+                        raise ValueError("Model checksum mismatch")
+                    model_file.seek(0)
+                    # Only the explicitly pinned trusted artifact reaches deserialization.
+                    model = joblib.load(model_file)
+                names = joblib.load(io.BytesIO(names_bytes))
             if (
                 list(names) != FEATURES
                 or list(model.feature_names_in_) != FEATURES
@@ -84,7 +115,11 @@ class ModelService:
                     import shap
 
                     # Training path counts supply the background, not invented records.
-                    self.explainer = shap.TreeExplainer(model, feature_perturbation="tree_path_dependent")
+                    self.explainer = (
+                        BoundedForestExplainer(model)
+                        if isinstance(model, sklearn.ensemble.RandomForestClassifier)
+                        else shap.TreeExplainer(model, feature_perturbation="tree_path_dependent")
+                    )
                 except Exception:
                     logger.exception("shap_initialization_failed")
             logger.info("model_initialized version=%s", m["model_version"])
