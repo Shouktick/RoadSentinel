@@ -1,1 +1,4 @@
-export { default } from "@/components/platform/DeviceSpeedMonitor";
+import { redirect } from "next/navigation";
+export default function Page() {
+  redirect("/what-if");
+}

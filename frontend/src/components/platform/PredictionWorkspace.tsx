@@ -1,63 +1,47 @@
 "use client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import { predictionSchema, Scenario } from "@/lib/contracts";
+import { predictionSchema, Scenario, scopeNote } from "@/lib/contracts";
 import ScenarioForm from "./ScenarioForm";
 import PredictionResult from "./PredictionResult";
-import {
-  Empty,
-  Failure,
-  Limitation,
-  Loading,
-  PageTitle,
-  Panel,
-  useHealth,
-} from "./ui";
-
+import { Empty, Failure, Limitation, Loading, PageTitle, Panel } from "./ui";
 export default function PredictionWorkspace() {
-  const query = useQueryClient(),
-    health = useHealth();
+  const cache = useQueryClient();
   const mutation = useMutation({
-    mutationFn: ({ scenario, save }: { scenario: Scenario; save: boolean }) =>
+    mutationFn: (payload: { scenario: Scenario; save: boolean }) =>
       api("predict", predictionSchema, {
         method: "POST",
-        body: JSON.stringify({ scenario, save, explain: true }),
+        body: JSON.stringify({ ...payload, explain: true }),
       }),
     onSuccess: () => {
-      void query.invalidateQueries({ queryKey: ["activity"] });
-      void query.invalidateQueries({ queryKey: ["history"] });
+      void cache.invalidateQueries({ queryKey: ["history"] });
+      void cache.invalidateQueries({ queryKey: ["activity"] });
     },
   });
   return (
     <div className="page-stack">
       <PageTitle
         eyebrow="WORKSPACE / PREDICTION"
-        title="Build the scenario. Inspect the response."
-        description="Actual Random Forest inference with input-bound Tree SHAP explanations."
+        title="Explore injury severity."
+        description="A road-condition scenario based on documented Great Britain collision data."
       />
-      <Limitation>
-        The original codebook is unavailable. Inputs retain the source UI&apos;s
-        numeric codes; speed units and class-to-severity meanings are
-        unverified. Outputs are numeric classes, not verified severity claims.
-      </Limitation>
-      {health.error && (
-        <Failure error={health.error} retry={() => void health.refetch()} />
-      )}
+      <Limitation>{scopeNote}</Limitation>
       <div className="prediction-grid">
         <Panel
           title="Scenario parameters"
-          subtitle="Operational validation · seven original features"
+          subtitle="Eight documented inputs · Great Britain · posted limits in mph"
         >
           <ScenarioForm
             allowShared
             pending={mutation.isPending}
+            onChange={() => mutation.reset()}
             onSubmit={(scenario, save) => mutation.mutate({ scenario, save })}
           />
         </Panel>
         <div className="page-stack" aria-live="polite">
           {mutation.isPending ? (
             <Panel>
-              <Loading message="Running the model and computing local Tree SHAP…" />
+              <Loading message="Estimating severity and explaining this scenario…" />
             </Panel>
           ) : mutation.error ? (
             <Failure
@@ -71,9 +55,8 @@ export default function PredictionWorkspace() {
           ) : (
             <Panel>
               <Empty title="Ready when you are">
-                Set a hypothetical scenario and run the model. Class
-                probabilities and genuine feature contributions will appear
-                here.
+                Choose road conditions and run the model. Changing an input
+                clears the previous result.
               </Empty>
             </Panel>
           )}

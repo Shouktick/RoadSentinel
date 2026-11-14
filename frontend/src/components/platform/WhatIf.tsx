@@ -1,23 +1,23 @@
 "use client";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { ArrowLeftRight, LoaderCircle } from "lucide-react";
 import { z } from "zod";
 import { api, downloadText } from "@/lib/api";
-import { defaults, predictionSchema, scenarioSchema } from "@/lib/contracts";
+import {
+  defaults,
+  predictionSchema,
+  labels,
+  scopeNote,
+  performanceNote,
+} from "@/lib/contracts";
 import { ControlledScenario } from "./ScenarioForm";
-import { Failure, labels, Limitation, PageTitle, Panel } from "./ui";
-
+import { Failure, Limitation, PageTitle, Panel } from "./ui";
 const comparisonSchema = z.object({
   baseline: predictionSchema,
   scenarios: z.array(
-    predictionSchema.extend({
-      risk_delta: z.number().nullable(),
-      feature_differences: z.array(z.string()),
-    }),
+    predictionSchema.extend({ feature_differences: z.array(z.string()) }),
   ),
-  best_change: predictionSchema.nullable(),
-  best_change_status: z.string(),
+  model_version: z.string(),
   limitation: z.string(),
 });
 const sweepSchema = z.object({
@@ -26,89 +26,71 @@ const sweepSchema = z.object({
     z.object({ speed: z.number(), prediction: predictionSchema }),
   ),
 });
-
 export default function WhatIf() {
   const [a, setA] = useState(defaults),
     [b, setB] = useState({
       ...defaults,
-      Speed_limit: 70,
-      Weather_Conditions: 2,
-    } as typeof defaults);
-  const [sweepStart, setSweepStart] = useState(20),
-    [sweepStop, setSweepStop] = useState(100);
+      speed_limit: 60,
+      urban_or_rural_area: 2,
+    });
   const comparison = useMutation({
     mutationFn: () =>
       api("predict/whatif", comparisonSchema, {
         method: "POST",
-        body: JSON.stringify({
-          baseline: a,
-          scenarios: [b],
-          find_best_change: true,
-        }),
+        body: JSON.stringify({ baseline: a, scenarios: [b] }),
       }),
   });
   const sweep = useMutation({
     mutationFn: () =>
       api("predict/speed-sweep", sweepSchema, {
         method: "POST",
-        body: JSON.stringify({
-          scenario: a,
-          start: sweepStart,
-          stop: sweepStop,
-          step: 10,
-        }),
+        body: JSON.stringify({ scenario: a, start: 20, stop: 70, step: 10 }),
       }),
   });
-  const valid =
-    scenarioSchema.safeParse(a).success && scenarioSchema.safeParse(b).success;
+  const pending = comparison.isPending || sweep.isPending;
   return (
     <div className="page-stack">
       <PageTitle
-        eyebrow="WORKSPACE / WHAT-IF"
-        title="Change the inputs. Compare the model."
-        description="A controlled model comparison, not evidence that a change causes a real-world outcome."
+        eyebrow="WORKSPACE / COMPARISON"
+        title="Compare road-condition scenarios."
+        description="Compare estimated injury severity, conditional on a recorded crash. Changes describe model associations, not the effect of a road intervention."
       />
+      <Limitation>{scopeNote}</Limitation>
       <div className="two-columns">
         <Panel
           title="Scenario A"
-          subtitle="Baseline · also used for the speed-limit sweep"
+          subtitle="Baseline, also used for speed exploration"
         >
           <ControlledScenario
+            id="scenario-a"
             value={a}
-            onChange={(value) => {
-              setA(value);
+            disabled={pending}
+            onChange={(v) => {
+              setA(v);
               comparison.reset();
               sweep.reset();
             }}
-            id="scenario-a"
           />
         </Panel>
-        <Panel
-          title="Scenario B"
-          subtitle="Alternative · change one or several inputs"
-        >
+        <Panel title="Scenario B" subtitle="Alternative conditions">
           <ControlledScenario
+            id="scenario-b"
             value={b}
-            onChange={(value) => {
-              setB(value);
+            disabled={pending}
+            onChange={(v) => {
+              setB(v);
               comparison.reset();
             }}
-            id="scenario-b"
           />
         </Panel>
       </div>
       <div className="actions">
         <button
           className="button primary"
-          disabled={!valid || comparison.isPending}
+          disabled={pending}
           onClick={() => comparison.mutate()}
         >
-          {comparison.isPending ? (
-            <LoaderCircle size={16} className="spin" />
-          ) : (
-            <ArrowLeftRight size={16} />
-          )}{" "}
-          Compare actual model responses
+          {comparison.isPending ? "Comparing…" : "Compare scenarios"}
         </button>
       </div>
       {comparison.error && (
@@ -117,153 +99,83 @@ export default function WhatIf() {
       {comparison.data && (
         <Panel
           title="Comparison results"
-          subtitle="Probability changes in percentage points"
-          action={
-            <button
-              className="button small"
-              onClick={() =>
-                downloadText(
-                  "roadsentinel-comparison.json",
-                  JSON.stringify(comparison.data, null, 2),
-                  "application/json",
-                )
-              }
-            >
-              Export comparison
-            </button>
-          }
+          subtitle={`Model ${comparison.data.model_version} · differences in percentage points`}
         >
-          <div className="split-summary">
-            <div>
-              <small>BASELINE OUTPUT</small>
-              <strong>{comparison.data.baseline.severity}</strong>
-            </div>
-            <div>
-              <small>ALTERNATIVE OUTPUT</small>
-              <strong>{comparison.data.scenarios[0].severity}</strong>
-            </div>
-            <div>
-              <small>SEVERITY INDEX DIFFERENCE</small>
-              <strong>
-                {comparison.data.scenarios[0].risk_delta === null
-                  ? "Withheld"
-                  : `${comparison.data.scenarios[0].risk_delta! > 0 ? "+" : ""}${comparison.data.scenarios[0].risk_delta}`}
-              </strong>
-            </div>
-          </div>
-          <div className="comparison-charts">
-            {comparison.data.baseline.probabilities.map((p, i) => {
-              const q = comparison.data!.scenarios[0].probabilities[i];
-              return (
-                <div key={p.class_id}>
-                  <div className="bar-label">
-                    <span>{p.label}</span>
-                    <strong>
-                      {((q.probability - p.probability) * 100).toFixed(2)} pp
-                    </strong>
-                  </div>
-                  <div className="compare-bars">
-                    <div className="bar-track">
-                      <div
-                        className="bar-fill"
-                        style={{ width: `${p.probability * 100}%` }}
-                      />
-                    </div>
-                    <div className="bar-track">
-                      <div
-                        className="bar-fill class-1"
-                        style={{ width: `${q.probability * 100}%` }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          <div className="chart-legend">
-            <span>Scenario A</span>
-            <span>Scenario B</span>
+          <div className="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Injury severity</th>
+                  <th>Scenario A</th>
+                  <th>Scenario B</th>
+                  <th>Difference</th>
+                </tr>
+              </thead>
+              <tbody>
+                {comparison.data.baseline.probabilities.map((p, i) => {
+                  const q = comparison.data!.scenarios[0].probabilities[i];
+                  return (
+                    <tr key={p.class_id}>
+                      <td>{p.label}</td>
+                      <td>{(p.probability * 100).toFixed(1)}%</td>
+                      <td>{(q.probability * 100).toFixed(1)}%</td>
+                      <td>
+                        {((q.probability - p.probability) * 100).toFixed(2)} pp
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
           <p className="chart-annotation">
-            Changed features:{" "}
+            Changed inputs:{" "}
             {comparison.data.scenarios[0].feature_differences
               .map((f) => labels[f])
               .join(", ") || "None"}
             .
           </p>
-          <div style={{ marginTop: 20 }}>
-            <Limitation>
-              {comparison.data.best_change_status ===
-              "requires_verified_severity_labels"
-                ? "The single-change risk reduction search is withheld until class severity meanings are verified. Probability changes above are still genuine model outputs."
-                : comparison.data.best_change
-                  ? `Lowest evaluated single-change index: ${comparison.data.best_change.risk_score}. This is a hypothetical association, not a recommendation or safety guarantee.`
-                  : "No evaluated single-feature alternative reduced the model index."}
-            </Limitation>
-          </div>
+          <Limitation>{comparison.data.limitation}</Limitation>
+          <button
+            className="button small"
+            onClick={() =>
+              downloadText(
+                "roadsentinel-comparison.json",
+                JSON.stringify(comparison.data, null, 2),
+                "application/json",
+              )
+            }
+          >
+            Export comparison
+          </button>
         </Panel>
       )}
       <Panel
-        title="Speed-limit sweep"
-        subtitle="Evaluates Scenario A across native model values"
+        title="Posted speed limit exploration"
+        subtitle="Scenario A at the six documented speed limits. This is not a driving-speed simulator."
       >
-        <div className="filters">
-          <div className="field">
-            <label htmlFor="sweep-start">Start · native model units</label>
-            <input
-              id="sweep-start"
-              type="number"
-              min="10"
-              max="140"
-              value={sweepStart}
-              onChange={(e) => {
-                setSweepStart(Number(e.target.value));
-                sweep.reset();
-              }}
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="sweep-stop">Stop · native model units</label>
-            <input
-              id="sweep-stop"
-              type="number"
-              min="10"
-              max="140"
-              value={sweepStop}
-              onChange={(e) => {
-                setSweepStop(Number(e.target.value));
-                sweep.reset();
-              }}
-            />
-          </div>
-          <button
-            className="button"
-            disabled={
-              !valid ||
-              sweep.isPending ||
-              sweepStart > sweepStop ||
-              sweepStart < 10 ||
-              sweepStop > 140
-            }
-            onClick={() => sweep.mutate()}
-          >
-            {sweep.isPending && <LoaderCircle size={15} className="spin" />}Run
-            sweep
-          </button>
-        </div>
+        <button
+          className="button"
+          disabled={pending}
+          onClick={() => sweep.mutate()}
+        >
+          {sweep.isPending ? "Evaluating…" : "Explore speed limits"}
+        </button>
         {sweep.error && (
           <Failure error={sweep.error} retry={() => sweep.mutate()} />
         )}
         {sweep.data && (
           <>
+            <p className="chart-annotation">
+              Model {sweep.data.points[0].prediction.model_version}. Other
+              inputs remain those of Scenario A. Curves need not be monotonic.
+            </p>
             <svg
               className="line-chart"
-              viewBox="0 0 720 300"
+              viewBox="0 0 720 280"
               role="img"
-              aria-label="Model class probability by native speed-limit input"
+              aria-label="Estimated injury severity probability by posted speed limit in mph"
             >
-              <line x1="60" y1="240" x2="690" y2="240" stroke="var(--stroke)" />
-              <line x1="60" y1="30" x2="60" y2="240" stroke="var(--stroke)" />
               {[0, 25, 50, 75, 100].map((p) => (
                 <g key={p}>
                   <line
@@ -272,7 +184,6 @@ export default function WhatIf() {
                     x2="690"
                     y2={240 - p * 2}
                     stroke="var(--stroke)"
-                    strokeDasharray="3 5"
                   />
                   <text x="45" y={244 - p * 2} textAnchor="end" fontSize="10">
                     {p}%
@@ -285,12 +196,12 @@ export default function WhatIf() {
                   points={sweep
                     .data!.points.map(
                       (point, i) =>
-                        `${60 + (i / Math.max(1, sweep.data!.points.length - 1)) * 630},${240 - point.prediction.probabilities[index].probability * 200}`,
+                        `${60 + i * 126},${240 - point.prediction.probabilities[index].probability * 200}`,
                     )
                     .join(" ")}
                   fill="none"
                   stroke={
-                    ["var(--accent)", "var(--blue)", "var(--teal)"][index]
+                    ["var(--blue)", "var(--accent)", "var(--teal)"][index]
                   }
                   strokeWidth="2.5"
                 />
@@ -298,71 +209,56 @@ export default function WhatIf() {
               {sweep.data.points.map((point, i) => (
                 <text
                   key={point.speed}
-                  x={
-                    60 + (i / Math.max(1, sweep.data!.points.length - 1)) * 630
-                  }
-                  y="260"
+                  x={60 + i * 126}
+                  y="265"
                   textAnchor="middle"
-                  fontSize="10"
+                  fontSize="11"
                 >
-                  {point.speed}
+                  {point.speed} mph
                 </text>
               ))}
-              <text x="375" y="287" textAnchor="middle" fontSize="11">
-                Posted speed-limit input · native model units (unverified)
-              </text>
-              <text
-                x="18"
-                y="135"
-                textAnchor="middle"
-                transform="rotate(-90 18 135)"
-                fontSize="10"
-              >
-                Class probability (%)
-              </text>
             </svg>
-            <div className="chart-legend">
-              {sweep.data.points[0].prediction.probabilities.map((p, i) => (
-                <span
-                  key={p.class_id}
-                  style={{
-                    color: ["var(--accent)", "var(--blue)", "var(--teal)"][i],
-                  }}
-                >
-                  {p.label}
-                </span>
-              ))}
-            </div>
-            <p className="chart-annotation">
-              Source: actual model responses to the baseline scenario. Curves
-              need not be monotonic. Speed limit is not measured driving speed.
-            </p>
-            <details className="details-panel">
-              <summary>View sweep values</summary>
-              <div className="table-scroll">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Native value</th>
-                      <th>Model output</th>
-                      <th>Confidence</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sweep.data.points.map((p) => (
-                      <tr key={p.speed}>
-                        <td>{p.speed}</td>
-                        <td>{p.prediction.severity}</td>
-                        <td>{(p.prediction.confidence * 100).toFixed(1)}%</td>
-                      </tr>
+            <div className="table-scroll">
+              <table>
+                <caption>Estimated probability by posted speed limit</caption>
+                <thead>
+                  <tr>
+                    <th>Limit (mph)</th>
+                    {sweep.data.points[0].prediction.probabilities.map((p) => (
+                      <th key={p.class_id}>{p.label}</th>
                     ))}
-                  </tbody>
-                </table>
-              </div>
-            </details>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sweep.data.points.map((p) => (
+                    <tr key={p.speed}>
+                      <td>{p.speed}</td>
+                      {p.prediction.probabilities.map((q) => (
+                        <td key={q.class_id}>
+                          {(q.probability * 100).toFixed(1)}%
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <button
+              className="button small"
+              onClick={() =>
+                downloadText(
+                  "roadsentinel-speed-limits.json",
+                  JSON.stringify(sweep.data, null, 2),
+                  "application/json",
+                )
+              }
+            >
+              Export speed exploration
+            </button>
           </>
         )}
       </Panel>
+      <Limitation>{performanceNote}</Limitation>
     </div>
   );
 }

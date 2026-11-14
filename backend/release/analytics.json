@@ -1,0 +1,10272 @@
+{
+  "overview": {
+    "provenance": {
+      "source": "DfT STATS19, Great Britain, 2023",
+      "sha256": "0c01d4194b4e4c5e1b242a43c633bc30e22cf16e8becca698e63a37f71410cfa",
+      "record_count": 104258
+    },
+    "model_version": "stats19-gb-2022-v1",
+    "row_count": 104258,
+    "distribution": [
+      {
+        "label": "Fatal injury",
+        "count": 1522
+      },
+      {
+        "label": "Serious injury",
+        "count": 23438
+      },
+      {
+        "label": "Slight injury",
+        "count": 79298
+      }
+    ],
+    "missing_values": 1072,
+    "duplicate_rows": 0
+  },
+  "aggregates": {
+    "weather": {
+      "provenance": {
+        "source": "DfT STATS19, Great Britain, 2023",
+        "sha256": "0c01d4194b4e4c5e1b242a43c633bc30e22cf16e8becca698e63a37f71410cfa",
+        "record_count": 104258
+      },
+      "model_version": "stats19-gb-2022-v1",
+      "denominator": 104258,
+      "dimension": "weather",
+      "items": [
+        {
+          "group": "Fine, no high winds",
+          "label": "Fatal injury",
+          "count": 1241
+        },
+        {
+          "group": "Fine, no high winds",
+          "label": "Serious injury",
+          "count": 18817
+        },
+        {
+          "group": "Fine, no high winds",
+          "label": "Slight injury",
+          "count": 61971
+        },
+        {
+          "group": "Raining, no high winds",
+          "label": "Fatal injury",
+          "count": 182
+        },
+        {
+          "group": "Raining, no high winds",
+          "label": "Serious injury",
+          "count": 2935
+        },
+        {
+          "group": "Raining, no high winds",
+          "label": "Slight injury",
+          "count": 9723
+        },
+        {
+          "group": "Snowing, no high winds",
+          "label": "Fatal injury",
+          "count": 8
+        },
+        {
+          "group": "Snowing, no high winds",
+          "label": "Serious injury",
+          "count": 83
+        },
+        {
+          "group": "Snowing, no high winds",
+          "label": "Slight injury",
+          "count": 305
+        },
+        {
+          "group": "Fine with high winds",
+          "label": "Fatal injury",
+          "count": 24
+        },
+        {
+          "group": "Fine with high winds",
+          "label": "Serious injury",
+          "count": 270
+        },
+        {
+          "group": "Fine with high winds",
+          "label": "Slight injury",
+          "count": 683
+        },
+        {
+          "group": "Raining with high winds",
+          "label": "Fatal injury",
+          "count": 32
+        },
+        {
+          "group": "Raining with high winds",
+          "label": "Serious injury",
+          "count": 293
+        },
+        {
+          "group": "Raining with high winds",
+          "label": "Slight injury",
+          "count": 900
+        },
+        {
+          "group": "Snowing with high winds",
+          "label": "Serious injury",
+          "count": 12
+        },
+        {
+          "group": "Snowing with high winds",
+          "label": "Slight injury",
+          "count": 30
+        },
+        {
+          "group": "Fog or mist",
+          "label": "Fatal injury",
+          "count": 7
+        },
+        {
+          "group": "Fog or mist",
+          "label": "Serious injury",
+          "count": 72
+        },
+        {
+          "group": "Fog or mist",
+          "label": "Slight injury",
+          "count": 254
+        },
+        {
+          "group": "Other",
+          "label": "Fatal injury",
+          "count": 23
+        },
+        {
+          "group": "Other",
+          "label": "Serious injury",
+          "count": 594
+        },
+        {
+          "group": "Other",
+          "label": "Slight injury",
+          "count": 2464
+        },
+        {
+          "group": "Unknown",
+          "label": "Fatal injury",
+          "count": 5
+        },
+        {
+          "group": "Unknown",
+          "label": "Serious injury",
+          "count": 362
+        },
+        {
+          "group": "Unknown",
+          "label": "Slight injury",
+          "count": 2968
+        }
+      ]
+    },
+    "road-surface": {
+      "provenance": {
+        "source": "DfT STATS19, Great Britain, 2023",
+        "sha256": "0c01d4194b4e4c5e1b242a43c633bc30e22cf16e8becca698e63a37f71410cfa",
+        "record_count": 104258
+      },
+      "model_version": "stats19-gb-2022-v1",
+      "denominator": 104258,
+      "dimension": "road-surface",
+      "items": [
+        {
+          "group": "Not recorded",
+          "label": "Serious injury",
+          "count": 108
+        },
+        {
+          "group": "Not recorded",
+          "label": "Slight injury",
+          "count": 956
+        },
+        {
+          "group": "Dry",
+          "label": "Fatal injury",
+          "count": 1020
+        },
+        {
+          "group": "Dry",
+          "label": "Serious injury",
+          "count": 16548
+        },
+        {
+          "group": "Dry",
+          "label": "Slight injury",
+          "count": 55184
+        },
+        {
+          "group": "Wet or damp",
+          "label": "Fatal injury",
+          "count": 472
+        },
+        {
+          "group": "Wet or damp",
+          "label": "Serious injury",
+          "count": 6277
+        },
+        {
+          "group": "Wet or damp",
+          "label": "Slight injury",
+          "count": 20195
+        },
+        {
+          "group": "Snow",
+          "label": "Fatal injury",
+          "count": 4
+        },
+        {
+          "group": "Snow",
+          "label": "Serious injury",
+          "count": 59
+        },
+        {
+          "group": "Snow",
+          "label": "Slight injury",
+          "count": 178
+        },
+        {
+          "group": "Frost or ice",
+          "label": "Fatal injury",
+          "count": 18
+        },
+        {
+          "group": "Frost or ice",
+          "label": "Serious injury",
+          "count": 313
+        },
+        {
+          "group": "Frost or ice",
+          "label": "Slight injury",
+          "count": 1130
+        },
+        {
+          "group": "Flood over 3 cm deep",
+          "label": "Fatal injury",
+          "count": 8
+        },
+        {
+          "group": "Flood over 3 cm deep",
+          "label": "Serious injury",
+          "count": 49
+        },
+        {
+          "group": "Flood over 3 cm deep",
+          "label": "Slight injury",
+          "count": 122
+        },
+        {
+          "group": "Unknown",
+          "label": "Serious injury",
+          "count": 84
+        },
+        {
+          "group": "Unknown",
+          "label": "Slight injury",
+          "count": 1533
+        }
+      ]
+    },
+    "lighting": {
+      "provenance": {
+        "source": "DfT STATS19, Great Britain, 2023",
+        "sha256": "0c01d4194b4e4c5e1b242a43c633bc30e22cf16e8becca698e63a37f71410cfa",
+        "record_count": 104258
+      },
+      "model_version": "stats19-gb-2022-v1",
+      "denominator": 104258,
+      "dimension": "lighting",
+      "items": [
+        {
+          "group": "Daylight",
+          "label": "Fatal injury",
+          "count": 889
+        },
+        {
+          "group": "Daylight",
+          "label": "Serious injury",
+          "count": 16119
+        },
+        {
+          "group": "Daylight",
+          "label": "Slight injury",
+          "count": 57233
+        },
+        {
+          "group": "Darkness, lights lit",
+          "label": "Fatal injury",
+          "count": 339
+        },
+        {
+          "group": "Darkness, lights lit",
+          "label": "Serious injury",
+          "count": 5129
+        },
+        {
+          "group": "Darkness, lights lit",
+          "label": "Slight injury",
+          "count": 16535
+        },
+        {
+          "group": "Darkness, lights unlit",
+          "label": "Fatal injury",
+          "count": 18
+        },
+        {
+          "group": "Darkness, lights unlit",
+          "label": "Serious injury",
+          "count": 192
+        },
+        {
+          "group": "Darkness, lights unlit",
+          "label": "Slight injury",
+          "count": 541
+        },
+        {
+          "group": "Darkness, no lighting",
+          "label": "Fatal injury",
+          "count": 241
+        },
+        {
+          "group": "Darkness, no lighting",
+          "label": "Serious injury",
+          "count": 1696
+        },
+        {
+          "group": "Darkness, no lighting",
+          "label": "Slight injury",
+          "count": 3691
+        },
+        {
+          "group": "Darkness, lighting unknown",
+          "label": "Fatal injury",
+          "count": 35
+        },
+        {
+          "group": "Darkness, lighting unknown",
+          "label": "Serious injury",
+          "count": 302
+        },
+        {
+          "group": "Darkness, lighting unknown",
+          "label": "Slight injury",
+          "count": 1298
+        }
+      ]
+    },
+    "road-type": {
+      "provenance": {
+        "source": "DfT STATS19, Great Britain, 2023",
+        "sha256": "0c01d4194b4e4c5e1b242a43c633bc30e22cf16e8becca698e63a37f71410cfa",
+        "record_count": 104258
+      },
+      "model_version": "stats19-gb-2022-v1",
+      "denominator": 104258,
+      "dimension": "road-type",
+      "items": [
+        {
+          "group": "Roundabout",
+          "label": "Fatal injury",
+          "count": 32
+        },
+        {
+          "group": "Roundabout",
+          "label": "Serious injury",
+          "count": 999
+        },
+        {
+          "group": "Roundabout",
+          "label": "Slight injury",
+          "count": 4916
+        },
+        {
+          "group": "One way street",
+          "label": "Fatal injury",
+          "count": 8
+        },
+        {
+          "group": "One way street",
+          "label": "Serious injury",
+          "count": 389
+        },
+        {
+          "group": "One way street",
+          "label": "Slight injury",
+          "count": 1839
+        },
+        {
+          "group": "Dual carriageway",
+          "label": "Fatal injury",
+          "count": 309
+        },
+        {
+          "group": "Dual carriageway",
+          "label": "Serious injury",
+          "count": 3223
+        },
+        {
+          "group": "Dual carriageway",
+          "label": "Slight injury",
+          "count": 11880
+        },
+        {
+          "group": "Single carriageway",
+          "label": "Fatal injury",
+          "count": 1146
+        },
+        {
+          "group": "Single carriageway",
+          "label": "Serious injury",
+          "count": 18276
+        },
+        {
+          "group": "Single carriageway",
+          "label": "Slight injury",
+          "count": 56263
+        },
+        {
+          "group": "Slip road",
+          "label": "Fatal injury",
+          "count": 22
+        },
+        {
+          "group": "Slip road",
+          "label": "Serious injury",
+          "count": 308
+        },
+        {
+          "group": "Slip road",
+          "label": "Slight injury",
+          "count": 1471
+        },
+        {
+          "group": "Unknown",
+          "label": "Fatal injury",
+          "count": 5
+        },
+        {
+          "group": "Unknown",
+          "label": "Serious injury",
+          "count": 243
+        },
+        {
+          "group": "Unknown",
+          "label": "Slight injury",
+          "count": 2929
+        }
+      ]
+    },
+    "area-type": {
+      "provenance": {
+        "source": "DfT STATS19, Great Britain, 2023",
+        "sha256": "0c01d4194b4e4c5e1b242a43c633bc30e22cf16e8becca698e63a37f71410cfa",
+        "record_count": 104258
+      },
+      "model_version": "stats19-gb-2022-v1",
+      "denominator": 104258,
+      "dimension": "area-type",
+      "items": [
+        {
+          "group": "Not recorded",
+          "label": "Serious injury",
+          "count": 2
+        },
+        {
+          "group": "Not recorded",
+          "label": "Slight injury",
+          "count": 6
+        },
+        {
+          "group": "Urban",
+          "label": "Fatal injury",
+          "count": 568
+        },
+        {
+          "group": "Urban",
+          "label": "Serious injury",
+          "count": 14497
+        },
+        {
+          "group": "Urban",
+          "label": "Slight injury",
+          "count": 55247
+        },
+        {
+          "group": "Rural",
+          "label": "Fatal injury",
+          "count": 954
+        },
+        {
+          "group": "Rural",
+          "label": "Serious injury",
+          "count": 8937
+        },
+        {
+          "group": "Rural",
+          "label": "Slight injury",
+          "count": 24043
+        },
+        {
+          "group": "Unallocated",
+          "label": "Serious injury",
+          "count": 2
+        },
+        {
+          "group": "Unallocated",
+          "label": "Slight injury",
+          "count": 2
+        }
+      ]
+    },
+    "speed-bands": {
+      "provenance": {
+        "source": "DfT STATS19, Great Britain, 2023",
+        "sha256": "0c01d4194b4e4c5e1b242a43c633bc30e22cf16e8becca698e63a37f71410cfa",
+        "record_count": 104258
+      },
+      "model_version": "stats19-gb-2022-v1",
+      "denominator": 104258,
+      "dimension": "speed-bands",
+      "items": [
+        {
+          "group": "20 mph",
+          "label": "Fatal injury",
+          "count": 84
+        },
+        {
+          "group": "20 mph",
+          "label": "Serious injury",
+          "count": 3214
+        },
+        {
+          "group": "20 mph",
+          "label": "Slight injury",
+          "count": 14644
+        },
+        {
+          "group": "30 mph",
+          "label": "Fatal injury",
+          "count": 457
+        },
+        {
+          "group": "30 mph",
+          "label": "Serious injury",
+          "count": 11798
+        },
+        {
+          "group": "30 mph",
+          "label": "Slight injury",
+          "count": 41922
+        },
+        {
+          "group": "40 mph",
+          "label": "Fatal injury",
+          "count": 171
+        },
+        {
+          "group": "40 mph",
+          "label": "Serious injury",
+          "count": 2220
+        },
+        {
+          "group": "40 mph",
+          "label": "Slight injury",
+          "count": 6763
+        },
+        {
+          "group": "50 mph",
+          "label": "Fatal injury",
+          "count": 135
+        },
+        {
+          "group": "50 mph",
+          "label": "Serious injury",
+          "count": 1180
+        },
+        {
+          "group": "50 mph",
+          "label": "Slight injury",
+          "count": 3278
+        },
+        {
+          "group": "60 mph",
+          "label": "Fatal injury",
+          "count": 493
+        },
+        {
+          "group": "60 mph",
+          "label": "Serious injury",
+          "count": 3854
+        },
+        {
+          "group": "60 mph",
+          "label": "Slight injury",
+          "count": 8382
+        },
+        {
+          "group": "70 mph",
+          "label": "Fatal injury",
+          "count": 182
+        },
+        {
+          "group": "70 mph",
+          "label": "Serious injury",
+          "count": 1172
+        },
+        {
+          "group": "70 mph",
+          "label": "Slight injury",
+          "count": 4309
+        }
+      ]
+    },
+    "hourly": {
+      "provenance": {
+        "source": "DfT STATS19, Great Britain, 2023",
+        "sha256": "0c01d4194b4e4c5e1b242a43c633bc30e22cf16e8becca698e63a37f71410cfa",
+        "record_count": 104258
+      },
+      "model_version": "stats19-gb-2022-v1",
+      "denominator": 104258,
+      "dimension": "hourly",
+      "items": [
+        {
+          "group": "00:00–00:59",
+          "label": "Fatal injury",
+          "count": 50
+        },
+        {
+          "group": "00:00–00:59",
+          "label": "Serious injury",
+          "count": 457
+        },
+        {
+          "group": "00:00–00:59",
+          "label": "Slight injury",
+          "count": 1199
+        },
+        {
+          "group": "01:00–01:59",
+          "label": "Fatal injury",
+          "count": 28
+        },
+        {
+          "group": "01:00–01:59",
+          "label": "Serious injury",
+          "count": 309
+        },
+        {
+          "group": "01:00–01:59",
+          "label": "Slight injury",
+          "count": 884
+        },
+        {
+          "group": "02:00–02:59",
+          "label": "Fatal injury",
+          "count": 33
+        },
+        {
+          "group": "02:00–02:59",
+          "label": "Serious injury",
+          "count": 266
+        },
+        {
+          "group": "02:00–02:59",
+          "label": "Slight injury",
+          "count": 575
+        },
+        {
+          "group": "03:00–03:59",
+          "label": "Fatal injury",
+          "count": 28
+        },
+        {
+          "group": "03:00–03:59",
+          "label": "Serious injury",
+          "count": 187
+        },
+        {
+          "group": "03:00–03:59",
+          "label": "Slight injury",
+          "count": 489
+        },
+        {
+          "group": "04:00–04:59",
+          "label": "Fatal injury",
+          "count": 22
+        },
+        {
+          "group": "04:00–04:59",
+          "label": "Serious injury",
+          "count": 177
+        },
+        {
+          "group": "04:00–04:59",
+          "label": "Slight injury",
+          "count": 433
+        },
+        {
+          "group": "05:00–05:59",
+          "label": "Fatal injury",
+          "count": 46
+        },
+        {
+          "group": "05:00–05:59",
+          "label": "Serious injury",
+          "count": 300
+        },
+        {
+          "group": "05:00–05:59",
+          "label": "Slight injury",
+          "count": 687
+        },
+        {
+          "group": "06:00–06:59",
+          "label": "Fatal injury",
+          "count": 37
+        },
+        {
+          "group": "06:00–06:59",
+          "label": "Serious injury",
+          "count": 442
+        },
+        {
+          "group": "06:00–06:59",
+          "label": "Slight injury",
+          "count": 1414
+        },
+        {
+          "group": "07:00–07:59",
+          "label": "Fatal injury",
+          "count": 46
+        },
+        {
+          "group": "07:00–07:59",
+          "label": "Serious injury",
+          "count": 900
+        },
+        {
+          "group": "07:00–07:59",
+          "label": "Slight injury",
+          "count": 3260
+        },
+        {
+          "group": "08:00–08:59",
+          "label": "Fatal injury",
+          "count": 50
+        },
+        {
+          "group": "08:00–08:59",
+          "label": "Serious injury",
+          "count": 1209
+        },
+        {
+          "group": "08:00–08:59",
+          "label": "Slight injury",
+          "count": 5339
+        },
+        {
+          "group": "09:00–09:59",
+          "label": "Fatal injury",
+          "count": 55
+        },
+        {
+          "group": "09:00–09:59",
+          "label": "Serious injury",
+          "count": 931
+        },
+        {
+          "group": "09:00–09:59",
+          "label": "Slight injury",
+          "count": 3606
+        },
+        {
+          "group": "10:00–10:59",
+          "label": "Fatal injury",
+          "count": 50
+        },
+        {
+          "group": "10:00–10:59",
+          "label": "Serious injury",
+          "count": 1066
+        },
+        {
+          "group": "10:00–10:59",
+          "label": "Slight injury",
+          "count": 3459
+        },
+        {
+          "group": "11:00–11:59",
+          "label": "Fatal injury",
+          "count": 88
+        },
+        {
+          "group": "11:00–11:59",
+          "label": "Serious injury",
+          "count": 1104
+        },
+        {
+          "group": "11:00–11:59",
+          "label": "Slight injury",
+          "count": 4013
+        },
+        {
+          "group": "12:00–12:59",
+          "label": "Fatal injury",
+          "count": 80
+        },
+        {
+          "group": "12:00–12:59",
+          "label": "Serious injury",
+          "count": 1339
+        },
+        {
+          "group": "12:00–12:59",
+          "label": "Slight injury",
+          "count": 4458
+        },
+        {
+          "group": "13:00–13:59",
+          "label": "Fatal injury",
+          "count": 78
+        },
+        {
+          "group": "13:00–13:59",
+          "label": "Serious injury",
+          "count": 1348
+        },
+        {
+          "group": "13:00–13:59",
+          "label": "Slight injury",
+          "count": 4699
+        },
+        {
+          "group": "14:00–14:59",
+          "label": "Fatal injury",
+          "count": 92
+        },
+        {
+          "group": "14:00–14:59",
+          "label": "Serious injury",
+          "count": 1479
+        },
+        {
+          "group": "14:00–14:59",
+          "label": "Slight injury",
+          "count": 4990
+        },
+        {
+          "group": "15:00–15:59",
+          "label": "Fatal injury",
+          "count": 94
+        },
+        {
+          "group": "15:00–15:59",
+          "label": "Serious injury",
+          "count": 1933
+        },
+        {
+          "group": "15:00–15:59",
+          "label": "Slight injury",
+          "count": 6562
+        },
+        {
+          "group": "16:00–16:59",
+          "label": "Fatal injury",
+          "count": 95
+        },
+        {
+          "group": "16:00–16:59",
+          "label": "Serious injury",
+          "count": 1898
+        },
+        {
+          "group": "16:00–16:59",
+          "label": "Slight injury",
+          "count": 6686
+        },
+        {
+          "group": "17:00–17:59",
+          "label": "Fatal injury",
+          "count": 112
+        },
+        {
+          "group": "17:00–17:59",
+          "label": "Serious injury",
+          "count": 1965
+        },
+        {
+          "group": "17:00–17:59",
+          "label": "Slight injury",
+          "count": 7139
+        },
+        {
+          "group": "18:00–18:59",
+          "label": "Fatal injury",
+          "count": 83
+        },
+        {
+          "group": "18:00–18:59",
+          "label": "Serious injury",
+          "count": 1616
+        },
+        {
+          "group": "18:00–18:59",
+          "label": "Slight injury",
+          "count": 5689
+        },
+        {
+          "group": "19:00–19:59",
+          "label": "Fatal injury",
+          "count": 80
+        },
+        {
+          "group": "19:00–19:59",
+          "label": "Serious injury",
+          "count": 1255
+        },
+        {
+          "group": "19:00–19:59",
+          "label": "Slight injury",
+          "count": 4218
+        },
+        {
+          "group": "20:00–20:59",
+          "label": "Fatal injury",
+          "count": 78
+        },
+        {
+          "group": "20:00–20:59",
+          "label": "Serious injury",
+          "count": 977
+        },
+        {
+          "group": "20:00–20:59",
+          "label": "Slight injury",
+          "count": 3093
+        },
+        {
+          "group": "21:00–21:59",
+          "label": "Fatal injury",
+          "count": 72
+        },
+        {
+          "group": "21:00–21:59",
+          "label": "Serious injury",
+          "count": 881
+        },
+        {
+          "group": "21:00–21:59",
+          "label": "Slight injury",
+          "count": 2555
+        },
+        {
+          "group": "22:00–22:59",
+          "label": "Fatal injury",
+          "count": 75
+        },
+        {
+          "group": "22:00–22:59",
+          "label": "Serious injury",
+          "count": 804
+        },
+        {
+          "group": "22:00–22:59",
+          "label": "Slight injury",
+          "count": 2168
+        },
+        {
+          "group": "23:00–23:59",
+          "label": "Fatal injury",
+          "count": 50
+        },
+        {
+          "group": "23:00–23:59",
+          "label": "Serious injury",
+          "count": 595
+        },
+        {
+          "group": "23:00–23:59",
+          "label": "Slight injury",
+          "count": 1683
+        }
+      ]
+    },
+    "weekday": {
+      "provenance": {
+        "source": "DfT STATS19, Great Britain, 2023",
+        "sha256": "0c01d4194b4e4c5e1b242a43c633bc30e22cf16e8becca698e63a37f71410cfa",
+        "record_count": 104258
+      },
+      "model_version": "stats19-gb-2022-v1",
+      "denominator": 104258,
+      "dimension": "weekday",
+      "items": [
+        {
+          "group": "Sunday",
+          "label": "Fatal injury",
+          "count": 209
+        },
+        {
+          "group": "Sunday",
+          "label": "Serious injury",
+          "count": 2934
+        },
+        {
+          "group": "Sunday",
+          "label": "Slight injury",
+          "count": 8556
+        },
+        {
+          "group": "Monday",
+          "label": "Fatal injury",
+          "count": 222
+        },
+        {
+          "group": "Monday",
+          "label": "Serious injury",
+          "count": 3084
+        },
+        {
+          "group": "Monday",
+          "label": "Slight injury",
+          "count": 10982
+        },
+        {
+          "group": "Tuesday",
+          "label": "Fatal injury",
+          "count": 167
+        },
+        {
+          "group": "Tuesday",
+          "label": "Serious injury",
+          "count": 3262
+        },
+        {
+          "group": "Tuesday",
+          "label": "Slight injury",
+          "count": 12002
+        },
+        {
+          "group": "Wednesday",
+          "label": "Fatal injury",
+          "count": 191
+        },
+        {
+          "group": "Wednesday",
+          "label": "Serious injury",
+          "count": 3475
+        },
+        {
+          "group": "Wednesday",
+          "label": "Slight injury",
+          "count": 12083
+        },
+        {
+          "group": "Thursday",
+          "label": "Fatal injury",
+          "count": 224
+        },
+        {
+          "group": "Thursday",
+          "label": "Serious injury",
+          "count": 3409
+        },
+        {
+          "group": "Thursday",
+          "label": "Slight injury",
+          "count": 12158
+        },
+        {
+          "group": "Friday",
+          "label": "Fatal injury",
+          "count": 262
+        },
+        {
+          "group": "Friday",
+          "label": "Serious injury",
+          "count": 3811
+        },
+        {
+          "group": "Friday",
+          "label": "Slight injury",
+          "count": 13045
+        },
+        {
+          "group": "Saturday",
+          "label": "Fatal injury",
+          "count": 247
+        },
+        {
+          "group": "Saturday",
+          "label": "Serious injury",
+          "count": 3463
+        },
+        {
+          "group": "Saturday",
+          "label": "Slight injury",
+          "count": 10472
+        }
+      ]
+    }
+  },
+  "geography": {
+    "provenance": {
+      "source": "DfT STATS19, Great Britain, 2023",
+      "sha256": "0c01d4194b4e4c5e1b242a43c633bc30e22cf16e8becca698e63a37f71410cfa",
+      "record_count": 104258
+    },
+    "model_version": "stats19-gb-2022-v1",
+    "items": [
+      {
+        "lat": 50.05,
+        "lng": -5.55,
+        "count": 5
+      },
+      {
+        "lat": 50.05,
+        "lng": -5.25,
+        "count": 18
+      },
+      {
+        "lat": 50.15,
+        "lng": -5.55,
+        "count": 33
+      },
+      {
+        "lat": 50.15,
+        "lng": -5.45,
+        "count": 29
+      },
+      {
+        "lat": 50.15,
+        "lng": -5.35,
+        "count": 26
+      },
+      {
+        "lat": 50.15,
+        "lng": -5.25,
+        "count": 13
+      },
+      {
+        "lat": 50.15,
+        "lng": -5.15,
+        "count": 22
+      },
+      {
+        "lat": 50.15,
+        "lng": -5.05,
+        "count": 29
+      },
+      {
+        "lat": 50.25,
+        "lng": -5.45,
+        "count": 9
+      },
+      {
+        "lat": 50.25,
+        "lng": -5.35,
+        "count": 17
+      },
+      {
+        "lat": 50.25,
+        "lng": -5.25,
+        "count": 71
+      },
+      {
+        "lat": 50.25,
+        "lng": -5.15,
+        "count": 53
+      },
+      {
+        "lat": 50.25,
+        "lng": -5.05,
+        "count": 62
+      },
+      {
+        "lat": 50.25,
+        "lng": -4.95,
+        "count": 16
+      },
+      {
+        "lat": 50.25,
+        "lng": -4.85,
+        "count": 5
+      },
+      {
+        "lat": 50.25,
+        "lng": -4.75,
+        "count": 7
+      },
+      {
+        "lat": 50.25,
+        "lng": -3.85,
+        "count": 11
+      },
+      {
+        "lat": 50.25,
+        "lng": -3.75,
+        "count": 10
+      },
+      {
+        "lat": 50.35,
+        "lng": -5.15,
+        "count": 16
+      },
+      {
+        "lat": 50.35,
+        "lng": -5.05,
+        "count": 23
+      },
+      {
+        "lat": 50.35,
+        "lng": -4.95,
+        "count": 17
+      },
+      {
+        "lat": 50.35,
+        "lng": -4.85,
+        "count": 26
+      },
+      {
+        "lat": 50.35,
+        "lng": -4.75,
+        "count": 49
+      },
+      {
+        "lat": 50.35,
+        "lng": -4.45,
+        "count": 14
+      },
+      {
+        "lat": 50.35,
+        "lng": -4.35,
+        "count": 9
+      },
+      {
+        "lat": 50.35,
+        "lng": -4.25,
+        "count": 15
+      },
+      {
+        "lat": 50.35,
+        "lng": -4.15,
+        "count": 235
+      },
+      {
+        "lat": 50.35,
+        "lng": -4.05,
+        "count": 78
+      },
+      {
+        "lat": 50.35,
+        "lng": -3.95,
+        "count": 16
+      },
+      {
+        "lat": 50.35,
+        "lng": -3.85,
+        "count": 12
+      },
+      {
+        "lat": 50.35,
+        "lng": -3.75,
+        "count": 8
+      },
+      {
+        "lat": 50.35,
+        "lng": -3.65,
+        "count": 7
+      },
+      {
+        "lat": 50.35,
+        "lng": -3.55,
+        "count": 21
+      },
+      {
+        "lat": 50.45,
+        "lng": -5.05,
+        "count": 24
+      },
+      {
+        "lat": 50.45,
+        "lng": -4.95,
+        "count": 23
+      },
+      {
+        "lat": 50.45,
+        "lng": -4.85,
+        "count": 10
+      },
+      {
+        "lat": 50.45,
+        "lng": -4.75,
+        "count": 35
+      },
+      {
+        "lat": 50.45,
+        "lng": -4.65,
+        "count": 18
+      },
+      {
+        "lat": 50.45,
+        "lng": -4.55,
+        "count": 17
+      },
+      {
+        "lat": 50.45,
+        "lng": -4.45,
+        "count": 29
+      },
+      {
+        "lat": 50.45,
+        "lng": -4.35,
+        "count": 11
+      },
+      {
+        "lat": 50.45,
+        "lng": -4.25,
+        "count": 30
+      },
+      {
+        "lat": 50.45,
+        "lng": -4.15,
+        "count": 103
+      },
+      {
+        "lat": 50.45,
+        "lng": -4.05,
+        "count": 17
+      },
+      {
+        "lat": 50.45,
+        "lng": -3.85,
+        "count": 6
+      },
+      {
+        "lat": 50.45,
+        "lng": -3.75,
+        "count": 16
+      },
+      {
+        "lat": 50.45,
+        "lng": -3.65,
+        "count": 23
+      },
+      {
+        "lat": 50.45,
+        "lng": -3.55,
+        "count": 180
+      },
+      {
+        "lat": 50.55,
+        "lng": -4.95,
+        "count": 6
+      },
+      {
+        "lat": 50.55,
+        "lng": -4.85,
+        "count": 17
+      },
+      {
+        "lat": 50.55,
+        "lng": -4.75,
+        "count": 17
+      },
+      {
+        "lat": 50.55,
+        "lng": -4.65,
+        "count": 5
+      },
+      {
+        "lat": 50.55,
+        "lng": -4.55,
+        "count": 5
+      },
+      {
+        "lat": 50.55,
+        "lng": -4.45,
+        "count": 11
+      },
+      {
+        "lat": 50.55,
+        "lng": -4.35,
+        "count": 21
+      },
+      {
+        "lat": 50.55,
+        "lng": -4.25,
+        "count": 22
+      },
+      {
+        "lat": 50.55,
+        "lng": -4.15,
+        "count": 25
+      },
+      {
+        "lat": 50.55,
+        "lng": -4.05,
+        "count": 7
+      },
+      {
+        "lat": 50.55,
+        "lng": -3.75,
+        "count": 13
+      },
+      {
+        "lat": 50.55,
+        "lng": -3.65,
+        "count": 39
+      },
+      {
+        "lat": 50.55,
+        "lng": -3.55,
+        "count": 58
+      },
+      {
+        "lat": 50.55,
+        "lng": -3.45,
+        "count": 14
+      },
+      {
+        "lat": 50.55,
+        "lng": -2.45,
+        "count": 18
+      },
+      {
+        "lat": 50.55,
+        "lng": -1.25,
+        "count": 6
+      },
+      {
+        "lat": 50.65,
+        "lng": -4.75,
+        "count": 7
+      },
+      {
+        "lat": 50.65,
+        "lng": -4.65,
+        "count": 9
+      },
+      {
+        "lat": 50.65,
+        "lng": -4.55,
+        "count": 5
+      },
+      {
+        "lat": 50.65,
+        "lng": -4.45,
+        "count": 9
+      },
+      {
+        "lat": 50.65,
+        "lng": -4.35,
+        "count": 27
+      },
+      {
+        "lat": 50.65,
+        "lng": -4.25,
+        "count": 6
+      },
+      {
+        "lat": 50.65,
+        "lng": -3.75,
+        "count": 9
+      },
+      {
+        "lat": 50.65,
+        "lng": -3.65,
+        "count": 5
+      },
+      {
+        "lat": 50.65,
+        "lng": -3.55,
+        "count": 47
+      },
+      {
+        "lat": 50.65,
+        "lng": -3.45,
+        "count": 36
+      },
+      {
+        "lat": 50.65,
+        "lng": -3.35,
+        "count": 22
+      },
+      {
+        "lat": 50.65,
+        "lng": -3.25,
+        "count": 15
+      },
+      {
+        "lat": 50.65,
+        "lng": -2.65,
+        "count": 8
+      },
+      {
+        "lat": 50.65,
+        "lng": -2.55,
+        "count": 8
+      },
+      {
+        "lat": 50.65,
+        "lng": -2.45,
+        "count": 108
+      },
+      {
+        "lat": 50.65,
+        "lng": -2.35,
+        "count": 12
+      },
+      {
+        "lat": 50.65,
+        "lng": -2.25,
+        "count": 13
+      },
+      {
+        "lat": 50.65,
+        "lng": -2.15,
+        "count": 10
+      },
+      {
+        "lat": 50.65,
+        "lng": -2.05,
+        "count": 11
+      },
+      {
+        "lat": 50.65,
+        "lng": -1.95,
+        "count": 15
+      },
+      {
+        "lat": 50.65,
+        "lng": -1.55,
+        "count": 7
+      },
+      {
+        "lat": 50.65,
+        "lng": -1.45,
+        "count": 13
+      },
+      {
+        "lat": 50.65,
+        "lng": -1.35,
+        "count": 18
+      },
+      {
+        "lat": 50.65,
+        "lng": -1.25,
+        "count": 46
+      },
+      {
+        "lat": 50.65,
+        "lng": -1.15,
+        "count": 33
+      },
+      {
+        "lat": 50.65,
+        "lng": -1.05,
+        "count": 6
+      },
+      {
+        "lat": 50.75,
+        "lng": -4.55,
+        "count": 7
+      },
+      {
+        "lat": 50.75,
+        "lng": -4.45,
+        "count": 5
+      },
+      {
+        "lat": 50.75,
+        "lng": -4.15,
+        "count": 8
+      },
+      {
+        "lat": 50.75,
+        "lng": -4.05,
+        "count": 10
+      },
+      {
+        "lat": 50.75,
+        "lng": -3.95,
+        "count": 18
+      },
+      {
+        "lat": 50.75,
+        "lng": -3.85,
+        "count": 9
+      },
+      {
+        "lat": 50.75,
+        "lng": -3.75,
+        "count": 5
+      },
+      {
+        "lat": 50.75,
+        "lng": -3.65,
+        "count": 14
+      },
+      {
+        "lat": 50.75,
+        "lng": -3.55,
+        "count": 111
+      },
+      {
+        "lat": 50.75,
+        "lng": -3.45,
+        "count": 82
+      },
+      {
+        "lat": 50.75,
+        "lng": -3.35,
+        "count": 12
+      },
+      {
+        "lat": 50.75,
+        "lng": -3.25,
+        "count": 22
+      },
+      {
+        "lat": 50.75,
+        "lng": -3.15,
+        "count": 23
+      },
+      {
+        "lat": 50.75,
+        "lng": -3.05,
+        "count": 25
+      },
+      {
+        "lat": 50.75,
+        "lng": -2.95,
+        "count": 19
+      },
+      {
+        "lat": 50.75,
+        "lng": -2.75,
+        "count": 26
+      },
+      {
+        "lat": 50.75,
+        "lng": -2.65,
+        "count": 5
+      },
+      {
+        "lat": 50.75,
+        "lng": -2.45,
+        "count": 51
+      },
+      {
+        "lat": 50.75,
+        "lng": -2.35,
+        "count": 6
+      },
+      {
+        "lat": 50.75,
+        "lng": -2.25,
+        "count": 13
+      },
+      {
+        "lat": 50.75,
+        "lng": -2.15,
+        "count": 17
+      },
+      {
+        "lat": 50.75,
+        "lng": -2.05,
+        "count": 64
+      },
+      {
+        "lat": 50.75,
+        "lng": -1.95,
+        "count": 314
+      },
+      {
+        "lat": 50.75,
+        "lng": -1.85,
+        "count": 344
+      },
+      {
+        "lat": 50.75,
+        "lng": -1.75,
+        "count": 73
+      },
+      {
+        "lat": 50.75,
+        "lng": -1.65,
+        "count": 49
+      },
+      {
+        "lat": 50.75,
+        "lng": -1.55,
+        "count": 31
+      },
+      {
+        "lat": 50.75,
+        "lng": -1.45,
+        "count": 5
+      },
+      {
+        "lat": 50.75,
+        "lng": -1.35,
+        "count": 21
+      },
+      {
+        "lat": 50.75,
+        "lng": -1.25,
+        "count": 45
+      },
+      {
+        "lat": 50.75,
+        "lng": -1.15,
+        "count": 83
+      },
+      {
+        "lat": 50.75,
+        "lng": -1.05,
+        "count": 140
+      },
+      {
+        "lat": 50.75,
+        "lng": -0.95,
+        "count": 9
+      },
+      {
+        "lat": 50.75,
+        "lng": -0.85,
+        "count": 11
+      },
+      {
+        "lat": 50.75,
+        "lng": -0.75,
+        "count": 26
+      },
+      {
+        "lat": 50.75,
+        "lng": -0.65,
+        "count": 59
+      },
+      {
+        "lat": 50.75,
+        "lng": -0.05,
+        "count": 18
+      },
+      {
+        "lat": 50.75,
+        "lng": 0.05,
+        "count": 43
+      },
+      {
+        "lat": 50.75,
+        "lng": 0.15,
+        "count": 15
+      },
+      {
+        "lat": 50.75,
+        "lng": 0.25,
+        "count": 125
+      },
+      {
+        "lat": 50.75,
+        "lng": 0.35,
+        "count": 33
+      },
+      {
+        "lat": 50.85,
+        "lng": -4.55,
+        "count": 16
+      },
+      {
+        "lat": 50.85,
+        "lng": -4.45,
+        "count": 12
+      },
+      {
+        "lat": 50.85,
+        "lng": -4.35,
+        "count": 11
+      },
+      {
+        "lat": 50.85,
+        "lng": -4.05,
+        "count": 8
+      },
+      {
+        "lat": 50.85,
+        "lng": -3.85,
+        "count": 5
+      },
+      {
+        "lat": 50.85,
+        "lng": -3.75,
+        "count": 9
+      },
+      {
+        "lat": 50.85,
+        "lng": -3.45,
+        "count": 9
+      },
+      {
+        "lat": 50.85,
+        "lng": -3.35,
+        "count": 22
+      },
+      {
+        "lat": 50.85,
+        "lng": -3.15,
+        "count": 19
+      },
+      {
+        "lat": 50.85,
+        "lng": -3.05,
+        "count": 8
+      },
+      {
+        "lat": 50.85,
+        "lng": -2.95,
+        "count": 22
+      },
+      {
+        "lat": 50.85,
+        "lng": -2.85,
+        "count": 11
+      },
+      {
+        "lat": 50.85,
+        "lng": -2.75,
+        "count": 12
+      },
+      {
+        "lat": 50.85,
+        "lng": -2.65,
+        "count": 6
+      },
+      {
+        "lat": 50.85,
+        "lng": -2.45,
+        "count": 7
+      },
+      {
+        "lat": 50.85,
+        "lng": -2.25,
+        "count": 9
+      },
+      {
+        "lat": 50.85,
+        "lng": -2.15,
+        "count": 21
+      },
+      {
+        "lat": 50.85,
+        "lng": -1.95,
+        "count": 39
+      },
+      {
+        "lat": 50.85,
+        "lng": -1.85,
+        "count": 62
+      },
+      {
+        "lat": 50.85,
+        "lng": -1.75,
+        "count": 35
+      },
+      {
+        "lat": 50.85,
+        "lng": -1.65,
+        "count": 15
+      },
+      {
+        "lat": 50.85,
+        "lng": -1.55,
+        "count": 21
+      },
+      {
+        "lat": 50.85,
+        "lng": -1.45,
+        "count": 46
+      },
+      {
+        "lat": 50.85,
+        "lng": -1.35,
+        "count": 97
+      },
+      {
+        "lat": 50.85,
+        "lng": -1.25,
+        "count": 105
+      },
+      {
+        "lat": 50.85,
+        "lng": -1.15,
+        "count": 174
+      },
+      {
+        "lat": 50.85,
+        "lng": -1.05,
+        "count": 398
+      },
+      {
+        "lat": 50.85,
+        "lng": -0.95,
+        "count": 96
+      },
+      {
+        "lat": 50.85,
+        "lng": -0.85,
+        "count": 35
+      },
+      {
+        "lat": 50.85,
+        "lng": -0.75,
+        "count": 143
+      },
+      {
+        "lat": 50.85,
+        "lng": -0.65,
+        "count": 78
+      },
+      {
+        "lat": 50.85,
+        "lng": -0.55,
+        "count": 104
+      },
+      {
+        "lat": 50.85,
+        "lng": -0.45,
+        "count": 110
+      },
+      {
+        "lat": 50.85,
+        "lng": -0.35,
+        "count": 194
+      },
+      {
+        "lat": 50.85,
+        "lng": -0.25,
+        "count": 144
+      },
+      {
+        "lat": 50.85,
+        "lng": -0.15,
+        "count": 529
+      },
+      {
+        "lat": 50.85,
+        "lng": -0.05,
+        "count": 53
+      },
+      {
+        "lat": 50.85,
+        "lng": 0.05,
+        "count": 53
+      },
+      {
+        "lat": 50.85,
+        "lng": 0.15,
+        "count": 25
+      },
+      {
+        "lat": 50.85,
+        "lng": 0.25,
+        "count": 111
+      },
+      {
+        "lat": 50.85,
+        "lng": 0.35,
+        "count": 49
+      },
+      {
+        "lat": 50.85,
+        "lng": 0.45,
+        "count": 70
+      },
+      {
+        "lat": 50.85,
+        "lng": 0.55,
+        "count": 165
+      },
+      {
+        "lat": 50.85,
+        "lng": 0.65,
+        "count": 19
+      },
+      {
+        "lat": 50.95,
+        "lng": -4.45,
+        "count": 6
+      },
+      {
+        "lat": 50.95,
+        "lng": -4.35,
+        "count": 6
+      },
+      {
+        "lat": 50.95,
+        "lng": -4.25,
+        "count": 7
+      },
+      {
+        "lat": 50.95,
+        "lng": -4.15,
+        "count": 18
+      },
+      {
+        "lat": 50.95,
+        "lng": -4.05,
+        "count": 6
+      },
+      {
+        "lat": 50.95,
+        "lng": -3.95,
+        "count": 7
+      },
+      {
+        "lat": 50.95,
+        "lng": -3.85,
+        "count": 5
+      },
+      {
+        "lat": 50.95,
+        "lng": -3.45,
+        "count": 21
+      },
+      {
+        "lat": 50.95,
+        "lng": -3.35,
+        "count": 12
+      },
+      {
+        "lat": 50.95,
+        "lng": -3.25,
+        "count": 17
+      },
+      {
+        "lat": 50.95,
+        "lng": -3.15,
+        "count": 9
+      },
+      {
+        "lat": 50.95,
+        "lng": -3.05,
+        "count": 9
+      },
+      {
+        "lat": 50.95,
+        "lng": -2.95,
+        "count": 15
+      },
+      {
+        "lat": 50.95,
+        "lng": -2.85,
+        "count": 11
+      },
+      {
+        "lat": 50.95,
+        "lng": -2.75,
+        "count": 23
+      },
+      {
+        "lat": 50.95,
+        "lng": -2.65,
+        "count": 69
+      },
+      {
+        "lat": 50.95,
+        "lng": -2.55,
+        "count": 19
+      },
+      {
+        "lat": 50.95,
+        "lng": -2.45,
+        "count": 10
+      },
+      {
+        "lat": 50.95,
+        "lng": -2.35,
+        "count": 11
+      },
+      {
+        "lat": 50.95,
+        "lng": -2.25,
+        "count": 5
+      },
+      {
+        "lat": 50.95,
+        "lng": -2.15,
+        "count": 17
+      },
+      {
+        "lat": 50.95,
+        "lng": -1.85,
+        "count": 5
+      },
+      {
+        "lat": 50.95,
+        "lng": -1.75,
+        "count": 18
+      },
+      {
+        "lat": 50.95,
+        "lng": -1.65,
+        "count": 8
+      },
+      {
+        "lat": 50.95,
+        "lng": -1.55,
+        "count": 75
+      },
+      {
+        "lat": 50.95,
+        "lng": -1.45,
+        "count": 281
+      },
+      {
+        "lat": 50.95,
+        "lng": -1.35,
+        "count": 323
+      },
+      {
+        "lat": 50.95,
+        "lng": -1.25,
+        "count": 48
+      },
+      {
+        "lat": 50.95,
+        "lng": -1.15,
+        "count": 16
+      },
+      {
+        "lat": 50.95,
+        "lng": -1.05,
+        "count": 16
+      },
+      {
+        "lat": 50.95,
+        "lng": -0.95,
+        "count": 22
+      },
+      {
+        "lat": 50.95,
+        "lng": -0.85,
+        "count": 7
+      },
+      {
+        "lat": 50.95,
+        "lng": -0.75,
+        "count": 21
+      },
+      {
+        "lat": 50.95,
+        "lng": -0.65,
+        "count": 14
+      },
+      {
+        "lat": 50.95,
+        "lng": -0.55,
+        "count": 21
+      },
+      {
+        "lat": 50.95,
+        "lng": -0.45,
+        "count": 50
+      },
+      {
+        "lat": 50.95,
+        "lng": -0.35,
+        "count": 42
+      },
+      {
+        "lat": 50.95,
+        "lng": -0.25,
+        "count": 29
+      },
+      {
+        "lat": 50.95,
+        "lng": -0.15,
+        "count": 113
+      },
+      {
+        "lat": 50.95,
+        "lng": -0.05,
+        "count": 39
+      },
+      {
+        "lat": 50.95,
+        "lng": 0.05,
+        "count": 42
+      },
+      {
+        "lat": 50.95,
+        "lng": 0.15,
+        "count": 27
+      },
+      {
+        "lat": 50.95,
+        "lng": 0.25,
+        "count": 36
+      },
+      {
+        "lat": 50.95,
+        "lng": 0.45,
+        "count": 34
+      },
+      {
+        "lat": 50.95,
+        "lng": 0.55,
+        "count": 32
+      },
+      {
+        "lat": 50.95,
+        "lng": 0.65,
+        "count": 15
+      },
+      {
+        "lat": 50.95,
+        "lng": 0.75,
+        "count": 22
+      },
+      {
+        "lat": 50.95,
+        "lng": 0.95,
+        "count": 15
+      },
+      {
+        "lat": 51.05,
+        "lng": -4.25,
+        "count": 31
+      },
+      {
+        "lat": 51.05,
+        "lng": -4.15,
+        "count": 10
+      },
+      {
+        "lat": 51.05,
+        "lng": -4.05,
+        "count": 49
+      },
+      {
+        "lat": 51.05,
+        "lng": -3.95,
+        "count": 5
+      },
+      {
+        "lat": 51.05,
+        "lng": -3.85,
+        "count": 20
+      },
+      {
+        "lat": 51.05,
+        "lng": -3.25,
+        "count": 10
+      },
+      {
+        "lat": 51.05,
+        "lng": -3.15,
+        "count": 46
+      },
+      {
+        "lat": 51.05,
+        "lng": -3.05,
+        "count": 60
+      },
+      {
+        "lat": 51.05,
+        "lng": -2.95,
+        "count": 6
+      },
+      {
+        "lat": 51.05,
+        "lng": -2.85,
+        "count": 7
+      },
+      {
+        "lat": 51.05,
+        "lng": -2.75,
+        "count": 11
+      },
+      {
+        "lat": 51.05,
+        "lng": -2.65,
+        "count": 17
+      },
+      {
+        "lat": 51.05,
+        "lng": -2.55,
+        "count": 16
+      },
+      {
+        "lat": 51.05,
+        "lng": -2.45,
+        "count": 16
+      },
+      {
+        "lat": 51.05,
+        "lng": -2.35,
+        "count": 6
+      },
+      {
+        "lat": 51.05,
+        "lng": -2.25,
+        "count": 22
+      },
+      {
+        "lat": 51.05,
+        "lng": -2.15,
+        "count": 20
+      },
+      {
+        "lat": 51.05,
+        "lng": -1.95,
+        "count": 7
+      },
+      {
+        "lat": 51.05,
+        "lng": -1.85,
+        "count": 51
+      },
+      {
+        "lat": 51.05,
+        "lng": -1.75,
+        "count": 70
+      },
+      {
+        "lat": 51.05,
+        "lng": -1.65,
+        "count": 12
+      },
+      {
+        "lat": 51.05,
+        "lng": -1.55,
+        "count": 6
+      },
+      {
+        "lat": 51.05,
+        "lng": -1.45,
+        "count": 8
+      },
+      {
+        "lat": 51.05,
+        "lng": -1.35,
+        "count": 97
+      },
+      {
+        "lat": 51.05,
+        "lng": -1.25,
+        "count": 51
+      },
+      {
+        "lat": 51.05,
+        "lng": -1.15,
+        "count": 16
+      },
+      {
+        "lat": 51.05,
+        "lng": -1.05,
+        "count": 21
+      },
+      {
+        "lat": 51.05,
+        "lng": -0.95,
+        "count": 29
+      },
+      {
+        "lat": 51.05,
+        "lng": -0.85,
+        "count": 42
+      },
+      {
+        "lat": 51.05,
+        "lng": -0.75,
+        "count": 35
+      },
+      {
+        "lat": 51.05,
+        "lng": -0.65,
+        "count": 9
+      },
+      {
+        "lat": 51.05,
+        "lng": -0.55,
+        "count": 14
+      },
+      {
+        "lat": 51.05,
+        "lng": -0.45,
+        "count": 19
+      },
+      {
+        "lat": 51.05,
+        "lng": -0.35,
+        "count": 95
+      },
+      {
+        "lat": 51.05,
+        "lng": -0.25,
+        "count": 51
+      },
+      {
+        "lat": 51.05,
+        "lng": -0.15,
+        "count": 65
+      },
+      {
+        "lat": 51.05,
+        "lng": -0.05,
+        "count": 30
+      },
+      {
+        "lat": 51.05,
+        "lng": 0.05,
+        "count": 19
+      },
+      {
+        "lat": 51.05,
+        "lng": 0.15,
+        "count": 42
+      },
+      {
+        "lat": 51.05,
+        "lng": 0.25,
+        "count": 25
+      },
+      {
+        "lat": 51.05,
+        "lng": 0.35,
+        "count": 18
+      },
+      {
+        "lat": 51.05,
+        "lng": 0.45,
+        "count": 24
+      },
+      {
+        "lat": 51.05,
+        "lng": 0.55,
+        "count": 26
+      },
+      {
+        "lat": 51.05,
+        "lng": 0.65,
+        "count": 27
+      },
+      {
+        "lat": 51.05,
+        "lng": 0.75,
+        "count": 15
+      },
+      {
+        "lat": 51.05,
+        "lng": 0.85,
+        "count": 15
+      },
+      {
+        "lat": 51.05,
+        "lng": 0.95,
+        "count": 13
+      },
+      {
+        "lat": 51.05,
+        "lng": 1.05,
+        "count": 43
+      },
+      {
+        "lat": 51.05,
+        "lng": 1.15,
+        "count": 111
+      },
+      {
+        "lat": 51.15,
+        "lng": -4.15,
+        "count": 18
+      },
+      {
+        "lat": 51.15,
+        "lng": -4.05,
+        "count": 16
+      },
+      {
+        "lat": 51.15,
+        "lng": -3.95,
+        "count": 6
+      },
+      {
+        "lat": 51.15,
+        "lng": -3.45,
+        "count": 6
+      },
+      {
+        "lat": 51.15,
+        "lng": -3.35,
+        "count": 6
+      },
+      {
+        "lat": 51.15,
+        "lng": -3.15,
+        "count": 9
+      },
+      {
+        "lat": 51.15,
+        "lng": -3.05,
+        "count": 36
+      },
+      {
+        "lat": 51.15,
+        "lng": -2.95,
+        "count": 58
+      },
+      {
+        "lat": 51.15,
+        "lng": -2.85,
+        "count": 5
+      },
+      {
+        "lat": 51.15,
+        "lng": -2.75,
+        "count": 49
+      },
+      {
+        "lat": 51.15,
+        "lng": -2.65,
+        "count": 9
+      },
+      {
+        "lat": 51.15,
+        "lng": -2.55,
+        "count": 22
+      },
+      {
+        "lat": 51.15,
+        "lng": -2.45,
+        "count": 8
+      },
+      {
+        "lat": 51.15,
+        "lng": -2.25,
+        "count": 10
+      },
+      {
+        "lat": 51.15,
+        "lng": -2.15,
+        "count": 23
+      },
+      {
+        "lat": 51.15,
+        "lng": -2.05,
+        "count": 11
+      },
+      {
+        "lat": 51.15,
+        "lng": -1.95,
+        "count": 12
+      },
+      {
+        "lat": 51.15,
+        "lng": -1.85,
+        "count": 27
+      },
+      {
+        "lat": 51.15,
+        "lng": -1.75,
+        "count": 34
+      },
+      {
+        "lat": 51.15,
+        "lng": -1.65,
+        "count": 14
+      },
+      {
+        "lat": 51.15,
+        "lng": -1.55,
+        "count": 14
+      },
+      {
+        "lat": 51.15,
+        "lng": -1.45,
+        "count": 19
+      },
+      {
+        "lat": 51.15,
+        "lng": -1.35,
+        "count": 18
+      },
+      {
+        "lat": 51.15,
+        "lng": -1.25,
+        "count": 20
+      },
+      {
+        "lat": 51.15,
+        "lng": -1.05,
+        "count": 17
+      },
+      {
+        "lat": 51.15,
+        "lng": -0.95,
+        "count": 36
+      },
+      {
+        "lat": 51.15,
+        "lng": -0.85,
+        "count": 51
+      },
+      {
+        "lat": 51.15,
+        "lng": -0.75,
+        "count": 33
+      },
+      {
+        "lat": 51.15,
+        "lng": -0.65,
+        "count": 57
+      },
+      {
+        "lat": 51.15,
+        "lng": -0.55,
+        "count": 41
+      },
+      {
+        "lat": 51.15,
+        "lng": -0.45,
+        "count": 22
+      },
+      {
+        "lat": 51.15,
+        "lng": -0.35,
+        "count": 36
+      },
+      {
+        "lat": 51.15,
+        "lng": -0.25,
+        "count": 72
+      },
+      {
+        "lat": 51.15,
+        "lng": -0.15,
+        "count": 263
+      },
+      {
+        "lat": 51.15,
+        "lng": -0.05,
+        "count": 73
+      },
+      {
+        "lat": 51.15,
+        "lng": 0.05,
+        "count": 24
+      },
+      {
+        "lat": 51.15,
+        "lng": 0.15,
+        "count": 26
+      },
+      {
+        "lat": 51.15,
+        "lng": 0.25,
+        "count": 149
+      },
+      {
+        "lat": 51.15,
+        "lng": 0.35,
+        "count": 70
+      },
+      {
+        "lat": 51.15,
+        "lng": 0.45,
+        "count": 32
+      },
+      {
+        "lat": 51.15,
+        "lng": 0.55,
+        "count": 33
+      },
+      {
+        "lat": 51.15,
+        "lng": 0.65,
+        "count": 29
+      },
+      {
+        "lat": 51.15,
+        "lng": 0.75,
+        "count": 20
+      },
+      {
+        "lat": 51.15,
+        "lng": 0.85,
+        "count": 152
+      },
+      {
+        "lat": 51.15,
+        "lng": 0.95,
+        "count": 44
+      },
+      {
+        "lat": 51.15,
+        "lng": 1.05,
+        "count": 12
+      },
+      {
+        "lat": 51.15,
+        "lng": 1.15,
+        "count": 29
+      },
+      {
+        "lat": 51.15,
+        "lng": 1.25,
+        "count": 61
+      },
+      {
+        "lat": 51.15,
+        "lng": 1.35,
+        "count": 75
+      },
+      {
+        "lat": 51.25,
+        "lng": -4.15,
+        "count": 5
+      },
+      {
+        "lat": 51.25,
+        "lng": -2.95,
+        "count": 54
+      },
+      {
+        "lat": 51.25,
+        "lng": -2.85,
+        "count": 12
+      },
+      {
+        "lat": 51.25,
+        "lng": -2.75,
+        "count": 9
+      },
+      {
+        "lat": 51.25,
+        "lng": -2.65,
+        "count": 15
+      },
+      {
+        "lat": 51.25,
+        "lng": -2.55,
+        "count": 17
+      },
+      {
+        "lat": 51.25,
+        "lng": -2.45,
+        "count": 22
+      },
+      {
+        "lat": 51.25,
+        "lng": -2.35,
+        "count": 40
+      },
+      {
+        "lat": 51.25,
+        "lng": -2.25,
+        "count": 35
+      },
+      {
+        "lat": 51.25,
+        "lng": -2.15,
+        "count": 48
+      },
+      {
+        "lat": 51.25,
+        "lng": -2.05,
+        "count": 7
+      },
+      {
+        "lat": 51.25,
+        "lng": -1.95,
+        "count": 10
+      },
+      {
+        "lat": 51.25,
+        "lng": -1.85,
+        "count": 6
+      },
+      {
+        "lat": 51.25,
+        "lng": -1.75,
+        "count": 12
+      },
+      {
+        "lat": 51.25,
+        "lng": -1.65,
+        "count": 20
+      },
+      {
+        "lat": 51.25,
+        "lng": -1.55,
+        "count": 27
+      },
+      {
+        "lat": 51.25,
+        "lng": -1.45,
+        "count": 40
+      },
+      {
+        "lat": 51.25,
+        "lng": -1.35,
+        "count": 21
+      },
+      {
+        "lat": 51.25,
+        "lng": -1.25,
+        "count": 9
+      },
+      {
+        "lat": 51.25,
+        "lng": -1.15,
+        "count": 102
+      },
+      {
+        "lat": 51.25,
+        "lng": -1.05,
+        "count": 77
+      },
+      {
+        "lat": 51.25,
+        "lng": -0.95,
+        "count": 33
+      },
+      {
+        "lat": 51.25,
+        "lng": -0.85,
+        "count": 69
+      },
+      {
+        "lat": 51.25,
+        "lng": -0.75,
+        "count": 205
+      },
+      {
+        "lat": 51.25,
+        "lng": -0.65,
+        "count": 61
+      },
+      {
+        "lat": 51.25,
+        "lng": -0.55,
+        "count": 193
+      },
+      {
+        "lat": 51.25,
+        "lng": -0.45,
+        "count": 38
+      },
+      {
+        "lat": 51.25,
+        "lng": -0.35,
+        "count": 111
+      },
+      {
+        "lat": 51.25,
+        "lng": -0.25,
+        "count": 100
+      },
+      {
+        "lat": 51.25,
+        "lng": -0.15,
+        "count": 158
+      },
+      {
+        "lat": 51.25,
+        "lng": -0.05,
+        "count": 93
+      },
+      {
+        "lat": 51.25,
+        "lng": 0.05,
+        "count": 57
+      },
+      {
+        "lat": 51.25,
+        "lng": 0.15,
+        "count": 78
+      },
+      {
+        "lat": 51.25,
+        "lng": 0.25,
+        "count": 41
+      },
+      {
+        "lat": 51.25,
+        "lng": 0.35,
+        "count": 38
+      },
+      {
+        "lat": 51.25,
+        "lng": 0.45,
+        "count": 84
+      },
+      {
+        "lat": 51.25,
+        "lng": 0.55,
+        "count": 188
+      },
+      {
+        "lat": 51.25,
+        "lng": 0.65,
+        "count": 40
+      },
+      {
+        "lat": 51.25,
+        "lng": 0.75,
+        "count": 39
+      },
+      {
+        "lat": 51.25,
+        "lng": 0.85,
+        "count": 20
+      },
+      {
+        "lat": 51.25,
+        "lng": 0.95,
+        "count": 20
+      },
+      {
+        "lat": 51.25,
+        "lng": 1.05,
+        "count": 117
+      },
+      {
+        "lat": 51.25,
+        "lng": 1.15,
+        "count": 49
+      },
+      {
+        "lat": 51.25,
+        "lng": 1.25,
+        "count": 15
+      },
+      {
+        "lat": 51.25,
+        "lng": 1.35,
+        "count": 55
+      },
+      {
+        "lat": 51.25,
+        "lng": 1.45,
+        "count": 10
+      },
+      {
+        "lat": 51.35,
+        "lng": -3.25,
+        "count": 6
+      },
+      {
+        "lat": 51.35,
+        "lng": -2.95,
+        "count": 99
+      },
+      {
+        "lat": 51.35,
+        "lng": -2.85,
+        "count": 40
+      },
+      {
+        "lat": 51.35,
+        "lng": -2.75,
+        "count": 30
+      },
+      {
+        "lat": 51.35,
+        "lng": -2.65,
+        "count": 16
+      },
+      {
+        "lat": 51.35,
+        "lng": -2.55,
+        "count": 5
+      },
+      {
+        "lat": 51.35,
+        "lng": -2.45,
+        "count": 12
+      },
+      {
+        "lat": 51.35,
+        "lng": -2.35,
+        "count": 42
+      },
+      {
+        "lat": 51.35,
+        "lng": -2.25,
+        "count": 73
+      },
+      {
+        "lat": 51.35,
+        "lng": -2.15,
+        "count": 75
+      },
+      {
+        "lat": 51.35,
+        "lng": -2.05,
+        "count": 27
+      },
+      {
+        "lat": 51.35,
+        "lng": -1.95,
+        "count": 17
+      },
+      {
+        "lat": 51.35,
+        "lng": -1.85,
+        "count": 9
+      },
+      {
+        "lat": 51.35,
+        "lng": -1.75,
+        "count": 9
+      },
+      {
+        "lat": 51.35,
+        "lng": -1.65,
+        "count": 8
+      },
+      {
+        "lat": 51.35,
+        "lng": -1.55,
+        "count": 6
+      },
+      {
+        "lat": 51.35,
+        "lng": -1.45,
+        "count": 6
+      },
+      {
+        "lat": 51.35,
+        "lng": -1.35,
+        "count": 25
+      },
+      {
+        "lat": 51.35,
+        "lng": -1.25,
+        "count": 20
+      },
+      {
+        "lat": 51.35,
+        "lng": -1.15,
+        "count": 20
+      },
+      {
+        "lat": 51.35,
+        "lng": -1.05,
+        "count": 32
+      },
+      {
+        "lat": 51.35,
+        "lng": -0.95,
+        "count": 39
+      },
+      {
+        "lat": 51.35,
+        "lng": -0.85,
+        "count": 56
+      },
+      {
+        "lat": 51.35,
+        "lng": -0.75,
+        "count": 150
+      },
+      {
+        "lat": 51.35,
+        "lng": -0.65,
+        "count": 123
+      },
+      {
+        "lat": 51.35,
+        "lng": -0.55,
+        "count": 228
+      },
+      {
+        "lat": 51.35,
+        "lng": -0.45,
+        "count": 279
+      },
+      {
+        "lat": 51.35,
+        "lng": -0.35,
+        "count": 232
+      },
+      {
+        "lat": 51.35,
+        "lng": -0.25,
+        "count": 433
+      },
+      {
+        "lat": 51.35,
+        "lng": -0.15,
+        "count": 804
+      },
+      {
+        "lat": 51.35,
+        "lng": -0.05,
+        "count": 501
+      },
+      {
+        "lat": 51.35,
+        "lng": 0.05,
+        "count": 199
+      },
+      {
+        "lat": 51.35,
+        "lng": 0.15,
+        "count": 130
+      },
+      {
+        "lat": 51.35,
+        "lng": 0.25,
+        "count": 64
+      },
+      {
+        "lat": 51.35,
+        "lng": 0.35,
+        "count": 59
+      },
+      {
+        "lat": 51.35,
+        "lng": 0.45,
+        "count": 138
+      },
+      {
+        "lat": 51.35,
+        "lng": 0.55,
+        "count": 408
+      },
+      {
+        "lat": 51.35,
+        "lng": 0.65,
+        "count": 66
+      },
+      {
+        "lat": 51.35,
+        "lng": 0.75,
+        "count": 121
+      },
+      {
+        "lat": 51.35,
+        "lng": 0.85,
+        "count": 42
+      },
+      {
+        "lat": 51.35,
+        "lng": 0.95,
+        "count": 21
+      },
+      {
+        "lat": 51.35,
+        "lng": 1.05,
+        "count": 54
+      },
+      {
+        "lat": 51.35,
+        "lng": 1.15,
+        "count": 68
+      },
+      {
+        "lat": 51.35,
+        "lng": 1.25,
+        "count": 21
+      },
+      {
+        "lat": 51.35,
+        "lng": 1.35,
+        "count": 147
+      },
+      {
+        "lat": 51.35,
+        "lng": 1.45,
+        "count": 121
+      },
+      {
+        "lat": 51.45,
+        "lng": -3.65,
+        "count": 5
+      },
+      {
+        "lat": 51.45,
+        "lng": -3.55,
+        "count": 13
+      },
+      {
+        "lat": 51.45,
+        "lng": -3.45,
+        "count": 5
+      },
+      {
+        "lat": 51.45,
+        "lng": -3.35,
+        "count": 6
+      },
+      {
+        "lat": 51.45,
+        "lng": -3.25,
+        "count": 102
+      },
+      {
+        "lat": 51.45,
+        "lng": -3.15,
+        "count": 146
+      },
+      {
+        "lat": 51.45,
+        "lng": -2.85,
+        "count": 23
+      },
+      {
+        "lat": 51.45,
+        "lng": -2.75,
+        "count": 35
+      },
+      {
+        "lat": 51.45,
+        "lng": -2.65,
+        "count": 210
+      },
+      {
+        "lat": 51.45,
+        "lng": -2.55,
+        "count": 650
+      },
+      {
+        "lat": 51.45,
+        "lng": -2.45,
+        "count": 61
+      },
+      {
+        "lat": 51.45,
+        "lng": -2.35,
+        "count": 16
+      },
+      {
+        "lat": 51.45,
+        "lng": -2.25,
+        "count": 22
+      },
+      {
+        "lat": 51.45,
+        "lng": -2.15,
+        "count": 70
+      },
+      {
+        "lat": 51.45,
+        "lng": -2.05,
+        "count": 21
+      },
+      {
+        "lat": 51.45,
+        "lng": -1.95,
+        "count": 19
+      },
+      {
+        "lat": 51.45,
+        "lng": -1.85,
+        "count": 11
+      },
+      {
+        "lat": 51.45,
+        "lng": -1.75,
+        "count": 25
+      },
+      {
+        "lat": 51.45,
+        "lng": -1.65,
+        "count": 11
+      },
+      {
+        "lat": 51.45,
+        "lng": -1.55,
+        "count": 12
+      },
+      {
+        "lat": 51.45,
+        "lng": -1.45,
+        "count": 9
+      },
+      {
+        "lat": 51.45,
+        "lng": -1.35,
+        "count": 33
+      },
+      {
+        "lat": 51.45,
+        "lng": -1.25,
+        "count": 25
+      },
+      {
+        "lat": 51.45,
+        "lng": -1.15,
+        "count": 16
+      },
+      {
+        "lat": 51.45,
+        "lng": -1.05,
+        "count": 92
+      },
+      {
+        "lat": 51.45,
+        "lng": -0.95,
+        "count": 269
+      },
+      {
+        "lat": 51.45,
+        "lng": -0.85,
+        "count": 88
+      },
+      {
+        "lat": 51.45,
+        "lng": -0.75,
+        "count": 82
+      },
+      {
+        "lat": 51.45,
+        "lng": -0.65,
+        "count": 75
+      },
+      {
+        "lat": 51.45,
+        "lng": -0.55,
+        "count": 235
+      },
+      {
+        "lat": 51.45,
+        "lng": -0.45,
+        "count": 485
+      },
+      {
+        "lat": 51.45,
+        "lng": -0.35,
+        "count": 678
+      },
+      {
+        "lat": 51.45,
+        "lng": -0.25,
+        "count": 1006
+      },
+      {
+        "lat": 51.45,
+        "lng": -0.15,
+        "count": 2879
+      },
+      {
+        "lat": 51.45,
+        "lng": -0.05,
+        "count": 1803
+      },
+      {
+        "lat": 51.45,
+        "lng": 0.05,
+        "count": 812
+      },
+      {
+        "lat": 51.45,
+        "lng": 0.15,
+        "count": 442
+      },
+      {
+        "lat": 51.45,
+        "lng": 0.25,
+        "count": 363
+      },
+      {
+        "lat": 51.45,
+        "lng": 0.35,
+        "count": 296
+      },
+      {
+        "lat": 51.45,
+        "lng": 0.45,
+        "count": 48
+      },
+      {
+        "lat": 51.45,
+        "lng": 0.55,
+        "count": 46
+      },
+      {
+        "lat": 51.45,
+        "lng": 0.65,
+        "count": 6
+      },
+      {
+        "lat": 51.45,
+        "lng": 0.75,
+        "count": 60
+      },
+      {
+        "lat": 51.45,
+        "lng": 0.85,
+        "count": 17
+      },
+      {
+        "lat": 51.55,
+        "lng": -4.05,
+        "count": 6
+      },
+      {
+        "lat": 51.55,
+        "lng": -3.75,
+        "count": 13
+      },
+      {
+        "lat": 51.55,
+        "lng": -3.65,
+        "count": 17
+      },
+      {
+        "lat": 51.55,
+        "lng": -3.55,
+        "count": 39
+      },
+      {
+        "lat": 51.55,
+        "lng": -3.45,
+        "count": 27
+      },
+      {
+        "lat": 51.55,
+        "lng": -3.35,
+        "count": 28
+      },
+      {
+        "lat": 51.55,
+        "lng": -3.25,
+        "count": 74
+      },
+      {
+        "lat": 51.55,
+        "lng": -3.15,
+        "count": 74
+      },
+      {
+        "lat": 51.55,
+        "lng": -3.05,
+        "count": 32
+      },
+      {
+        "lat": 51.55,
+        "lng": -2.95,
+        "count": 71
+      },
+      {
+        "lat": 51.55,
+        "lng": -2.85,
+        "count": 9
+      },
+      {
+        "lat": 51.55,
+        "lng": -2.75,
+        "count": 10
+      },
+      {
+        "lat": 51.55,
+        "lng": -2.65,
+        "count": 52
+      },
+      {
+        "lat": 51.55,
+        "lng": -2.55,
+        "count": 117
+      },
+      {
+        "lat": 51.55,
+        "lng": -2.45,
+        "count": 56
+      },
+      {
+        "lat": 51.55,
+        "lng": -2.35,
+        "count": 15
+      },
+      {
+        "lat": 51.55,
+        "lng": -2.25,
+        "count": 14
+      },
+      {
+        "lat": 51.55,
+        "lng": -2.15,
+        "count": 14
+      },
+      {
+        "lat": 51.55,
+        "lng": -2.05,
+        "count": 12
+      },
+      {
+        "lat": 51.55,
+        "lng": -1.95,
+        "count": 28
+      },
+      {
+        "lat": 51.55,
+        "lng": -1.85,
+        "count": 106
+      },
+      {
+        "lat": 51.55,
+        "lng": -1.75,
+        "count": 282
+      },
+      {
+        "lat": 51.55,
+        "lng": -1.65,
+        "count": 10
+      },
+      {
+        "lat": 51.55,
+        "lng": -1.55,
+        "count": 5
+      },
+      {
+        "lat": 51.55,
+        "lng": -1.45,
+        "count": 18
+      },
+      {
+        "lat": 51.55,
+        "lng": -1.35,
+        "count": 7
+      },
+      {
+        "lat": 51.55,
+        "lng": -1.25,
+        "count": 6
+      },
+      {
+        "lat": 51.55,
+        "lng": -1.15,
+        "count": 13
+      },
+      {
+        "lat": 51.55,
+        "lng": -1.05,
+        "count": 11
+      },
+      {
+        "lat": 51.55,
+        "lng": -0.95,
+        "count": 14
+      },
+      {
+        "lat": 51.55,
+        "lng": -0.85,
+        "count": 8
+      },
+      {
+        "lat": 51.55,
+        "lng": -0.75,
+        "count": 80
+      },
+      {
+        "lat": 51.55,
+        "lng": -0.65,
+        "count": 152
+      },
+      {
+        "lat": 51.55,
+        "lng": -0.55,
+        "count": 139
+      },
+      {
+        "lat": 51.55,
+        "lng": -0.45,
+        "count": 418
+      },
+      {
+        "lat": 51.55,
+        "lng": -0.35,
+        "count": 948
+      },
+      {
+        "lat": 51.55,
+        "lng": -0.25,
+        "count": 1802
+      },
+      {
+        "lat": 51.55,
+        "lng": -0.15,
+        "count": 2995
+      },
+      {
+        "lat": 51.55,
+        "lng": -0.05,
+        "count": 2802
+      },
+      {
+        "lat": 51.55,
+        "lng": 0.05,
+        "count": 1432
+      },
+      {
+        "lat": 51.55,
+        "lng": 0.15,
+        "count": 642
+      },
+      {
+        "lat": 51.55,
+        "lng": 0.25,
+        "count": 252
+      },
+      {
+        "lat": 51.55,
+        "lng": 0.35,
+        "count": 51
+      },
+      {
+        "lat": 51.55,
+        "lng": 0.45,
+        "count": 161
+      },
+      {
+        "lat": 51.55,
+        "lng": 0.55,
+        "count": 131
+      },
+      {
+        "lat": 51.55,
+        "lng": 0.65,
+        "count": 193
+      },
+      {
+        "lat": 51.55,
+        "lng": 0.75,
+        "count": 155
+      },
+      {
+        "lat": 51.65,
+        "lng": -4.95,
+        "count": 26
+      },
+      {
+        "lat": 51.65,
+        "lng": -4.85,
+        "count": 9
+      },
+      {
+        "lat": 51.65,
+        "lng": -4.75,
+        "count": 9
+      },
+      {
+        "lat": 51.65,
+        "lng": -4.25,
+        "count": 13
+      },
+      {
+        "lat": 51.65,
+        "lng": -4.15,
+        "count": 65
+      },
+      {
+        "lat": 51.65,
+        "lng": -4.05,
+        "count": 28
+      },
+      {
+        "lat": 51.65,
+        "lng": -3.95,
+        "count": 108
+      },
+      {
+        "lat": 51.65,
+        "lng": -3.85,
+        "count": 39
+      },
+      {
+        "lat": 51.65,
+        "lng": -3.75,
+        "count": 15
+      },
+      {
+        "lat": 51.65,
+        "lng": -3.65,
+        "count": 9
+      },
+      {
+        "lat": 51.65,
+        "lng": -3.55,
+        "count": 21
+      },
+      {
+        "lat": 51.65,
+        "lng": -3.45,
+        "count": 39
+      },
+      {
+        "lat": 51.65,
+        "lng": -3.35,
+        "count": 45
+      },
+      {
+        "lat": 51.65,
+        "lng": -3.25,
+        "count": 57
+      },
+      {
+        "lat": 51.65,
+        "lng": -3.15,
+        "count": 47
+      },
+      {
+        "lat": 51.65,
+        "lng": -3.05,
+        "count": 80
+      },
+      {
+        "lat": 51.65,
+        "lng": -2.95,
+        "count": 17
+      },
+      {
+        "lat": 51.65,
+        "lng": -2.85,
+        "count": 7
+      },
+      {
+        "lat": 51.65,
+        "lng": -2.75,
+        "count": 5
+      },
+      {
+        "lat": 51.65,
+        "lng": -2.65,
+        "count": 27
+      },
+      {
+        "lat": 51.65,
+        "lng": -2.55,
+        "count": 6
+      },
+      {
+        "lat": 51.65,
+        "lng": -2.45,
+        "count": 24
+      },
+      {
+        "lat": 51.65,
+        "lng": -2.35,
+        "count": 20
+      },
+      {
+        "lat": 51.65,
+        "lng": -2.25,
+        "count": 10
+      },
+      {
+        "lat": 51.65,
+        "lng": -2.15,
+        "count": 15
+      },
+      {
+        "lat": 51.65,
+        "lng": -2.05,
+        "count": 8
+      },
+      {
+        "lat": 51.65,
+        "lng": -1.95,
+        "count": 22
+      },
+      {
+        "lat": 51.65,
+        "lng": -1.85,
+        "count": 23
+      },
+      {
+        "lat": 51.65,
+        "lng": -1.75,
+        "count": 25
+      },
+      {
+        "lat": 51.65,
+        "lng": -1.65,
+        "count": 18
+      },
+      {
+        "lat": 51.65,
+        "lng": -1.55,
+        "count": 14
+      },
+      {
+        "lat": 51.65,
+        "lng": -1.45,
+        "count": 11
+      },
+      {
+        "lat": 51.65,
+        "lng": -1.35,
+        "count": 36
+      },
+      {
+        "lat": 51.65,
+        "lng": -1.25,
+        "count": 45
+      },
+      {
+        "lat": 51.65,
+        "lng": -1.15,
+        "count": 25
+      },
+      {
+        "lat": 51.65,
+        "lng": -0.95,
+        "count": 12
+      },
+      {
+        "lat": 51.65,
+        "lng": -0.85,
+        "count": 15
+      },
+      {
+        "lat": 51.65,
+        "lng": -0.75,
+        "count": 141
+      },
+      {
+        "lat": 51.65,
+        "lng": -0.65,
+        "count": 43
+      },
+      {
+        "lat": 51.65,
+        "lng": -0.55,
+        "count": 45
+      },
+      {
+        "lat": 51.65,
+        "lng": -0.45,
+        "count": 162
+      },
+      {
+        "lat": 51.65,
+        "lng": -0.35,
+        "count": 289
+      },
+      {
+        "lat": 51.65,
+        "lng": -0.25,
+        "count": 321
+      },
+      {
+        "lat": 51.65,
+        "lng": -0.15,
+        "count": 572
+      },
+      {
+        "lat": 51.65,
+        "lng": -0.05,
+        "count": 1023
+      },
+      {
+        "lat": 51.65,
+        "lng": 0.05,
+        "count": 243
+      },
+      {
+        "lat": 51.65,
+        "lng": 0.15,
+        "count": 107
+      },
+      {
+        "lat": 51.65,
+        "lng": 0.25,
+        "count": 98
+      },
+      {
+        "lat": 51.65,
+        "lng": 0.35,
+        "count": 75
+      },
+      {
+        "lat": 51.65,
+        "lng": 0.45,
+        "count": 43
+      },
+      {
+        "lat": 51.65,
+        "lng": 0.55,
+        "count": 55
+      },
+      {
+        "lat": 51.65,
+        "lng": 0.65,
+        "count": 56
+      },
+      {
+        "lat": 51.65,
+        "lng": 0.75,
+        "count": 28
+      },
+      {
+        "lat": 51.65,
+        "lng": 0.85,
+        "count": 19
+      },
+      {
+        "lat": 51.75,
+        "lng": -5.05,
+        "count": 11
+      },
+      {
+        "lat": 51.75,
+        "lng": -4.95,
+        "count": 32
+      },
+      {
+        "lat": 51.75,
+        "lng": -4.75,
+        "count": 22
+      },
+      {
+        "lat": 51.75,
+        "lng": -4.65,
+        "count": 8
+      },
+      {
+        "lat": 51.75,
+        "lng": -4.55,
+        "count": 6
+      },
+      {
+        "lat": 51.75,
+        "lng": -4.35,
+        "count": 5
+      },
+      {
+        "lat": 51.75,
+        "lng": -4.25,
+        "count": 13
+      },
+      {
+        "lat": 51.75,
+        "lng": -4.15,
+        "count": 13
+      },
+      {
+        "lat": 51.75,
+        "lng": -4.05,
+        "count": 34
+      },
+      {
+        "lat": 51.75,
+        "lng": -3.95,
+        "count": 10
+      },
+      {
+        "lat": 51.75,
+        "lng": -3.85,
+        "count": 16
+      },
+      {
+        "lat": 51.75,
+        "lng": -3.75,
+        "count": 15
+      },
+      {
+        "lat": 51.75,
+        "lng": -3.65,
+        "count": 8
+      },
+      {
+        "lat": 51.75,
+        "lng": -3.55,
+        "count": 8
+      },
+      {
+        "lat": 51.75,
+        "lng": -3.45,
+        "count": 37
+      },
+      {
+        "lat": 51.75,
+        "lng": -3.35,
+        "count": 31
+      },
+      {
+        "lat": 51.75,
+        "lng": -3.25,
+        "count": 29
+      },
+      {
+        "lat": 51.75,
+        "lng": -3.15,
+        "count": 19
+      },
+      {
+        "lat": 51.75,
+        "lng": -3.05,
+        "count": 22
+      },
+      {
+        "lat": 51.75,
+        "lng": -2.95,
+        "count": 6
+      },
+      {
+        "lat": 51.75,
+        "lng": -2.85,
+        "count": 5
+      },
+      {
+        "lat": 51.75,
+        "lng": -2.65,
+        "count": 9
+      },
+      {
+        "lat": 51.75,
+        "lng": -2.55,
+        "count": 25
+      },
+      {
+        "lat": 51.75,
+        "lng": -2.35,
+        "count": 24
+      },
+      {
+        "lat": 51.75,
+        "lng": -2.25,
+        "count": 64
+      },
+      {
+        "lat": 51.75,
+        "lng": -2.15,
+        "count": 14
+      },
+      {
+        "lat": 51.75,
+        "lng": -2.05,
+        "count": 10
+      },
+      {
+        "lat": 51.75,
+        "lng": -1.95,
+        "count": 37
+      },
+      {
+        "lat": 51.75,
+        "lng": -1.85,
+        "count": 9
+      },
+      {
+        "lat": 51.75,
+        "lng": -1.55,
+        "count": 21
+      },
+      {
+        "lat": 51.75,
+        "lng": -1.45,
+        "count": 27
+      },
+      {
+        "lat": 51.75,
+        "lng": -1.35,
+        "count": 19
+      },
+      {
+        "lat": 51.75,
+        "lng": -1.25,
+        "count": 237
+      },
+      {
+        "lat": 51.75,
+        "lng": -1.15,
+        "count": 37
+      },
+      {
+        "lat": 51.75,
+        "lng": -1.05,
+        "count": 21
+      },
+      {
+        "lat": 51.75,
+        "lng": -0.95,
+        "count": 26
+      },
+      {
+        "lat": 51.75,
+        "lng": -0.85,
+        "count": 16
+      },
+      {
+        "lat": 51.75,
+        "lng": -0.75,
+        "count": 32
+      },
+      {
+        "lat": 51.75,
+        "lng": -0.65,
+        "count": 23
+      },
+      {
+        "lat": 51.75,
+        "lng": -0.55,
+        "count": 32
+      },
+      {
+        "lat": 51.75,
+        "lng": -0.45,
+        "count": 166
+      },
+      {
+        "lat": 51.75,
+        "lng": -0.35,
+        "count": 185
+      },
+      {
+        "lat": 51.75,
+        "lng": -0.25,
+        "count": 133
+      },
+      {
+        "lat": 51.75,
+        "lng": -0.15,
+        "count": 48
+      },
+      {
+        "lat": 51.75,
+        "lng": -0.05,
+        "count": 135
+      },
+      {
+        "lat": 51.75,
+        "lng": 0.05,
+        "count": 70
+      },
+      {
+        "lat": 51.75,
+        "lng": 0.15,
+        "count": 107
+      },
+      {
+        "lat": 51.75,
+        "lng": 0.25,
+        "count": 15
+      },
+      {
+        "lat": 51.75,
+        "lng": 0.35,
+        "count": 8
+      },
+      {
+        "lat": 51.75,
+        "lng": 0.45,
+        "count": 173
+      },
+      {
+        "lat": 51.75,
+        "lng": 0.55,
+        "count": 74
+      },
+      {
+        "lat": 51.75,
+        "lng": 0.65,
+        "count": 56
+      },
+      {
+        "lat": 51.75,
+        "lng": 0.75,
+        "count": 12
+      },
+      {
+        "lat": 51.75,
+        "lng": 0.85,
+        "count": 8
+      },
+      {
+        "lat": 51.75,
+        "lng": 0.95,
+        "count": 7
+      },
+      {
+        "lat": 51.75,
+        "lng": 1.15,
+        "count": 45
+      },
+      {
+        "lat": 51.85,
+        "lng": -4.95,
+        "count": 23
+      },
+      {
+        "lat": 51.85,
+        "lng": -4.75,
+        "count": 11
+      },
+      {
+        "lat": 51.85,
+        "lng": -4.45,
+        "count": 7
+      },
+      {
+        "lat": 51.85,
+        "lng": -4.35,
+        "count": 23
+      },
+      {
+        "lat": 51.85,
+        "lng": -4.25,
+        "count": 16
+      },
+      {
+        "lat": 51.85,
+        "lng": -4.15,
+        "count": 11
+      },
+      {
+        "lat": 51.85,
+        "lng": -4.05,
+        "count": 21
+      },
+      {
+        "lat": 51.85,
+        "lng": -3.95,
+        "count": 10
+      },
+      {
+        "lat": 51.85,
+        "lng": -3.85,
+        "count": 6
+      },
+      {
+        "lat": 51.85,
+        "lng": -3.45,
+        "count": 11
+      },
+      {
+        "lat": 51.85,
+        "lng": -3.25,
+        "count": 8
+      },
+      {
+        "lat": 51.85,
+        "lng": -3.15,
+        "count": 9
+      },
+      {
+        "lat": 51.85,
+        "lng": -3.05,
+        "count": 16
+      },
+      {
+        "lat": 51.85,
+        "lng": -2.65,
+        "count": 12
+      },
+      {
+        "lat": 51.85,
+        "lng": -2.55,
+        "count": 38
+      },
+      {
+        "lat": 51.85,
+        "lng": -2.45,
+        "count": 22
+      },
+      {
+        "lat": 51.85,
+        "lng": -2.35,
+        "count": 14
+      },
+      {
+        "lat": 51.85,
+        "lng": -2.25,
+        "count": 229
+      },
+      {
+        "lat": 51.85,
+        "lng": -2.15,
+        "count": 106
+      },
+      {
+        "lat": 51.85,
+        "lng": -2.05,
+        "count": 69
+      },
+      {
+        "lat": 51.85,
+        "lng": -1.95,
+        "count": 16
+      },
+      {
+        "lat": 51.85,
+        "lng": -1.85,
+        "count": 11
+      },
+      {
+        "lat": 51.85,
+        "lng": -1.75,
+        "count": 12
+      },
+      {
+        "lat": 51.85,
+        "lng": -1.65,
+        "count": 9
+      },
+      {
+        "lat": 51.85,
+        "lng": -1.55,
+        "count": 12
+      },
+      {
+        "lat": 51.85,
+        "lng": -1.45,
+        "count": 10
+      },
+      {
+        "lat": 51.85,
+        "lng": -1.35,
+        "count": 15
+      },
+      {
+        "lat": 51.85,
+        "lng": -1.25,
+        "count": 23
+      },
+      {
+        "lat": 51.85,
+        "lng": -1.15,
+        "count": 34
+      },
+      {
+        "lat": 51.85,
+        "lng": -1.05,
+        "count": 12
+      },
+      {
+        "lat": 51.85,
+        "lng": -0.95,
+        "count": 15
+      },
+      {
+        "lat": 51.85,
+        "lng": -0.85,
+        "count": 97
+      },
+      {
+        "lat": 51.85,
+        "lng": -0.75,
+        "count": 43
+      },
+      {
+        "lat": 51.85,
+        "lng": -0.65,
+        "count": 20
+      },
+      {
+        "lat": 51.85,
+        "lng": -0.55,
+        "count": 90
+      },
+      {
+        "lat": 51.85,
+        "lng": -0.45,
+        "count": 367
+      },
+      {
+        "lat": 51.85,
+        "lng": -0.35,
+        "count": 62
+      },
+      {
+        "lat": 51.85,
+        "lng": -0.25,
+        "count": 57
+      },
+      {
+        "lat": 51.85,
+        "lng": -0.15,
+        "count": 63
+      },
+      {
+        "lat": 51.85,
+        "lng": -0.05,
+        "count": 29
+      },
+      {
+        "lat": 51.85,
+        "lng": 0.05,
+        "count": 13
+      },
+      {
+        "lat": 51.85,
+        "lng": 0.15,
+        "count": 88
+      },
+      {
+        "lat": 51.85,
+        "lng": 0.25,
+        "count": 41
+      },
+      {
+        "lat": 51.85,
+        "lng": 0.35,
+        "count": 18
+      },
+      {
+        "lat": 51.85,
+        "lng": 0.45,
+        "count": 12
+      },
+      {
+        "lat": 51.85,
+        "lng": 0.55,
+        "count": 68
+      },
+      {
+        "lat": 51.85,
+        "lng": 0.65,
+        "count": 37
+      },
+      {
+        "lat": 51.85,
+        "lng": 0.75,
+        "count": 39
+      },
+      {
+        "lat": 51.85,
+        "lng": 0.85,
+        "count": 115
+      },
+      {
+        "lat": 51.85,
+        "lng": 0.95,
+        "count": 100
+      },
+      {
+        "lat": 51.85,
+        "lng": 1.05,
+        "count": 36
+      },
+      {
+        "lat": 51.85,
+        "lng": 1.15,
+        "count": 57
+      },
+      {
+        "lat": 51.85,
+        "lng": 1.25,
+        "count": 15
+      },
+      {
+        "lat": 51.95,
+        "lng": -4.95,
+        "count": 10
+      },
+      {
+        "lat": 51.95,
+        "lng": -4.35,
+        "count": 8
+      },
+      {
+        "lat": 51.95,
+        "lng": -4.25,
+        "count": 6
+      },
+      {
+        "lat": 51.95,
+        "lng": -3.75,
+        "count": 5
+      },
+      {
+        "lat": 51.95,
+        "lng": -3.45,
+        "count": 8
+      },
+      {
+        "lat": 51.95,
+        "lng": -3.35,
+        "count": 21
+      },
+      {
+        "lat": 51.95,
+        "lng": -3.25,
+        "count": 10
+      },
+      {
+        "lat": 51.95,
+        "lng": -2.85,
+        "count": 8
+      },
+      {
+        "lat": 51.95,
+        "lng": -2.75,
+        "count": 6
+      },
+      {
+        "lat": 51.95,
+        "lng": -2.65,
+        "count": 9
+      },
+      {
+        "lat": 51.95,
+        "lng": -2.55,
+        "count": 21
+      },
+      {
+        "lat": 51.95,
+        "lng": -2.45,
+        "count": 18
+      },
+      {
+        "lat": 51.95,
+        "lng": -2.35,
+        "count": 12
+      },
+      {
+        "lat": 51.95,
+        "lng": -2.25,
+        "count": 8
+      },
+      {
+        "lat": 51.95,
+        "lng": -2.15,
+        "count": 63
+      },
+      {
+        "lat": 51.95,
+        "lng": -2.05,
+        "count": 87
+      },
+      {
+        "lat": 51.95,
+        "lng": -1.95,
+        "count": 8
+      },
+      {
+        "lat": 51.95,
+        "lng": -1.85,
+        "count": 7
+      },
+      {
+        "lat": 51.95,
+        "lng": -1.75,
+        "count": 19
+      },
+      {
+        "lat": 51.95,
+        "lng": -1.65,
+        "count": 8
+      },
+      {
+        "lat": 51.95,
+        "lng": -1.55,
+        "count": 11
+      },
+      {
+        "lat": 51.95,
+        "lng": -1.45,
+        "count": 9
+      },
+      {
+        "lat": 51.95,
+        "lng": -1.35,
+        "count": 5
+      },
+      {
+        "lat": 51.95,
+        "lng": -1.25,
+        "count": 10
+      },
+      {
+        "lat": 51.95,
+        "lng": -1.15,
+        "count": 21
+      },
+      {
+        "lat": 51.95,
+        "lng": -0.95,
+        "count": 14
+      },
+      {
+        "lat": 51.95,
+        "lng": -0.85,
+        "count": 13
+      },
+      {
+        "lat": 51.95,
+        "lng": -0.75,
+        "count": 34
+      },
+      {
+        "lat": 51.95,
+        "lng": -0.65,
+        "count": 77
+      },
+      {
+        "lat": 51.95,
+        "lng": -0.55,
+        "count": 83
+      },
+      {
+        "lat": 51.95,
+        "lng": -0.45,
+        "count": 131
+      },
+      {
+        "lat": 51.95,
+        "lng": -0.35,
+        "count": 20
+      },
+      {
+        "lat": 51.95,
+        "lng": -0.25,
+        "count": 135
+      },
+      {
+        "lat": 51.95,
+        "lng": -0.15,
+        "count": 42
+      },
+      {
+        "lat": 51.95,
+        "lng": -0.05,
+        "count": 14
+      },
+      {
+        "lat": 51.95,
+        "lng": 0.05,
+        "count": 7
+      },
+      {
+        "lat": 51.95,
+        "lng": 0.15,
+        "count": 8
+      },
+      {
+        "lat": 51.95,
+        "lng": 0.25,
+        "count": 22
+      },
+      {
+        "lat": 51.95,
+        "lng": 0.35,
+        "count": 9
+      },
+      {
+        "lat": 51.95,
+        "lng": 0.45,
+        "count": 5
+      },
+      {
+        "lat": 51.95,
+        "lng": 0.55,
+        "count": 14
+      },
+      {
+        "lat": 51.95,
+        "lng": 0.65,
+        "count": 23
+      },
+      {
+        "lat": 51.95,
+        "lng": 0.75,
+        "count": 11
+      },
+      {
+        "lat": 51.95,
+        "lng": 0.85,
+        "count": 26
+      },
+      {
+        "lat": 51.95,
+        "lng": 0.95,
+        "count": 37
+      },
+      {
+        "lat": 51.95,
+        "lng": 1.05,
+        "count": 28
+      },
+      {
+        "lat": 51.95,
+        "lng": 1.15,
+        "count": 9
+      },
+      {
+        "lat": 51.95,
+        "lng": 1.25,
+        "count": 18
+      },
+      {
+        "lat": 51.95,
+        "lng": 1.35,
+        "count": 27
+      },
+      {
+        "lat": 52.05,
+        "lng": -4.65,
+        "count": 14
+      },
+      {
+        "lat": 52.05,
+        "lng": -4.55,
+        "count": 8
+      },
+      {
+        "lat": 52.05,
+        "lng": -4.45,
+        "count": 6
+      },
+      {
+        "lat": 52.05,
+        "lng": -4.35,
+        "count": 8
+      },
+      {
+        "lat": 52.05,
+        "lng": -4.25,
+        "count": 7
+      },
+      {
+        "lat": 52.05,
+        "lng": -4.15,
+        "count": 5
+      },
+      {
+        "lat": 52.05,
+        "lng": -3.75,
+        "count": 5
+      },
+      {
+        "lat": 52.05,
+        "lng": -3.25,
+        "count": 12
+      },
+      {
+        "lat": 52.05,
+        "lng": -3.15,
+        "count": 5
+      },
+      {
+        "lat": 52.05,
+        "lng": -2.85,
+        "count": 9
+      },
+      {
+        "lat": 52.05,
+        "lng": -2.75,
+        "count": 84
+      },
+      {
+        "lat": 52.05,
+        "lng": -2.65,
+        "count": 24
+      },
+      {
+        "lat": 52.05,
+        "lng": -2.55,
+        "count": 6
+      },
+      {
+        "lat": 52.05,
+        "lng": -2.45,
+        "count": 8
+      },
+      {
+        "lat": 52.05,
+        "lng": -2.35,
+        "count": 9
+      },
+      {
+        "lat": 52.05,
+        "lng": -2.25,
+        "count": 6
+      },
+      {
+        "lat": 52.05,
+        "lng": -2.15,
+        "count": 22
+      },
+      {
+        "lat": 52.05,
+        "lng": -2.05,
+        "count": 8
+      },
+      {
+        "lat": 52.05,
+        "lng": -1.95,
+        "count": 35
+      },
+      {
+        "lat": 52.05,
+        "lng": -1.85,
+        "count": 29
+      },
+      {
+        "lat": 52.05,
+        "lng": -1.75,
+        "count": 10
+      },
+      {
+        "lat": 52.05,
+        "lng": -1.65,
+        "count": 17
+      },
+      {
+        "lat": 52.05,
+        "lng": -1.55,
+        "count": 8
+      },
+      {
+        "lat": 52.05,
+        "lng": -1.45,
+        "count": 9
+      },
+      {
+        "lat": 52.05,
+        "lng": -1.35,
+        "count": 60
+      },
+      {
+        "lat": 52.05,
+        "lng": -1.25,
+        "count": 19
+      },
+      {
+        "lat": 52.05,
+        "lng": -1.15,
+        "count": 22
+      },
+      {
+        "lat": 52.05,
+        "lng": -1.05,
+        "count": 11
+      },
+      {
+        "lat": 52.05,
+        "lng": -0.95,
+        "count": 13
+      },
+      {
+        "lat": 52.05,
+        "lng": -0.85,
+        "count": 44
+      },
+      {
+        "lat": 52.05,
+        "lng": -0.75,
+        "count": 165
+      },
+      {
+        "lat": 52.05,
+        "lng": -0.65,
+        "count": 85
+      },
+      {
+        "lat": 52.05,
+        "lng": -0.55,
+        "count": 45
+      },
+      {
+        "lat": 52.05,
+        "lng": -0.45,
+        "count": 43
+      },
+      {
+        "lat": 52.05,
+        "lng": -0.35,
+        "count": 23
+      },
+      {
+        "lat": 52.05,
+        "lng": -0.25,
+        "count": 63
+      },
+      {
+        "lat": 52.05,
+        "lng": -0.15,
+        "count": 12
+      },
+      {
+        "lat": 52.05,
+        "lng": -0.05,
+        "count": 32
+      },
+      {
+        "lat": 52.05,
+        "lng": 0.05,
+        "count": 21
+      },
+      {
+        "lat": 52.05,
+        "lng": 0.15,
+        "count": 21
+      },
+      {
+        "lat": 52.05,
+        "lng": 0.25,
+        "count": 23
+      },
+      {
+        "lat": 52.05,
+        "lng": 0.35,
+        "count": 13
+      },
+      {
+        "lat": 52.05,
+        "lng": 0.45,
+        "count": 24
+      },
+      {
+        "lat": 52.05,
+        "lng": 0.55,
+        "count": 8
+      },
+      {
+        "lat": 52.05,
+        "lng": 0.65,
+        "count": 10
+      },
+      {
+        "lat": 52.05,
+        "lng": 0.75,
+        "count": 40
+      },
+      {
+        "lat": 52.05,
+        "lng": 0.85,
+        "count": 5
+      },
+      {
+        "lat": 52.05,
+        "lng": 0.95,
+        "count": 14
+      },
+      {
+        "lat": 52.05,
+        "lng": 1.05,
+        "count": 21
+      },
+      {
+        "lat": 52.05,
+        "lng": 1.15,
+        "count": 201
+      },
+      {
+        "lat": 52.05,
+        "lng": 1.25,
+        "count": 47
+      },
+      {
+        "lat": 52.05,
+        "lng": 1.35,
+        "count": 9
+      },
+      {
+        "lat": 52.15,
+        "lng": -4.65,
+        "count": 5
+      },
+      {
+        "lat": 52.15,
+        "lng": -4.35,
+        "count": 7
+      },
+      {
+        "lat": 52.15,
+        "lng": -4.25,
+        "count": 6
+      },
+      {
+        "lat": 52.15,
+        "lng": -4.15,
+        "count": 7
+      },
+      {
+        "lat": 52.15,
+        "lng": -3.45,
+        "count": 9
+      },
+      {
+        "lat": 52.15,
+        "lng": -3.35,
+        "count": 5
+      },
+      {
+        "lat": 52.15,
+        "lng": -3.05,
+        "count": 5
+      },
+      {
+        "lat": 52.15,
+        "lng": -2.95,
+        "count": 9
+      },
+      {
+        "lat": 52.15,
+        "lng": -2.75,
+        "count": 15
+      },
+      {
+        "lat": 52.15,
+        "lng": -2.65,
+        "count": 5
+      },
+      {
+        "lat": 52.15,
+        "lng": -2.55,
+        "count": 12
+      },
+      {
+        "lat": 52.15,
+        "lng": -2.45,
+        "count": 8
+      },
+      {
+        "lat": 52.15,
+        "lng": -2.35,
+        "count": 38
+      },
+      {
+        "lat": 52.15,
+        "lng": -2.25,
+        "count": 57
+      },
+      {
+        "lat": 52.15,
+        "lng": -2.15,
+        "count": 33
+      },
+      {
+        "lat": 52.15,
+        "lng": -2.05,
+        "count": 12
+      },
+      {
+        "lat": 52.15,
+        "lng": -1.95,
+        "count": 9
+      },
+      {
+        "lat": 52.15,
+        "lng": -1.85,
+        "count": 9
+      },
+      {
+        "lat": 52.15,
+        "lng": -1.75,
+        "count": 27
+      },
+      {
+        "lat": 52.15,
+        "lng": -1.65,
+        "count": 20
+      },
+      {
+        "lat": 52.15,
+        "lng": -1.55,
+        "count": 22
+      },
+      {
+        "lat": 52.15,
+        "lng": -1.45,
+        "count": 9
+      },
+      {
+        "lat": 52.15,
+        "lng": -1.35,
+        "count": 9
+      },
+      {
+        "lat": 52.15,
+        "lng": -1.25,
+        "count": 14
+      },
+      {
+        "lat": 52.15,
+        "lng": -1.05,
+        "count": 16
+      },
+      {
+        "lat": 52.15,
+        "lng": -0.95,
+        "count": 28
+      },
+      {
+        "lat": 52.15,
+        "lng": -0.85,
+        "count": 23
+      },
+      {
+        "lat": 52.15,
+        "lng": -0.75,
+        "count": 6
+      },
+      {
+        "lat": 52.15,
+        "lng": -0.65,
+        "count": 10
+      },
+      {
+        "lat": 52.15,
+        "lng": -0.55,
+        "count": 33
+      },
+      {
+        "lat": 52.15,
+        "lng": -0.45,
+        "count": 228
+      },
+      {
+        "lat": 52.15,
+        "lng": -0.35,
+        "count": 28
+      },
+      {
+        "lat": 52.15,
+        "lng": -0.25,
+        "count": 26
+      },
+      {
+        "lat": 52.15,
+        "lng": -0.15,
+        "count": 14
+      },
+      {
+        "lat": 52.15,
+        "lng": -0.05,
+        "count": 15
+      },
+      {
+        "lat": 52.15,
+        "lng": 0.05,
+        "count": 16
+      },
+      {
+        "lat": 52.15,
+        "lng": 0.15,
+        "count": 128
+      },
+      {
+        "lat": 52.15,
+        "lng": 0.25,
+        "count": 22
+      },
+      {
+        "lat": 52.15,
+        "lng": 0.35,
+        "count": 10
+      },
+      {
+        "lat": 52.15,
+        "lng": 0.55,
+        "count": 8
+      },
+      {
+        "lat": 52.15,
+        "lng": 0.75,
+        "count": 6
+      },
+      {
+        "lat": 52.15,
+        "lng": 0.95,
+        "count": 16
+      },
+      {
+        "lat": 52.15,
+        "lng": 1.05,
+        "count": 24
+      },
+      {
+        "lat": 52.15,
+        "lng": 1.15,
+        "count": 14
+      },
+      {
+        "lat": 52.15,
+        "lng": 1.25,
+        "count": 8
+      },
+      {
+        "lat": 52.15,
+        "lng": 1.35,
+        "count": 10
+      },
+      {
+        "lat": 52.15,
+        "lng": 1.45,
+        "count": 7
+      },
+      {
+        "lat": 52.25,
+        "lng": -4.25,
+        "count": 12
+      },
+      {
+        "lat": 52.25,
+        "lng": -4.15,
+        "count": 6
+      },
+      {
+        "lat": 52.25,
+        "lng": -3.45,
+        "count": 10
+      },
+      {
+        "lat": 52.25,
+        "lng": -3.35,
+        "count": 7
+      },
+      {
+        "lat": 52.25,
+        "lng": -3.05,
+        "count": 8
+      },
+      {
+        "lat": 52.25,
+        "lng": -2.85,
+        "count": 10
+      },
+      {
+        "lat": 52.25,
+        "lng": -2.75,
+        "count": 21
+      },
+      {
+        "lat": 52.25,
+        "lng": -2.35,
+        "count": 7
+      },
+      {
+        "lat": 52.25,
+        "lng": -2.25,
+        "count": 26
+      },
+      {
+        "lat": 52.25,
+        "lng": -2.15,
+        "count": 43
+      },
+      {
+        "lat": 52.25,
+        "lng": -2.05,
+        "count": 6
+      },
+      {
+        "lat": 52.25,
+        "lng": -1.95,
+        "count": 35
+      },
+      {
+        "lat": 52.25,
+        "lng": -1.85,
+        "count": 17
+      },
+      {
+        "lat": 52.25,
+        "lng": -1.75,
+        "count": 32
+      },
+      {
+        "lat": 52.25,
+        "lng": -1.65,
+        "count": 33
+      },
+      {
+        "lat": 52.25,
+        "lng": -1.55,
+        "count": 96
+      },
+      {
+        "lat": 52.25,
+        "lng": -1.45,
+        "count": 23
+      },
+      {
+        "lat": 52.25,
+        "lng": -1.35,
+        "count": 17
+      },
+      {
+        "lat": 52.25,
+        "lng": -1.25,
+        "count": 6
+      },
+      {
+        "lat": 52.25,
+        "lng": -1.15,
+        "count": 46
+      },
+      {
+        "lat": 52.25,
+        "lng": -1.05,
+        "count": 28
+      },
+      {
+        "lat": 52.25,
+        "lng": -0.95,
+        "count": 165
+      },
+      {
+        "lat": 52.25,
+        "lng": -0.85,
+        "count": 274
+      },
+      {
+        "lat": 52.25,
+        "lng": -0.75,
+        "count": 42
+      },
+      {
+        "lat": 52.25,
+        "lng": -0.65,
+        "count": 40
+      },
+      {
+        "lat": 52.25,
+        "lng": -0.55,
+        "count": 30
+      },
+      {
+        "lat": 52.25,
+        "lng": -0.45,
+        "count": 5
+      },
+      {
+        "lat": 52.25,
+        "lng": -0.35,
+        "count": 14
+      },
+      {
+        "lat": 52.25,
+        "lng": -0.25,
+        "count": 53
+      },
+      {
+        "lat": 52.25,
+        "lng": -0.15,
+        "count": 24
+      },
+      {
+        "lat": 52.25,
+        "lng": -0.05,
+        "count": 23
+      },
+      {
+        "lat": 52.25,
+        "lng": 0.05,
+        "count": 43
+      },
+      {
+        "lat": 52.25,
+        "lng": 0.15,
+        "count": 194
+      },
+      {
+        "lat": 52.25,
+        "lng": 0.25,
+        "count": 10
+      },
+      {
+        "lat": 52.25,
+        "lng": 0.35,
+        "count": 27
+      },
+      {
+        "lat": 52.25,
+        "lng": 0.45,
+        "count": 33
+      },
+      {
+        "lat": 52.25,
+        "lng": 0.65,
+        "count": 18
+      },
+      {
+        "lat": 52.25,
+        "lng": 0.75,
+        "count": 42
+      },
+      {
+        "lat": 52.25,
+        "lng": 0.85,
+        "count": 28
+      },
+      {
+        "lat": 52.25,
+        "lng": 0.95,
+        "count": 11
+      },
+      {
+        "lat": 52.25,
+        "lng": 1.05,
+        "count": 8
+      },
+      {
+        "lat": 52.25,
+        "lng": 1.15,
+        "count": 10
+      },
+      {
+        "lat": 52.25,
+        "lng": 1.35,
+        "count": 7
+      },
+      {
+        "lat": 52.25,
+        "lng": 1.45,
+        "count": 8
+      },
+      {
+        "lat": 52.25,
+        "lng": 1.55,
+        "count": 18
+      },
+      {
+        "lat": 52.35,
+        "lng": -4.05,
+        "count": 12
+      },
+      {
+        "lat": 52.35,
+        "lng": -3.95,
+        "count": 5
+      },
+      {
+        "lat": 52.35,
+        "lng": -3.55,
+        "count": 8
+      },
+      {
+        "lat": 52.35,
+        "lng": -2.75,
+        "count": 7
+      },
+      {
+        "lat": 52.35,
+        "lng": -2.65,
+        "count": 5
+      },
+      {
+        "lat": 52.35,
+        "lng": -2.45,
+        "count": 7
+      },
+      {
+        "lat": 52.35,
+        "lng": -2.35,
+        "count": 16
+      },
+      {
+        "lat": 52.35,
+        "lng": -2.25,
+        "count": 78
+      },
+      {
+        "lat": 52.35,
+        "lng": -2.15,
+        "count": 7
+      },
+      {
+        "lat": 52.35,
+        "lng": -2.05,
+        "count": 87
+      },
+      {
+        "lat": 52.35,
+        "lng": -1.95,
+        "count": 78
+      },
+      {
+        "lat": 52.35,
+        "lng": -1.85,
+        "count": 38
+      },
+      {
+        "lat": 52.35,
+        "lng": -1.75,
+        "count": 33
+      },
+      {
+        "lat": 52.35,
+        "lng": -1.65,
+        "count": 18
+      },
+      {
+        "lat": 52.35,
+        "lng": -1.55,
+        "count": 92
+      },
+      {
+        "lat": 52.35,
+        "lng": -1.45,
+        "count": 57
+      },
+      {
+        "lat": 52.35,
+        "lng": -1.35,
+        "count": 23
+      },
+      {
+        "lat": 52.35,
+        "lng": -1.25,
+        "count": 89
+      },
+      {
+        "lat": 52.35,
+        "lng": -1.15,
+        "count": 37
+      },
+      {
+        "lat": 52.35,
+        "lng": -1.05,
+        "count": 24
+      },
+      {
+        "lat": 52.35,
+        "lng": -0.85,
+        "count": 12
+      },
+      {
+        "lat": 52.35,
+        "lng": -0.75,
+        "count": 83
+      },
+      {
+        "lat": 52.35,
+        "lng": -0.65,
+        "count": 60
+      },
+      {
+        "lat": 52.35,
+        "lng": -0.55,
+        "count": 35
+      },
+      {
+        "lat": 52.35,
+        "lng": -0.45,
+        "count": 11
+      },
+      {
+        "lat": 52.35,
+        "lng": -0.35,
+        "count": 11
+      },
+      {
+        "lat": 52.35,
+        "lng": -0.25,
+        "count": 33
+      },
+      {
+        "lat": 52.35,
+        "lng": -0.15,
+        "count": 67
+      },
+      {
+        "lat": 52.35,
+        "lng": -0.05,
+        "count": 47
+      },
+      {
+        "lat": 52.35,
+        "lng": 0.05,
+        "count": 12
+      },
+      {
+        "lat": 52.35,
+        "lng": 0.15,
+        "count": 25
+      },
+      {
+        "lat": 52.35,
+        "lng": 0.25,
+        "count": 23
+      },
+      {
+        "lat": 52.35,
+        "lng": 0.35,
+        "count": 22
+      },
+      {
+        "lat": 52.35,
+        "lng": 0.45,
+        "count": 13
+      },
+      {
+        "lat": 52.35,
+        "lng": 0.55,
+        "count": 30
+      },
+      {
+        "lat": 52.35,
+        "lng": 0.65,
+        "count": 9
+      },
+      {
+        "lat": 52.35,
+        "lng": 0.75,
+        "count": 5
+      },
+      {
+        "lat": 52.35,
+        "lng": 0.95,
+        "count": 6
+      },
+      {
+        "lat": 52.35,
+        "lng": 1.05,
+        "count": 7
+      },
+      {
+        "lat": 52.35,
+        "lng": 1.15,
+        "count": 23
+      },
+      {
+        "lat": 52.35,
+        "lng": 1.25,
+        "count": 7
+      },
+      {
+        "lat": 52.35,
+        "lng": 1.55,
+        "count": 12
+      },
+      {
+        "lat": 52.35,
+        "lng": 1.65,
+        "count": 9
+      },
+      {
+        "lat": 52.45,
+        "lng": -4.05,
+        "count": 34
+      },
+      {
+        "lat": 52.45,
+        "lng": -3.95,
+        "count": 12
+      },
+      {
+        "lat": 52.45,
+        "lng": -3.85,
+        "count": 9
+      },
+      {
+        "lat": 52.45,
+        "lng": -3.55,
+        "count": 10
+      },
+      {
+        "lat": 52.45,
+        "lng": -3.45,
+        "count": 5
+      },
+      {
+        "lat": 52.45,
+        "lng": -3.35,
+        "count": 14
+      },
+      {
+        "lat": 52.45,
+        "lng": -2.85,
+        "count": 12
+      },
+      {
+        "lat": 52.45,
+        "lng": -2.45,
+        "count": 6
+      },
+      {
+        "lat": 52.45,
+        "lng": -2.35,
+        "count": 5
+      },
+      {
+        "lat": 52.45,
+        "lng": -2.25,
+        "count": 20
+      },
+      {
+        "lat": 52.45,
+        "lng": -2.15,
+        "count": 161
+      },
+      {
+        "lat": 52.45,
+        "lng": -2.05,
+        "count": 246
+      },
+      {
+        "lat": 52.45,
+        "lng": -1.95,
+        "count": 663
+      },
+      {
+        "lat": 52.45,
+        "lng": -1.85,
+        "count": 893
+      },
+      {
+        "lat": 52.45,
+        "lng": -1.75,
+        "count": 231
+      },
+      {
+        "lat": 52.45,
+        "lng": -1.65,
+        "count": 24
+      },
+      {
+        "lat": 52.45,
+        "lng": -1.55,
+        "count": 197
+      },
+      {
+        "lat": 52.45,
+        "lng": -1.45,
+        "count": 227
+      },
+      {
+        "lat": 52.45,
+        "lng": -1.35,
+        "count": 22
+      },
+      {
+        "lat": 52.45,
+        "lng": -1.25,
+        "count": 30
+      },
+      {
+        "lat": 52.45,
+        "lng": -1.15,
+        "count": 16
+      },
+      {
+        "lat": 52.45,
+        "lng": -0.95,
+        "count": 17
+      },
+      {
+        "lat": 52.45,
+        "lng": -0.85,
+        "count": 25
+      },
+      {
+        "lat": 52.45,
+        "lng": -0.75,
+        "count": 92
+      },
+      {
+        "lat": 52.45,
+        "lng": -0.65,
+        "count": 50
+      },
+      {
+        "lat": 52.45,
+        "lng": -0.45,
+        "count": 10
+      },
+      {
+        "lat": 52.45,
+        "lng": -0.25,
+        "count": 16
+      },
+      {
+        "lat": 52.45,
+        "lng": -0.15,
+        "count": 18
+      },
+      {
+        "lat": 52.45,
+        "lng": -0.05,
+        "count": 17
+      },
+      {
+        "lat": 52.45,
+        "lng": 0.05,
+        "count": 12
+      },
+      {
+        "lat": 52.45,
+        "lng": 0.15,
+        "count": 6
+      },
+      {
+        "lat": 52.45,
+        "lng": 0.25,
+        "count": 22
+      },
+      {
+        "lat": 52.45,
+        "lng": 0.35,
+        "count": 9
+      },
+      {
+        "lat": 52.45,
+        "lng": 0.55,
+        "count": 7
+      },
+      {
+        "lat": 52.45,
+        "lng": 0.65,
+        "count": 15
+      },
+      {
+        "lat": 52.45,
+        "lng": 0.75,
+        "count": 35
+      },
+      {
+        "lat": 52.45,
+        "lng": 0.85,
+        "count": 5
+      },
+      {
+        "lat": 52.45,
+        "lng": 0.95,
+        "count": 10
+      },
+      {
+        "lat": 52.45,
+        "lng": 1.05,
+        "count": 11
+      },
+      {
+        "lat": 52.45,
+        "lng": 1.25,
+        "count": 13
+      },
+      {
+        "lat": 52.45,
+        "lng": 1.35,
+        "count": 9
+      },
+      {
+        "lat": 52.45,
+        "lng": 1.45,
+        "count": 13
+      },
+      {
+        "lat": 52.45,
+        "lng": 1.55,
+        "count": 27
+      },
+      {
+        "lat": 52.45,
+        "lng": 1.65,
+        "count": 15
+      },
+      {
+        "lat": 52.45,
+        "lng": 1.75,
+        "count": 71
+      },
+      {
+        "lat": 52.55,
+        "lng": -4.05,
+        "count": 5
+      },
+      {
+        "lat": 52.55,
+        "lng": -3.95,
+        "count": 7
+      },
+      {
+        "lat": 52.55,
+        "lng": -3.45,
+        "count": 7
+      },
+      {
+        "lat": 52.55,
+        "lng": -3.35,
+        "count": 18
+      },
+      {
+        "lat": 52.55,
+        "lng": -3.25,
+        "count": 11
+      },
+      {
+        "lat": 52.55,
+        "lng": -3.15,
+        "count": 12
+      },
+      {
+        "lat": 52.55,
+        "lng": -3.05,
+        "count": 8
+      },
+      {
+        "lat": 52.55,
+        "lng": -2.55,
+        "count": 7
+      },
+      {
+        "lat": 52.55,
+        "lng": -2.45,
+        "count": 9
+      },
+      {
+        "lat": 52.55,
+        "lng": -2.35,
+        "count": 12
+      },
+      {
+        "lat": 52.55,
+        "lng": -2.25,
+        "count": 7
+      },
+      {
+        "lat": 52.55,
+        "lng": -2.15,
+        "count": 333
+      },
+      {
+        "lat": 52.55,
+        "lng": -2.05,
+        "count": 510
+      },
+      {
+        "lat": 52.55,
+        "lng": -1.95,
+        "count": 448
+      },
+      {
+        "lat": 52.55,
+        "lng": -1.85,
+        "count": 450
+      },
+      {
+        "lat": 52.55,
+        "lng": -1.75,
+        "count": 112
+      },
+      {
+        "lat": 52.55,
+        "lng": -1.65,
+        "count": 44
+      },
+      {
+        "lat": 52.55,
+        "lng": -1.55,
+        "count": 77
+      },
+      {
+        "lat": 52.55,
+        "lng": -1.45,
+        "count": 121
+      },
+      {
+        "lat": 52.55,
+        "lng": -1.35,
+        "count": 70
+      },
+      {
+        "lat": 52.55,
+        "lng": -1.25,
+        "count": 25
+      },
+      {
+        "lat": 52.55,
+        "lng": -1.15,
+        "count": 98
+      },
+      {
+        "lat": 52.55,
+        "lng": -1.05,
+        "count": 24
+      },
+      {
+        "lat": 52.55,
+        "lng": -0.95,
+        "count": 9
+      },
+      {
+        "lat": 52.55,
+        "lng": -0.75,
+        "count": 10
+      },
+      {
+        "lat": 52.55,
+        "lng": -0.65,
+        "count": 9
+      },
+      {
+        "lat": 52.55,
+        "lng": -0.55,
+        "count": 10
+      },
+      {
+        "lat": 52.55,
+        "lng": -0.45,
+        "count": 16
+      },
+      {
+        "lat": 52.55,
+        "lng": -0.35,
+        "count": 40
+      },
+      {
+        "lat": 52.55,
+        "lng": -0.25,
+        "count": 254
+      },
+      {
+        "lat": 52.55,
+        "lng": -0.15,
+        "count": 16
+      },
+      {
+        "lat": 52.55,
+        "lng": 0.05,
+        "count": 30
+      },
+      {
+        "lat": 52.55,
+        "lng": 0.35,
+        "count": 12
+      },
+      {
+        "lat": 52.55,
+        "lng": 0.55,
+        "count": 5
+      },
+      {
+        "lat": 52.55,
+        "lng": 0.65,
+        "count": 8
+      },
+      {
+        "lat": 52.55,
+        "lng": 0.85,
+        "count": 15
+      },
+      {
+        "lat": 52.55,
+        "lng": 0.95,
+        "count": 13
+      },
+      {
+        "lat": 52.55,
+        "lng": 1.05,
+        "count": 20
+      },
+      {
+        "lat": 52.55,
+        "lng": 1.15,
+        "count": 24
+      },
+      {
+        "lat": 52.55,
+        "lng": 1.25,
+        "count": 23
+      },
+      {
+        "lat": 52.55,
+        "lng": 1.35,
+        "count": 12
+      },
+      {
+        "lat": 52.55,
+        "lng": 1.45,
+        "count": 13
+      },
+      {
+        "lat": 52.55,
+        "lng": 1.55,
+        "count": 7
+      },
+      {
+        "lat": 52.55,
+        "lng": 1.65,
+        "count": 10
+      },
+      {
+        "lat": 52.55,
+        "lng": 1.75,
+        "count": 57
+      },
+      {
+        "lat": 52.65,
+        "lng": -3.35,
+        "count": 9
+      },
+      {
+        "lat": 52.65,
+        "lng": -3.15,
+        "count": 29
+      },
+      {
+        "lat": 52.65,
+        "lng": -2.85,
+        "count": 5
+      },
+      {
+        "lat": 52.65,
+        "lng": -2.75,
+        "count": 25
+      },
+      {
+        "lat": 52.65,
+        "lng": -2.65,
+        "count": 10
+      },
+      {
+        "lat": 52.65,
+        "lng": -2.55,
+        "count": 24
+      },
+      {
+        "lat": 52.65,
+        "lng": -2.45,
+        "count": 72
+      },
+      {
+        "lat": 52.65,
+        "lng": -2.35,
+        "count": 19
+      },
+      {
+        "lat": 52.65,
+        "lng": -2.25,
+        "count": 13
+      },
+      {
+        "lat": 52.65,
+        "lng": -2.15,
+        "count": 114
+      },
+      {
+        "lat": 52.65,
+        "lng": -2.05,
+        "count": 163
+      },
+      {
+        "lat": 52.65,
+        "lng": -1.95,
+        "count": 121
+      },
+      {
+        "lat": 52.65,
+        "lng": -1.85,
+        "count": 43
+      },
+      {
+        "lat": 52.65,
+        "lng": -1.75,
+        "count": 18
+      },
+      {
+        "lat": 52.65,
+        "lng": -1.65,
+        "count": 54
+      },
+      {
+        "lat": 52.65,
+        "lng": -1.55,
+        "count": 13
+      },
+      {
+        "lat": 52.65,
+        "lng": -1.45,
+        "count": 7
+      },
+      {
+        "lat": 52.65,
+        "lng": -1.35,
+        "count": 11
+      },
+      {
+        "lat": 52.65,
+        "lng": -1.25,
+        "count": 38
+      },
+      {
+        "lat": 52.65,
+        "lng": -1.15,
+        "count": 426
+      },
+      {
+        "lat": 52.65,
+        "lng": -1.05,
+        "count": 122
+      },
+      {
+        "lat": 52.65,
+        "lng": -0.95,
+        "count": 9
+      },
+      {
+        "lat": 52.65,
+        "lng": -0.85,
+        "count": 5
+      },
+      {
+        "lat": 52.65,
+        "lng": -0.75,
+        "count": 8
+      },
+      {
+        "lat": 52.65,
+        "lng": -0.45,
+        "count": 38
+      },
+      {
+        "lat": 52.65,
+        "lng": -0.35,
+        "count": 26
+      },
+      {
+        "lat": 52.65,
+        "lng": -0.25,
+        "count": 49
+      },
+      {
+        "lat": 52.65,
+        "lng": -0.15,
+        "count": 28
+      },
+      {
+        "lat": 52.65,
+        "lng": -0.05,
+        "count": 17
+      },
+      {
+        "lat": 52.65,
+        "lng": 0.05,
+        "count": 17
+      },
+      {
+        "lat": 52.65,
+        "lng": 0.15,
+        "count": 63
+      },
+      {
+        "lat": 52.65,
+        "lng": 0.25,
+        "count": 13
+      },
+      {
+        "lat": 52.65,
+        "lng": 0.35,
+        "count": 10
+      },
+      {
+        "lat": 52.65,
+        "lng": 0.45,
+        "count": 29
+      },
+      {
+        "lat": 52.65,
+        "lng": 0.55,
+        "count": 9
+      },
+      {
+        "lat": 52.65,
+        "lng": 0.65,
+        "count": 14
+      },
+      {
+        "lat": 52.65,
+        "lng": 0.75,
+        "count": 13
+      },
+      {
+        "lat": 52.65,
+        "lng": 0.85,
+        "count": 7
+      },
+      {
+        "lat": 52.65,
+        "lng": 0.95,
+        "count": 18
+      },
+      {
+        "lat": 52.65,
+        "lng": 1.05,
+        "count": 19
+      },
+      {
+        "lat": 52.65,
+        "lng": 1.15,
+        "count": 32
+      },
+      {
+        "lat": 52.65,
+        "lng": 1.25,
+        "count": 232
+      },
+      {
+        "lat": 52.65,
+        "lng": 1.35,
+        "count": 85
+      },
+      {
+        "lat": 52.65,
+        "lng": 1.45,
+        "count": 18
+      },
+      {
+        "lat": 52.65,
+        "lng": 1.55,
+        "count": 14
+      },
+      {
+        "lat": 52.65,
+        "lng": 1.65,
+        "count": 22
+      },
+      {
+        "lat": 52.65,
+        "lng": 1.75,
+        "count": 61
+      },
+      {
+        "lat": 52.75,
+        "lng": -3.85,
+        "count": 7
+      },
+      {
+        "lat": 52.75,
+        "lng": -3.15,
+        "count": 7
+      },
+      {
+        "lat": 52.75,
+        "lng": -3.05,
+        "count": 9
+      },
+      {
+        "lat": 52.75,
+        "lng": -2.85,
+        "count": 14
+      },
+      {
+        "lat": 52.75,
+        "lng": -2.75,
+        "count": 44
+      },
+      {
+        "lat": 52.75,
+        "lng": -2.65,
+        "count": 10
+      },
+      {
+        "lat": 52.75,
+        "lng": -2.55,
+        "count": 10
+      },
+      {
+        "lat": 52.75,
+        "lng": -2.45,
+        "count": 30
+      },
+      {
+        "lat": 52.75,
+        "lng": -2.35,
+        "count": 14
+      },
+      {
+        "lat": 52.75,
+        "lng": -2.15,
+        "count": 16
+      },
+      {
+        "lat": 52.75,
+        "lng": -2.05,
+        "count": 20
+      },
+      {
+        "lat": 52.75,
+        "lng": -1.95,
+        "count": 24
+      },
+      {
+        "lat": 52.75,
+        "lng": -1.85,
+        "count": 5
+      },
+      {
+        "lat": 52.75,
+        "lng": -1.75,
+        "count": 21
+      },
+      {
+        "lat": 52.75,
+        "lng": -1.65,
+        "count": 29
+      },
+      {
+        "lat": 52.75,
+        "lng": -1.55,
+        "count": 63
+      },
+      {
+        "lat": 52.75,
+        "lng": -1.45,
+        "count": 31
+      },
+      {
+        "lat": 52.75,
+        "lng": -1.35,
+        "count": 36
+      },
+      {
+        "lat": 52.75,
+        "lng": -1.25,
+        "count": 66
+      },
+      {
+        "lat": 52.75,
+        "lng": -1.15,
+        "count": 41
+      },
+      {
+        "lat": 52.75,
+        "lng": -1.05,
+        "count": 19
+      },
+      {
+        "lat": 52.75,
+        "lng": -0.95,
+        "count": 10
+      },
+      {
+        "lat": 52.75,
+        "lng": -0.85,
+        "count": 15
+      },
+      {
+        "lat": 52.75,
+        "lng": -0.75,
+        "count": 5
+      },
+      {
+        "lat": 52.75,
+        "lng": -0.65,
+        "count": 9
+      },
+      {
+        "lat": 52.75,
+        "lng": -0.55,
+        "count": 5
+      },
+      {
+        "lat": 52.75,
+        "lng": -0.45,
+        "count": 14
+      },
+      {
+        "lat": 52.75,
+        "lng": -0.35,
+        "count": 27
+      },
+      {
+        "lat": 52.75,
+        "lng": -0.25,
+        "count": 10
+      },
+      {
+        "lat": 52.75,
+        "lng": -0.15,
+        "count": 62
+      },
+      {
+        "lat": 52.75,
+        "lng": -0.05,
+        "count": 14
+      },
+      {
+        "lat": 52.75,
+        "lng": 0.05,
+        "count": 9
+      },
+      {
+        "lat": 52.75,
+        "lng": 0.15,
+        "count": 17
+      },
+      {
+        "lat": 52.75,
+        "lng": 0.25,
+        "count": 15
+      },
+      {
+        "lat": 52.75,
+        "lng": 0.35,
+        "count": 25
+      },
+      {
+        "lat": 52.75,
+        "lng": 0.45,
+        "count": 82
+      },
+      {
+        "lat": 52.75,
+        "lng": 0.55,
+        "count": 10
+      },
+      {
+        "lat": 52.75,
+        "lng": 0.75,
+        "count": 5
+      },
+      {
+        "lat": 52.75,
+        "lng": 0.85,
+        "count": 5
+      },
+      {
+        "lat": 52.75,
+        "lng": 0.95,
+        "count": 11
+      },
+      {
+        "lat": 52.75,
+        "lng": 1.05,
+        "count": 6
+      },
+      {
+        "lat": 52.75,
+        "lng": 1.15,
+        "count": 12
+      },
+      {
+        "lat": 52.75,
+        "lng": 1.25,
+        "count": 14
+      },
+      {
+        "lat": 52.75,
+        "lng": 1.35,
+        "count": 11
+      },
+      {
+        "lat": 52.75,
+        "lng": 1.45,
+        "count": 17
+      },
+      {
+        "lat": 52.75,
+        "lng": 1.55,
+        "count": 13
+      },
+      {
+        "lat": 52.85,
+        "lng": -3.15,
+        "count": 6
+      },
+      {
+        "lat": 52.85,
+        "lng": -3.05,
+        "count": 27
+      },
+      {
+        "lat": 52.85,
+        "lng": -2.95,
+        "count": 6
+      },
+      {
+        "lat": 52.85,
+        "lng": -2.75,
+        "count": 11
+      },
+      {
+        "lat": 52.85,
+        "lng": -2.65,
+        "count": 8
+      },
+      {
+        "lat": 52.85,
+        "lng": -2.55,
+        "count": 8
+      },
+      {
+        "lat": 52.85,
+        "lng": -2.45,
+        "count": 11
+      },
+      {
+        "lat": 52.85,
+        "lng": -2.25,
+        "count": 5
+      },
+      {
+        "lat": 52.85,
+        "lng": -2.15,
+        "count": 44
+      },
+      {
+        "lat": 52.85,
+        "lng": -2.05,
+        "count": 8
+      },
+      {
+        "lat": 52.85,
+        "lng": -1.75,
+        "count": 18
+      },
+      {
+        "lat": 52.85,
+        "lng": -1.65,
+        "count": 69
+      },
+      {
+        "lat": 52.85,
+        "lng": -1.55,
+        "count": 56
+      },
+      {
+        "lat": 52.85,
+        "lng": -1.45,
+        "count": 121
+      },
+      {
+        "lat": 52.85,
+        "lng": -1.35,
+        "count": 26
+      },
+      {
+        "lat": 52.85,
+        "lng": -1.25,
+        "count": 52
+      },
+      {
+        "lat": 52.85,
+        "lng": -1.15,
+        "count": 28
+      },
+      {
+        "lat": 52.85,
+        "lng": -1.05,
+        "count": 13
+      },
+      {
+        "lat": 52.85,
+        "lng": -0.95,
+        "count": 7
+      },
+      {
+        "lat": 52.85,
+        "lng": -0.75,
+        "count": 9
+      },
+      {
+        "lat": 52.85,
+        "lng": -0.65,
+        "count": 34
+      },
+      {
+        "lat": 52.85,
+        "lng": -0.55,
+        "count": 6
+      },
+      {
+        "lat": 52.85,
+        "lng": -0.35,
+        "count": 13
+      },
+      {
+        "lat": 52.85,
+        "lng": -0.25,
+        "count": 5
+      },
+      {
+        "lat": 52.85,
+        "lng": -0.15,
+        "count": 25
+      },
+      {
+        "lat": 52.85,
+        "lng": -0.05,
+        "count": 32
+      },
+      {
+        "lat": 52.85,
+        "lng": 0.05,
+        "count": 24
+      },
+      {
+        "lat": 52.85,
+        "lng": 0.55,
+        "count": 5
+      },
+      {
+        "lat": 52.85,
+        "lng": 0.65,
+        "count": 10
+      },
+      {
+        "lat": 52.85,
+        "lng": 0.75,
+        "count": 5
+      },
+      {
+        "lat": 52.85,
+        "lng": 0.85,
+        "count": 23
+      },
+      {
+        "lat": 52.85,
+        "lng": 0.95,
+        "count": 7
+      },
+      {
+        "lat": 52.85,
+        "lng": 1.05,
+        "count": 7
+      },
+      {
+        "lat": 52.85,
+        "lng": 1.15,
+        "count": 5
+      },
+      {
+        "lat": 52.85,
+        "lng": 1.35,
+        "count": 18
+      },
+      {
+        "lat": 52.85,
+        "lng": 1.45,
+        "count": 8
+      },
+      {
+        "lat": 52.95,
+        "lng": -4.25,
+        "count": 5
+      },
+      {
+        "lat": 52.95,
+        "lng": -4.15,
+        "count": 9
+      },
+      {
+        "lat": 52.95,
+        "lng": -3.55,
+        "count": 5
+      },
+      {
+        "lat": 52.95,
+        "lng": -3.45,
+        "count": 5
+      },
+      {
+        "lat": 52.95,
+        "lng": -3.35,
+        "count": 6
+      },
+      {
+        "lat": 52.95,
+        "lng": -3.15,
+        "count": 14
+      },
+      {
+        "lat": 52.95,
+        "lng": -3.05,
+        "count": 23
+      },
+      {
+        "lat": 52.95,
+        "lng": -2.95,
+        "count": 10
+      },
+      {
+        "lat": 52.95,
+        "lng": -2.85,
+        "count": 6
+      },
+      {
+        "lat": 52.95,
+        "lng": -2.65,
+        "count": 15
+      },
+      {
+        "lat": 52.95,
+        "lng": -2.55,
+        "count": 10
+      },
+      {
+        "lat": 52.95,
+        "lng": -2.45,
+        "count": 6
+      },
+      {
+        "lat": 52.95,
+        "lng": -2.35,
+        "count": 5
+      },
+      {
+        "lat": 52.95,
+        "lng": -2.25,
+        "count": 24
+      },
+      {
+        "lat": 52.95,
+        "lng": -2.15,
+        "count": 65
+      },
+      {
+        "lat": 52.95,
+        "lng": -2.05,
+        "count": 20
+      },
+      {
+        "lat": 52.95,
+        "lng": -1.95,
+        "count": 16
+      },
+      {
+        "lat": 52.95,
+        "lng": -1.85,
+        "count": 7
+      },
+      {
+        "lat": 52.95,
+        "lng": -1.75,
+        "count": 9
+      },
+      {
+        "lat": 52.95,
+        "lng": -1.65,
+        "count": 6
+      },
+      {
+        "lat": 52.95,
+        "lng": -1.55,
+        "count": 73
+      },
+      {
+        "lat": 52.95,
+        "lng": -1.45,
+        "count": 357
+      },
+      {
+        "lat": 52.95,
+        "lng": -1.35,
+        "count": 71
+      },
+      {
+        "lat": 52.95,
+        "lng": -1.25,
+        "count": 237
+      },
+      {
+        "lat": 52.95,
+        "lng": -1.15,
+        "count": 684
+      },
+      {
+        "lat": 52.95,
+        "lng": -1.05,
+        "count": 66
+      },
+      {
+        "lat": 52.95,
+        "lng": -0.95,
+        "count": 31
+      },
+      {
+        "lat": 52.95,
+        "lng": -0.85,
+        "count": 10
+      },
+      {
+        "lat": 52.95,
+        "lng": -0.75,
+        "count": 17
+      },
+      {
+        "lat": 52.95,
+        "lng": -0.65,
+        "count": 101
+      },
+      {
+        "lat": 52.95,
+        "lng": -0.55,
+        "count": 11
+      },
+      {
+        "lat": 52.95,
+        "lng": -0.45,
+        "count": 21
+      },
+      {
+        "lat": 52.95,
+        "lng": -0.35,
+        "count": 16
+      },
+      {
+        "lat": 52.95,
+        "lng": -0.25,
+        "count": 14
+      },
+      {
+        "lat": 52.95,
+        "lng": -0.15,
+        "count": 31
+      },
+      {
+        "lat": 52.95,
+        "lng": -0.05,
+        "count": 143
+      },
+      {
+        "lat": 52.95,
+        "lng": 0.05,
+        "count": 14
+      },
+      {
+        "lat": 52.95,
+        "lng": 0.45,
+        "count": 7
+      },
+      {
+        "lat": 52.95,
+        "lng": 0.55,
+        "count": 6
+      },
+      {
+        "lat": 52.95,
+        "lng": 0.85,
+        "count": 11
+      },
+      {
+        "lat": 52.95,
+        "lng": 1.05,
+        "count": 6
+      },
+      {
+        "lat": 52.95,
+        "lng": 1.15,
+        "count": 7
+      },
+      {
+        "lat": 52.95,
+        "lng": 1.25,
+        "count": 23
+      },
+      {
+        "lat": 52.95,
+        "lng": 1.35,
+        "count": 7
+      },
+      {
+        "lat": 53.05,
+        "lng": -4.25,
+        "count": 7
+      },
+      {
+        "lat": 53.05,
+        "lng": -3.25,
+        "count": 8
+      },
+      {
+        "lat": 53.05,
+        "lng": -3.15,
+        "count": 8
+      },
+      {
+        "lat": 53.05,
+        "lng": -3.05,
+        "count": 44
+      },
+      {
+        "lat": 53.05,
+        "lng": -2.95,
+        "count": 44
+      },
+      {
+        "lat": 53.05,
+        "lng": -2.85,
+        "count": 10
+      },
+      {
+        "lat": 53.05,
+        "lng": -2.75,
+        "count": 9
+      },
+      {
+        "lat": 53.05,
+        "lng": -2.55,
+        "count": 25
+      },
+      {
+        "lat": 53.05,
+        "lng": -2.45,
+        "count": 88
+      },
+      {
+        "lat": 53.05,
+        "lng": -2.35,
+        "count": 32
+      },
+      {
+        "lat": 53.05,
+        "lng": -2.25,
+        "count": 78
+      },
+      {
+        "lat": 53.05,
+        "lng": -2.15,
+        "count": 106
+      },
+      {
+        "lat": 53.05,
+        "lng": -2.05,
+        "count": 15
+      },
+      {
+        "lat": 53.05,
+        "lng": -1.75,
+        "count": 26
+      },
+      {
+        "lat": 53.05,
+        "lng": -1.65,
+        "count": 6
+      },
+      {
+        "lat": 53.05,
+        "lng": -1.55,
+        "count": 18
+      },
+      {
+        "lat": 53.05,
+        "lng": -1.45,
+        "count": 58
+      },
+      {
+        "lat": 53.05,
+        "lng": -1.35,
+        "count": 104
+      },
+      {
+        "lat": 53.05,
+        "lng": -1.25,
+        "count": 108
+      },
+      {
+        "lat": 53.05,
+        "lng": -1.15,
+        "count": 95
+      },
+      {
+        "lat": 53.05,
+        "lng": -1.05,
+        "count": 18
+      },
+      {
+        "lat": 53.05,
+        "lng": -0.95,
+        "count": 14
+      },
+      {
+        "lat": 53.05,
+        "lng": -0.85,
+        "count": 70
+      },
+      {
+        "lat": 53.05,
+        "lng": -0.75,
+        "count": 56
+      },
+      {
+        "lat": 53.05,
+        "lng": -0.65,
+        "count": 8
+      },
+      {
+        "lat": 53.05,
+        "lng": -0.55,
+        "count": 11
+      },
+      {
+        "lat": 53.05,
+        "lng": -0.45,
+        "count": 30
+      },
+      {
+        "lat": 53.05,
+        "lng": -0.35,
+        "count": 26
+      },
+      {
+        "lat": 53.05,
+        "lng": -0.25,
+        "count": 12
+      },
+      {
+        "lat": 53.05,
+        "lng": -0.15,
+        "count": 8
+      },
+      {
+        "lat": 53.05,
+        "lng": 0.05,
+        "count": 14
+      },
+      {
+        "lat": 53.05,
+        "lng": 0.15,
+        "count": 9
+      },
+      {
+        "lat": 53.15,
+        "lng": -4.25,
+        "count": 16
+      },
+      {
+        "lat": 53.15,
+        "lng": -4.15,
+        "count": 8
+      },
+      {
+        "lat": 53.15,
+        "lng": -4.05,
+        "count": 6
+      },
+      {
+        "lat": 53.15,
+        "lng": -3.75,
+        "count": 6
+      },
+      {
+        "lat": 53.15,
+        "lng": -3.45,
+        "count": 7
+      },
+      {
+        "lat": 53.15,
+        "lng": -3.35,
+        "count": 8
+      },
+      {
+        "lat": 53.15,
+        "lng": -3.15,
+        "count": 23
+      },
+      {
+        "lat": 53.15,
+        "lng": -3.05,
+        "count": 50
+      },
+      {
+        "lat": 53.15,
+        "lng": -2.95,
+        "count": 51
+      },
+      {
+        "lat": 53.15,
+        "lng": -2.85,
+        "count": 74
+      },
+      {
+        "lat": 53.15,
+        "lng": -2.75,
+        "count": 12
+      },
+      {
+        "lat": 53.15,
+        "lng": -2.65,
+        "count": 10
+      },
+      {
+        "lat": 53.15,
+        "lng": -2.55,
+        "count": 36
+      },
+      {
+        "lat": 53.15,
+        "lng": -2.45,
+        "count": 66
+      },
+      {
+        "lat": 53.15,
+        "lng": -2.35,
+        "count": 47
+      },
+      {
+        "lat": 53.15,
+        "lng": -2.25,
+        "count": 33
+      },
+      {
+        "lat": 53.15,
+        "lng": -2.15,
+        "count": 24
+      },
+      {
+        "lat": 53.15,
+        "lng": -2.05,
+        "count": 14
+      },
+      {
+        "lat": 53.15,
+        "lng": -1.85,
+        "count": 9
+      },
+      {
+        "lat": 53.15,
+        "lng": -1.65,
+        "count": 15
+      },
+      {
+        "lat": 53.15,
+        "lng": -1.55,
+        "count": 46
+      },
+      {
+        "lat": 53.15,
+        "lng": -1.45,
+        "count": 40
+      },
+      {
+        "lat": 53.15,
+        "lng": -1.35,
+        "count": 58
+      },
+      {
+        "lat": 53.15,
+        "lng": -1.25,
+        "count": 161
+      },
+      {
+        "lat": 53.15,
+        "lng": -1.15,
+        "count": 144
+      },
+      {
+        "lat": 53.15,
+        "lng": -1.05,
+        "count": 29
+      },
+      {
+        "lat": 53.15,
+        "lng": -0.95,
+        "count": 12
+      },
+      {
+        "lat": 53.15,
+        "lng": -0.85,
+        "count": 13
+      },
+      {
+        "lat": 53.15,
+        "lng": -0.75,
+        "count": 10
+      },
+      {
+        "lat": 53.15,
+        "lng": -0.65,
+        "count": 23
+      },
+      {
+        "lat": 53.15,
+        "lng": -0.55,
+        "count": 38
+      },
+      {
+        "lat": 53.15,
+        "lng": -0.45,
+        "count": 33
+      },
+      {
+        "lat": 53.15,
+        "lng": -0.35,
+        "count": 8
+      },
+      {
+        "lat": 53.15,
+        "lng": -0.25,
+        "count": 6
+      },
+      {
+        "lat": 53.15,
+        "lng": -0.15,
+        "count": 14
+      },
+      {
+        "lat": 53.15,
+        "lng": -0.05,
+        "count": 9
+      },
+      {
+        "lat": 53.15,
+        "lng": 0.15,
+        "count": 19
+      },
+      {
+        "lat": 53.15,
+        "lng": 0.25,
+        "count": 25
+      },
+      {
+        "lat": 53.15,
+        "lng": 0.35,
+        "count": 62
+      },
+      {
+        "lat": 53.25,
+        "lng": -4.35,
+        "count": 7
+      },
+      {
+        "lat": 53.25,
+        "lng": -4.25,
+        "count": 9
+      },
+      {
+        "lat": 53.25,
+        "lng": -4.15,
+        "count": 25
+      },
+      {
+        "lat": 53.25,
+        "lng": -3.95,
+        "count": 6
+      },
+      {
+        "lat": 53.25,
+        "lng": -3.85,
+        "count": 14
+      },
+      {
+        "lat": 53.25,
+        "lng": -3.75,
+        "count": 20
+      },
+      {
+        "lat": 53.25,
+        "lng": -3.65,
+        "count": 7
+      },
+      {
+        "lat": 53.25,
+        "lng": -3.55,
+        "count": 20
+      },
+      {
+        "lat": 53.25,
+        "lng": -3.45,
+        "count": 21
+      },
+      {
+        "lat": 53.25,
+        "lng": -3.25,
+        "count": 21
+      },
+      {
+        "lat": 53.25,
+        "lng": -3.15,
+        "count": 37
+      },
+      {
+        "lat": 53.25,
+        "lng": -3.05,
+        "count": 52
+      },
+      {
+        "lat": 53.25,
+        "lng": -2.95,
+        "count": 85
+      },
+      {
+        "lat": 53.25,
+        "lng": -2.85,
+        "count": 66
+      },
+      {
+        "lat": 53.25,
+        "lng": -2.75,
+        "count": 27
+      },
+      {
+        "lat": 53.25,
+        "lng": -2.65,
+        "count": 20
+      },
+      {
+        "lat": 53.25,
+        "lng": -2.55,
+        "count": 56
+      },
+      {
+        "lat": 53.25,
+        "lng": -2.45,
+        "count": 38
+      },
+      {
+        "lat": 53.25,
+        "lng": -2.35,
+        "count": 20
+      },
+      {
+        "lat": 53.25,
+        "lng": -2.25,
+        "count": 16
+      },
+      {
+        "lat": 53.25,
+        "lng": -2.15,
+        "count": 58
+      },
+      {
+        "lat": 53.25,
+        "lng": -2.05,
+        "count": 8
+      },
+      {
+        "lat": 53.25,
+        "lng": -1.95,
+        "count": 21
+      },
+      {
+        "lat": 53.25,
+        "lng": -1.85,
+        "count": 13
+      },
+      {
+        "lat": 53.25,
+        "lng": -1.75,
+        "count": 11
+      },
+      {
+        "lat": 53.25,
+        "lng": -1.65,
+        "count": 33
+      },
+      {
+        "lat": 53.25,
+        "lng": -1.55,
+        "count": 16
+      },
+      {
+        "lat": 53.25,
+        "lng": -1.45,
+        "count": 140
+      },
+      {
+        "lat": 53.25,
+        "lng": -1.35,
+        "count": 73
+      },
+      {
+        "lat": 53.25,
+        "lng": -1.25,
+        "count": 60
+      },
+      {
+        "lat": 53.25,
+        "lng": -1.15,
+        "count": 40
+      },
+      {
+        "lat": 53.25,
+        "lng": -1.05,
+        "count": 18
+      },
+      {
+        "lat": 53.25,
+        "lng": -0.95,
+        "count": 21
+      },
+      {
+        "lat": 53.25,
+        "lng": -0.85,
+        "count": 16
+      },
+      {
+        "lat": 53.25,
+        "lng": -0.65,
+        "count": 46
+      },
+      {
+        "lat": 53.25,
+        "lng": -0.55,
+        "count": 190
+      },
+      {
+        "lat": 53.25,
+        "lng": -0.45,
+        "count": 28
+      },
+      {
+        "lat": 53.25,
+        "lng": -0.35,
+        "count": 11
+      },
+      {
+        "lat": 53.25,
+        "lng": -0.25,
+        "count": 10
+      },
+      {
+        "lat": 53.25,
+        "lng": -0.15,
+        "count": 16
+      },
+      {
+        "lat": 53.25,
+        "lng": -0.05,
+        "count": 7
+      },
+      {
+        "lat": 53.25,
+        "lng": 0.05,
+        "count": 9
+      },
+      {
+        "lat": 53.25,
+        "lng": 0.15,
+        "count": 13
+      },
+      {
+        "lat": 53.25,
+        "lng": 0.25,
+        "count": 16
+      },
+      {
+        "lat": 53.25,
+        "lng": 0.35,
+        "count": 7
+      },
+      {
+        "lat": 53.35,
+        "lng": -4.65,
+        "count": 6
+      },
+      {
+        "lat": 53.35,
+        "lng": -4.35,
+        "count": 7
+      },
+      {
+        "lat": 53.35,
+        "lng": -3.85,
+        "count": 17
+      },
+      {
+        "lat": 53.35,
+        "lng": -3.75,
+        "count": 6
+      },
+      {
+        "lat": 53.35,
+        "lng": -3.55,
+        "count": 7
+      },
+      {
+        "lat": 53.35,
+        "lng": -3.45,
+        "count": 58
+      },
+      {
+        "lat": 53.35,
+        "lng": -3.35,
+        "count": 10
+      },
+      {
+        "lat": 53.35,
+        "lng": -3.15,
+        "count": 46
+      },
+      {
+        "lat": 53.35,
+        "lng": -3.05,
+        "count": 208
+      },
+      {
+        "lat": 53.35,
+        "lng": -2.95,
+        "count": 252
+      },
+      {
+        "lat": 53.35,
+        "lng": -2.85,
+        "count": 147
+      },
+      {
+        "lat": 53.35,
+        "lng": -2.75,
+        "count": 125
+      },
+      {
+        "lat": 53.35,
+        "lng": -2.65,
+        "count": 86
+      },
+      {
+        "lat": 53.35,
+        "lng": -2.55,
+        "count": 137
+      },
+      {
+        "lat": 53.35,
+        "lng": -2.45,
+        "count": 38
+      },
+      {
+        "lat": 53.35,
+        "lng": -2.35,
+        "count": 57
+      },
+      {
+        "lat": 53.35,
+        "lng": -2.25,
+        "count": 141
+      },
+      {
+        "lat": 53.35,
+        "lng": -2.15,
+        "count": 75
+      },
+      {
+        "lat": 53.35,
+        "lng": -2.05,
+        "count": 31
+      },
+      {
+        "lat": 53.35,
+        "lng": -1.95,
+        "count": 27
+      },
+      {
+        "lat": 53.35,
+        "lng": -1.85,
+        "count": 12
+      },
+      {
+        "lat": 53.35,
+        "lng": -1.75,
+        "count": 8
+      },
+      {
+        "lat": 53.35,
+        "lng": -1.65,
+        "count": 28
+      },
+      {
+        "lat": 53.35,
+        "lng": -1.55,
+        "count": 100
+      },
+      {
+        "lat": 53.35,
+        "lng": -1.45,
+        "count": 411
+      },
+      {
+        "lat": 53.35,
+        "lng": -1.35,
+        "count": 102
+      },
+      {
+        "lat": 53.35,
+        "lng": -1.25,
+        "count": 63
+      },
+      {
+        "lat": 53.35,
+        "lng": -1.15,
+        "count": 74
+      },
+      {
+        "lat": 53.35,
+        "lng": -1.05,
+        "count": 17
+      },
+      {
+        "lat": 53.35,
+        "lng": -0.95,
+        "count": 39
+      },
+      {
+        "lat": 53.35,
+        "lng": -0.85,
+        "count": 7
+      },
+      {
+        "lat": 53.35,
+        "lng": -0.75,
+        "count": 21
+      },
+      {
+        "lat": 53.35,
+        "lng": -0.65,
+        "count": 7
+      },
+      {
+        "lat": 53.35,
+        "lng": -0.55,
+        "count": 7
+      },
+      {
+        "lat": 53.35,
+        "lng": -0.45,
+        "count": 13
+      },
+      {
+        "lat": 53.35,
+        "lng": -0.35,
+        "count": 12
+      },
+      {
+        "lat": 53.35,
+        "lng": -0.25,
+        "count": 11
+      },
+      {
+        "lat": 53.35,
+        "lng": -0.15,
+        "count": 17
+      },
+      {
+        "lat": 53.35,
+        "lng": -0.05,
+        "count": 24
+      },
+      {
+        "lat": 53.35,
+        "lng": 0.05,
+        "count": 17
+      },
+      {
+        "lat": 53.35,
+        "lng": 0.15,
+        "count": 7
+      },
+      {
+        "lat": 53.35,
+        "lng": 0.25,
+        "count": 17
+      },
+      {
+        "lat": 53.45,
+        "lng": -4.45,
+        "count": 5
+      },
+      {
+        "lat": 53.45,
+        "lng": -3.15,
+        "count": 16
+      },
+      {
+        "lat": 53.45,
+        "lng": -3.05,
+        "count": 141
+      },
+      {
+        "lat": 53.45,
+        "lng": -2.95,
+        "count": 704
+      },
+      {
+        "lat": 53.45,
+        "lng": -2.85,
+        "count": 196
+      },
+      {
+        "lat": 53.45,
+        "lng": -2.75,
+        "count": 164
+      },
+      {
+        "lat": 53.45,
+        "lng": -2.65,
+        "count": 107
+      },
+      {
+        "lat": 53.45,
+        "lng": -2.55,
+        "count": 142
+      },
+      {
+        "lat": 53.45,
+        "lng": -2.45,
+        "count": 43
+      },
+      {
+        "lat": 53.45,
+        "lng": -2.35,
+        "count": 174
+      },
+      {
+        "lat": 53.45,
+        "lng": -2.25,
+        "count": 506
+      },
+      {
+        "lat": 53.45,
+        "lng": -2.15,
+        "count": 262
+      },
+      {
+        "lat": 53.45,
+        "lng": -2.05,
+        "count": 113
+      },
+      {
+        "lat": 53.45,
+        "lng": -1.95,
+        "count": 39
+      },
+      {
+        "lat": 53.45,
+        "lng": -1.85,
+        "count": 12
+      },
+      {
+        "lat": 53.45,
+        "lng": -1.65,
+        "count": 9
+      },
+      {
+        "lat": 53.45,
+        "lng": -1.55,
+        "count": 48
+      },
+      {
+        "lat": 53.45,
+        "lng": -1.45,
+        "count": 265
+      },
+      {
+        "lat": 53.45,
+        "lng": -1.35,
+        "count": 238
+      },
+      {
+        "lat": 53.45,
+        "lng": -1.25,
+        "count": 86
+      },
+      {
+        "lat": 53.45,
+        "lng": -1.15,
+        "count": 55
+      },
+      {
+        "lat": 53.45,
+        "lng": -1.05,
+        "count": 58
+      },
+      {
+        "lat": 53.45,
+        "lng": -0.95,
+        "count": 9
+      },
+      {
+        "lat": 53.45,
+        "lng": -0.85,
+        "count": 16
+      },
+      {
+        "lat": 53.45,
+        "lng": -0.75,
+        "count": 23
+      },
+      {
+        "lat": 53.45,
+        "lng": -0.65,
+        "count": 5
+      },
+      {
+        "lat": 53.45,
+        "lng": -0.55,
+        "count": 10
+      },
+      {
+        "lat": 53.45,
+        "lng": -0.45,
+        "count": 5
+      },
+      {
+        "lat": 53.45,
+        "lng": -0.35,
+        "count": 20
+      },
+      {
+        "lat": 53.45,
+        "lng": -0.25,
+        "count": 5
+      },
+      {
+        "lat": 53.45,
+        "lng": -0.05,
+        "count": 18
+      },
+      {
+        "lat": 53.45,
+        "lng": 0.05,
+        "count": 14
+      },
+      {
+        "lat": 53.55,
+        "lng": -3.05,
+        "count": 31
+      },
+      {
+        "lat": 53.55,
+        "lng": -2.95,
+        "count": 42
+      },
+      {
+        "lat": 53.55,
+        "lng": -2.85,
+        "count": 65
+      },
+      {
+        "lat": 53.55,
+        "lng": -2.75,
+        "count": 50
+      },
+      {
+        "lat": 53.55,
+        "lng": -2.65,
+        "count": 89
+      },
+      {
+        "lat": 53.55,
+        "lng": -2.55,
+        "count": 80
+      },
+      {
+        "lat": 53.55,
+        "lng": -2.45,
+        "count": 220
+      },
+      {
+        "lat": 53.55,
+        "lng": -2.35,
+        "count": 161
+      },
+      {
+        "lat": 53.55,
+        "lng": -2.25,
+        "count": 224
+      },
+      {
+        "lat": 53.55,
+        "lng": -2.15,
+        "count": 203
+      },
+      {
+        "lat": 53.55,
+        "lng": -2.05,
+        "count": 73
+      },
+      {
+        "lat": 53.55,
+        "lng": -1.85,
+        "count": 15
+      },
+      {
+        "lat": 53.55,
+        "lng": -1.75,
+        "count": 44
+      },
+      {
+        "lat": 53.55,
+        "lng": -1.65,
+        "count": 34
+      },
+      {
+        "lat": 53.55,
+        "lng": -1.55,
+        "count": 38
+      },
+      {
+        "lat": 53.55,
+        "lng": -1.45,
+        "count": 190
+      },
+      {
+        "lat": 53.55,
+        "lng": -1.35,
+        "count": 103
+      },
+      {
+        "lat": 53.55,
+        "lng": -1.25,
+        "count": 38
+      },
+      {
+        "lat": 53.55,
+        "lng": -1.15,
+        "count": 216
+      },
+      {
+        "lat": 53.55,
+        "lng": -1.05,
+        "count": 106
+      },
+      {
+        "lat": 53.55,
+        "lng": -0.95,
+        "count": 13
+      },
+      {
+        "lat": 53.55,
+        "lng": -0.85,
+        "count": 13
+      },
+      {
+        "lat": 53.55,
+        "lng": -0.75,
+        "count": 18
+      },
+      {
+        "lat": 53.55,
+        "lng": -0.65,
+        "count": 186
+      },
+      {
+        "lat": 53.55,
+        "lng": -0.55,
+        "count": 26
+      },
+      {
+        "lat": 53.55,
+        "lng": -0.45,
+        "count": 33
+      },
+      {
+        "lat": 53.55,
+        "lng": -0.35,
+        "count": 10
+      },
+      {
+        "lat": 53.55,
+        "lng": -0.25,
+        "count": 6
+      },
+      {
+        "lat": 53.55,
+        "lng": -0.15,
+        "count": 83
+      },
+      {
+        "lat": 53.55,
+        "lng": -0.05,
+        "count": 236
+      },
+      {
+        "lat": 53.65,
+        "lng": -3.05,
+        "count": 54
+      },
+      {
+        "lat": 53.65,
+        "lng": -2.95,
+        "count": 77
+      },
+      {
+        "lat": 53.65,
+        "lng": -2.85,
+        "count": 30
+      },
+      {
+        "lat": 53.65,
+        "lng": -2.75,
+        "count": 42
+      },
+      {
+        "lat": 53.65,
+        "lng": -2.65,
+        "count": 126
+      },
+      {
+        "lat": 53.65,
+        "lng": -2.55,
+        "count": 40
+      },
+      {
+        "lat": 53.65,
+        "lng": -2.45,
+        "count": 52
+      },
+      {
+        "lat": 53.65,
+        "lng": -2.35,
+        "count": 50
+      },
+      {
+        "lat": 53.65,
+        "lng": -2.25,
+        "count": 26
+      },
+      {
+        "lat": 53.65,
+        "lng": -2.15,
+        "count": 97
+      },
+      {
+        "lat": 53.65,
+        "lng": -2.05,
+        "count": 22
+      },
+      {
+        "lat": 53.65,
+        "lng": -1.95,
+        "count": 40
+      },
+      {
+        "lat": 53.65,
+        "lng": -1.85,
+        "count": 138
+      },
+      {
+        "lat": 53.65,
+        "lng": -1.75,
+        "count": 232
+      },
+      {
+        "lat": 53.65,
+        "lng": -1.65,
+        "count": 141
+      },
+      {
+        "lat": 53.65,
+        "lng": -1.55,
+        "count": 187
+      },
+      {
+        "lat": 53.65,
+        "lng": -1.45,
+        "count": 145
+      },
+      {
+        "lat": 53.65,
+        "lng": -1.35,
+        "count": 108
+      },
+      {
+        "lat": 53.65,
+        "lng": -1.25,
+        "count": 49
+      },
+      {
+        "lat": 53.65,
+        "lng": -1.15,
+        "count": 25
+      },
+      {
+        "lat": 53.65,
+        "lng": -1.05,
+        "count": 13
+      },
+      {
+        "lat": 53.65,
+        "lng": -0.95,
+        "count": 39
+      },
+      {
+        "lat": 53.65,
+        "lng": -0.85,
+        "count": 6
+      },
+      {
+        "lat": 53.65,
+        "lng": -0.75,
+        "count": 5
+      },
+      {
+        "lat": 53.65,
+        "lng": -0.65,
+        "count": 15
+      },
+      {
+        "lat": 53.65,
+        "lng": -0.55,
+        "count": 11
+      },
+      {
+        "lat": 53.65,
+        "lng": -0.45,
+        "count": 24
+      },
+      {
+        "lat": 53.65,
+        "lng": -0.35,
+        "count": 14
+      },
+      {
+        "lat": 53.65,
+        "lng": -0.25,
+        "count": 21
+      },
+      {
+        "lat": 53.75,
+        "lng": -3.05,
+        "count": 105
+      },
+      {
+        "lat": 53.75,
+        "lng": -2.95,
+        "count": 56
+      },
+      {
+        "lat": 53.75,
+        "lng": -2.85,
+        "count": 41
+      },
+      {
+        "lat": 53.75,
+        "lng": -2.75,
+        "count": 222
+      },
+      {
+        "lat": 53.75,
+        "lng": -2.65,
+        "count": 268
+      },
+      {
+        "lat": 53.75,
+        "lng": -2.55,
+        "count": 65
+      },
+      {
+        "lat": 53.75,
+        "lng": -2.45,
+        "count": 274
+      },
+      {
+        "lat": 53.75,
+        "lng": -2.35,
+        "count": 152
+      },
+      {
+        "lat": 53.75,
+        "lng": -2.25,
+        "count": 124
+      },
+      {
+        "lat": 53.75,
+        "lng": -2.15,
+        "count": 15
+      },
+      {
+        "lat": 53.75,
+        "lng": -2.05,
+        "count": 16
+      },
+      {
+        "lat": 53.75,
+        "lng": -1.95,
+        "count": 43
+      },
+      {
+        "lat": 53.75,
+        "lng": -1.85,
+        "count": 214
+      },
+      {
+        "lat": 53.75,
+        "lng": -1.75,
+        "count": 519
+      },
+      {
+        "lat": 53.75,
+        "lng": -1.65,
+        "count": 234
+      },
+      {
+        "lat": 53.75,
+        "lng": -1.55,
+        "count": 445
+      },
+      {
+        "lat": 53.75,
+        "lng": -1.45,
+        "count": 105
+      },
+      {
+        "lat": 53.75,
+        "lng": -1.35,
+        "count": 114
+      },
+      {
+        "lat": 53.75,
+        "lng": -1.25,
+        "count": 52
+      },
+      {
+        "lat": 53.75,
+        "lng": -1.15,
+        "count": 9
+      },
+      {
+        "lat": 53.75,
+        "lng": -1.05,
+        "count": 45
+      },
+      {
+        "lat": 53.75,
+        "lng": -0.95,
+        "count": 7
+      },
+      {
+        "lat": 53.75,
+        "lng": -0.85,
+        "count": 47
+      },
+      {
+        "lat": 53.75,
+        "lng": -0.75,
+        "count": 11
+      },
+      {
+        "lat": 53.75,
+        "lng": -0.65,
+        "count": 9
+      },
+      {
+        "lat": 53.75,
+        "lng": -0.55,
+        "count": 19
+      },
+      {
+        "lat": 53.75,
+        "lng": -0.45,
+        "count": 149
+      },
+      {
+        "lat": 53.75,
+        "lng": -0.35,
+        "count": 543
+      },
+      {
+        "lat": 53.75,
+        "lng": -0.25,
+        "count": 120
+      },
+      {
+        "lat": 53.75,
+        "lng": -0.15,
+        "count": 15
+      },
+      {
+        "lat": 53.75,
+        "lng": -0.05,
+        "count": 6
+      },
+      {
+        "lat": 53.75,
+        "lng": 0.05,
+        "count": 9
+      },
+      {
+        "lat": 53.85,
+        "lng": -3.05,
+        "count": 260
+      },
+      {
+        "lat": 53.85,
+        "lng": -2.95,
+        "count": 59
+      },
+      {
+        "lat": 53.85,
+        "lng": -2.85,
+        "count": 16
+      },
+      {
+        "lat": 53.85,
+        "lng": -2.75,
+        "count": 44
+      },
+      {
+        "lat": 53.85,
+        "lng": -2.65,
+        "count": 19
+      },
+      {
+        "lat": 53.85,
+        "lng": -2.55,
+        "count": 11
+      },
+      {
+        "lat": 53.85,
+        "lng": -2.45,
+        "count": 26
+      },
+      {
+        "lat": 53.85,
+        "lng": -2.35,
+        "count": 36
+      },
+      {
+        "lat": 53.85,
+        "lng": -2.25,
+        "count": 126
+      },
+      {
+        "lat": 53.85,
+        "lng": -2.15,
+        "count": 47
+      },
+      {
+        "lat": 53.85,
+        "lng": -2.05,
+        "count": 8
+      },
+      {
+        "lat": 53.85,
+        "lng": -1.95,
+        "count": 99
+      },
+      {
+        "lat": 53.85,
+        "lng": -1.85,
+        "count": 119
+      },
+      {
+        "lat": 53.85,
+        "lng": -1.75,
+        "count": 330
+      },
+      {
+        "lat": 53.85,
+        "lng": -1.65,
+        "count": 202
+      },
+      {
+        "lat": 53.85,
+        "lng": -1.55,
+        "count": 426
+      },
+      {
+        "lat": 53.85,
+        "lng": -1.45,
+        "count": 120
+      },
+      {
+        "lat": 53.85,
+        "lng": -1.35,
+        "count": 31
+      },
+      {
+        "lat": 53.85,
+        "lng": -1.25,
+        "count": 18
+      },
+      {
+        "lat": 53.85,
+        "lng": -1.15,
+        "count": 11
+      },
+      {
+        "lat": 53.85,
+        "lng": -1.05,
+        "count": 9
+      },
+      {
+        "lat": 53.85,
+        "lng": -0.95,
+        "count": 8
+      },
+      {
+        "lat": 53.85,
+        "lng": -0.75,
+        "count": 10
+      },
+      {
+        "lat": 53.85,
+        "lng": -0.65,
+        "count": 13
+      },
+      {
+        "lat": 53.85,
+        "lng": -0.55,
+        "count": 6
+      },
+      {
+        "lat": 53.85,
+        "lng": -0.45,
+        "count": 48
+      },
+      {
+        "lat": 53.85,
+        "lng": -0.35,
+        "count": 28
+      },
+      {
+        "lat": 53.85,
+        "lng": -0.25,
+        "count": 11
+      },
+      {
+        "lat": 53.95,
+        "lng": -3.05,
+        "count": 42
+      },
+      {
+        "lat": 53.95,
+        "lng": -2.95,
+        "count": 10
+      },
+      {
+        "lat": 53.95,
+        "lng": -2.85,
+        "count": 18
+      },
+      {
+        "lat": 53.95,
+        "lng": -2.75,
+        "count": 39
+      },
+      {
+        "lat": 53.95,
+        "lng": -2.35,
+        "count": 5
+      },
+      {
+        "lat": 53.95,
+        "lng": -2.25,
+        "count": 6
+      },
+      {
+        "lat": 53.95,
+        "lng": -2.15,
+        "count": 14
+      },
+      {
+        "lat": 53.95,
+        "lng": -2.05,
+        "count": 45
+      },
+      {
+        "lat": 53.95,
+        "lng": -1.95,
+        "count": 30
+      },
+      {
+        "lat": 53.95,
+        "lng": -1.85,
+        "count": 25
+      },
+      {
+        "lat": 53.95,
+        "lng": -1.75,
+        "count": 32
+      },
+      {
+        "lat": 53.95,
+        "lng": -1.65,
+        "count": 30
+      },
+      {
+        "lat": 53.95,
+        "lng": -1.55,
+        "count": 82
+      },
+      {
+        "lat": 53.95,
+        "lng": -1.45,
+        "count": 12
+      },
+      {
+        "lat": 53.95,
+        "lng": -1.35,
+        "count": 16
+      },
+      {
+        "lat": 53.95,
+        "lng": -1.25,
+        "count": 5
+      },
+      {
+        "lat": 53.95,
+        "lng": -1.15,
+        "count": 84
+      },
+      {
+        "lat": 53.95,
+        "lng": -1.05,
+        "count": 198
+      },
+      {
+        "lat": 53.95,
+        "lng": -0.95,
+        "count": 22
+      },
+      {
+        "lat": 53.95,
+        "lng": -0.85,
+        "count": 11
+      },
+      {
+        "lat": 53.95,
+        "lng": -0.75,
+        "count": 19
+      },
+      {
+        "lat": 53.95,
+        "lng": -0.55,
+        "count": 8
+      },
+      {
+        "lat": 53.95,
+        "lng": -0.45,
+        "count": 7
+      },
+      {
+        "lat": 53.95,
+        "lng": -0.25,
+        "count": 12
+      },
+      {
+        "lat": 53.95,
+        "lng": -0.15,
+        "count": 7
+      },
+      {
+        "lat": 54.05,
+        "lng": -2.85,
+        "count": 107
+      },
+      {
+        "lat": 54.05,
+        "lng": -2.75,
+        "count": 76
+      },
+      {
+        "lat": 54.05,
+        "lng": -2.35,
+        "count": 7
+      },
+      {
+        "lat": 54.05,
+        "lng": -2.25,
+        "count": 12
+      },
+      {
+        "lat": 54.05,
+        "lng": -2.05,
+        "count": 6
+      },
+      {
+        "lat": 54.05,
+        "lng": -1.75,
+        "count": 7
+      },
+      {
+        "lat": 54.05,
+        "lng": -1.65,
+        "count": 9
+      },
+      {
+        "lat": 54.05,
+        "lng": -1.55,
+        "count": 37
+      },
+      {
+        "lat": 54.05,
+        "lng": -1.45,
+        "count": 19
+      },
+      {
+        "lat": 54.05,
+        "lng": -1.35,
+        "count": 22
+      },
+      {
+        "lat": 54.05,
+        "lng": -1.25,
+        "count": 6
+      },
+      {
+        "lat": 54.05,
+        "lng": -1.15,
+        "count": 13
+      },
+      {
+        "lat": 54.05,
+        "lng": -1.05,
+        "count": 17
+      },
+      {
+        "lat": 54.05,
+        "lng": -0.95,
+        "count": 11
+      },
+      {
+        "lat": 54.05,
+        "lng": -0.75,
+        "count": 7
+      },
+      {
+        "lat": 54.05,
+        "lng": -0.65,
+        "count": 6
+      },
+      {
+        "lat": 54.05,
+        "lng": -0.55,
+        "count": 6
+      },
+      {
+        "lat": 54.05,
+        "lng": -0.45,
+        "count": 14
+      },
+      {
+        "lat": 54.05,
+        "lng": -0.35,
+        "count": 7
+      },
+      {
+        "lat": 54.05,
+        "lng": -0.25,
+        "count": 30
+      },
+      {
+        "lat": 54.05,
+        "lng": -0.15,
+        "count": 21
+      },
+      {
+        "lat": 54.15,
+        "lng": -3.25,
+        "count": 74
+      },
+      {
+        "lat": 54.15,
+        "lng": -3.15,
+        "count": 32
+      },
+      {
+        "lat": 54.15,
+        "lng": -3.05,
+        "count": 17
+      },
+      {
+        "lat": 54.15,
+        "lng": -2.95,
+        "count": 7
+      },
+      {
+        "lat": 54.15,
+        "lng": -2.75,
+        "count": 28
+      },
+      {
+        "lat": 54.15,
+        "lng": -2.55,
+        "count": 8
+      },
+      {
+        "lat": 54.15,
+        "lng": -2.45,
+        "count": 8
+      },
+      {
+        "lat": 54.15,
+        "lng": -2.35,
+        "count": 5
+      },
+      {
+        "lat": 54.15,
+        "lng": -1.65,
+        "count": 6
+      },
+      {
+        "lat": 54.15,
+        "lng": -1.55,
+        "count": 27
+      },
+      {
+        "lat": 54.15,
+        "lng": -1.45,
+        "count": 19
+      },
+      {
+        "lat": 54.15,
+        "lng": -1.35,
+        "count": 9
+      },
+      {
+        "lat": 54.15,
+        "lng": -1.25,
+        "count": 7
+      },
+      {
+        "lat": 54.15,
+        "lng": -1.15,
+        "count": 10
+      },
+      {
+        "lat": 54.15,
+        "lng": -1.05,
+        "count": 6
+      },
+      {
+        "lat": 54.15,
+        "lng": -0.95,
+        "count": 6
+      },
+      {
+        "lat": 54.15,
+        "lng": -0.85,
+        "count": 9
+      },
+      {
+        "lat": 54.15,
+        "lng": -0.75,
+        "count": 19
+      },
+      {
+        "lat": 54.15,
+        "lng": -0.45,
+        "count": 11
+      },
+      {
+        "lat": 54.15,
+        "lng": -0.35,
+        "count": 16
+      },
+      {
+        "lat": 54.15,
+        "lng": -0.25,
+        "count": 9
+      },
+      {
+        "lat": 54.15,
+        "lng": -0.15,
+        "count": 6
+      },
+      {
+        "lat": 54.25,
+        "lng": -3.25,
+        "count": 6
+      },
+      {
+        "lat": 54.25,
+        "lng": -3.05,
+        "count": 11
+      },
+      {
+        "lat": 54.25,
+        "lng": -2.95,
+        "count": 15
+      },
+      {
+        "lat": 54.25,
+        "lng": -2.85,
+        "count": 6
+      },
+      {
+        "lat": 54.25,
+        "lng": -2.75,
+        "count": 28
+      },
+      {
+        "lat": 54.25,
+        "lng": -2.65,
+        "count": 11
+      },
+      {
+        "lat": 54.25,
+        "lng": -1.65,
+        "count": 5
+      },
+      {
+        "lat": 54.25,
+        "lng": -1.55,
+        "count": 7
+      },
+      {
+        "lat": 54.25,
+        "lng": -1.45,
+        "count": 7
+      },
+      {
+        "lat": 54.25,
+        "lng": -1.35,
+        "count": 28
+      },
+      {
+        "lat": 54.25,
+        "lng": -1.25,
+        "count": 6
+      },
+      {
+        "lat": 54.25,
+        "lng": -1.05,
+        "count": 6
+      },
+      {
+        "lat": 54.25,
+        "lng": -0.95,
+        "count": 8
+      },
+      {
+        "lat": 54.25,
+        "lng": -0.75,
+        "count": 14
+      },
+      {
+        "lat": 54.25,
+        "lng": -0.45,
+        "count": 89
+      },
+      {
+        "lat": 54.25,
+        "lng": -0.35,
+        "count": 24
+      },
+      {
+        "lat": 54.25,
+        "lng": -0.25,
+        "count": 7
+      },
+      {
+        "lat": 54.35,
+        "lng": -3.05,
+        "count": 6
+      },
+      {
+        "lat": 54.35,
+        "lng": -2.95,
+        "count": 18
+      },
+      {
+        "lat": 54.35,
+        "lng": -2.85,
+        "count": 12
+      },
+      {
+        "lat": 54.35,
+        "lng": -2.75,
+        "count": 28
+      },
+      {
+        "lat": 54.35,
+        "lng": -2.65,
+        "count": 7
+      },
+      {
+        "lat": 54.35,
+        "lng": -1.75,
+        "count": 12
+      },
+      {
+        "lat": 54.35,
+        "lng": -1.65,
+        "count": 11
+      },
+      {
+        "lat": 54.35,
+        "lng": -1.55,
+        "count": 8
+      },
+      {
+        "lat": 54.35,
+        "lng": -1.45,
+        "count": 25
+      },
+      {
+        "lat": 54.35,
+        "lng": -1.35,
+        "count": 9
+      },
+      {
+        "lat": 54.35,
+        "lng": -0.45,
+        "count": 6
+      },
+      {
+        "lat": 54.45,
+        "lng": -3.55,
+        "count": 14
+      },
+      {
+        "lat": 54.45,
+        "lng": -2.95,
+        "count": 16
+      },
+      {
+        "lat": 54.45,
+        "lng": -2.65,
+        "count": 7
+      },
+      {
+        "lat": 54.45,
+        "lng": -2.35,
+        "count": 6
+      },
+      {
+        "lat": 54.45,
+        "lng": -1.75,
+        "count": 11
+      },
+      {
+        "lat": 54.45,
+        "lng": -1.65,
+        "count": 9
+      },
+      {
+        "lat": 54.45,
+        "lng": -1.55,
+        "count": 7
+      },
+      {
+        "lat": 54.45,
+        "lng": -1.35,
+        "count": 13
+      },
+      {
+        "lat": 54.45,
+        "lng": -1.25,
+        "count": 7
+      },
+      {
+        "lat": 54.45,
+        "lng": -1.15,
+        "count": 9
+      },
+      {
+        "lat": 54.45,
+        "lng": -0.95,
+        "count": 5
+      },
+      {
+        "lat": 54.45,
+        "lng": -0.75,
+        "count": 6
+      },
+      {
+        "lat": 54.45,
+        "lng": -0.65,
+        "count": 22
+      },
+      {
+        "lat": 54.45,
+        "lng": -0.55,
+        "count": 9
+      },
+      {
+        "lat": 54.55,
+        "lng": -3.55,
+        "count": 57
+      },
+      {
+        "lat": 54.55,
+        "lng": -3.45,
+        "count": 9
+      },
+      {
+        "lat": 54.55,
+        "lng": -3.15,
+        "count": 6
+      },
+      {
+        "lat": 54.55,
+        "lng": -2.65,
+        "count": 6
+      },
+      {
+        "lat": 54.55,
+        "lng": -2.45,
+        "count": 6
+      },
+      {
+        "lat": 54.55,
+        "lng": -2.35,
+        "count": 11
+      },
+      {
+        "lat": 54.55,
+        "lng": -1.95,
+        "count": 10
+      },
+      {
+        "lat": 54.55,
+        "lng": -1.65,
+        "count": 10
+      },
+      {
+        "lat": 54.55,
+        "lng": -1.55,
+        "count": 96
+      },
+      {
+        "lat": 54.55,
+        "lng": -1.45,
+        "count": 5
+      },
+      {
+        "lat": 54.55,
+        "lng": -1.35,
+        "count": 137
+      },
+      {
+        "lat": 54.55,
+        "lng": -1.25,
+        "count": 195
+      },
+      {
+        "lat": 54.55,
+        "lng": -1.15,
+        "count": 80
+      },
+      {
+        "lat": 54.55,
+        "lng": -1.05,
+        "count": 30
+      },
+      {
+        "lat": 54.55,
+        "lng": -0.95,
+        "count": 7
+      },
+      {
+        "lat": 54.55,
+        "lng": -0.85,
+        "count": 9
+      },
+      {
+        "lat": 54.55,
+        "lng": -0.75,
+        "count": 8
+      },
+      {
+        "lat": 54.65,
+        "lng": -3.55,
+        "count": 34
+      },
+      {
+        "lat": 54.65,
+        "lng": -3.45,
+        "count": 13
+      },
+      {
+        "lat": 54.65,
+        "lng": -3.35,
+        "count": 9
+      },
+      {
+        "lat": 54.65,
+        "lng": -3.25,
+        "count": 5
+      },
+      {
+        "lat": 54.65,
+        "lng": -3.15,
+        "count": 8
+      },
+      {
+        "lat": 54.65,
+        "lng": -2.85,
+        "count": 5
+      },
+      {
+        "lat": 54.65,
+        "lng": -2.75,
+        "count": 31
+      },
+      {
+        "lat": 54.65,
+        "lng": -2.65,
+        "count": 5
+      },
+      {
+        "lat": 54.65,
+        "lng": -2.55,
+        "count": 6
+      },
+      {
+        "lat": 54.65,
+        "lng": -1.75,
+        "count": 13
+      },
+      {
+        "lat": 54.65,
+        "lng": -1.65,
+        "count": 57
+      },
+      {
+        "lat": 54.65,
+        "lng": -1.55,
+        "count": 31
+      },
+      {
+        "lat": 54.65,
+        "lng": -1.45,
+        "count": 11
+      },
+      {
+        "lat": 54.65,
+        "lng": -1.35,
+        "count": 24
+      },
+      {
+        "lat": 54.65,
+        "lng": -1.25,
+        "count": 83
+      },
+      {
+        "lat": 54.65,
+        "lng": -1.05,
+        "count": 25
+      },
+      {
+        "lat": 54.75,
+        "lng": -3.45,
+        "count": 13
+      },
+      {
+        "lat": 54.75,
+        "lng": -3.35,
+        "count": 7
+      },
+      {
+        "lat": 54.75,
+        "lng": -3.15,
+        "count": 6
+      },
+      {
+        "lat": 54.75,
+        "lng": -2.85,
+        "count": 9
+      },
+      {
+        "lat": 54.75,
+        "lng": -1.95,
+        "count": 9
+      },
+      {
+        "lat": 54.75,
+        "lng": -1.75,
+        "count": 7
+      },
+      {
+        "lat": 54.75,
+        "lng": -1.65,
+        "count": 16
+      },
+      {
+        "lat": 54.75,
+        "lng": -1.55,
+        "count": 78
+      },
+      {
+        "lat": 54.75,
+        "lng": -1.45,
+        "count": 17
+      },
+      {
+        "lat": 54.75,
+        "lng": -1.35,
+        "count": 40
+      },
+      {
+        "lat": 54.75,
+        "lng": -1.25,
+        "count": 19
+      },
+      {
+        "lat": 54.85,
+        "lng": -3.35,
+        "count": 5
+      },
+      {
+        "lat": 54.85,
+        "lng": -3.15,
+        "count": 6
+      },
+      {
+        "lat": 54.85,
+        "lng": -3.05,
+        "count": 11
+      },
+      {
+        "lat": 54.85,
+        "lng": -2.95,
+        "count": 115
+      },
+      {
+        "lat": 54.85,
+        "lng": -2.85,
+        "count": 19
+      },
+      {
+        "lat": 54.85,
+        "lng": -1.85,
+        "count": 22
+      },
+      {
+        "lat": 54.85,
+        "lng": -1.75,
+        "count": 22
+      },
+      {
+        "lat": 54.85,
+        "lng": -1.65,
+        "count": 39
+      },
+      {
+        "lat": 54.85,
+        "lng": -1.55,
+        "count": 76
+      },
+      {
+        "lat": 54.85,
+        "lng": -1.45,
+        "count": 116
+      },
+      {
+        "lat": 54.85,
+        "lng": -1.35,
+        "count": 52
+      },
+      {
+        "lat": 54.95,
+        "lng": -5.05,
+        "count": 6
+      },
+      {
+        "lat": 54.95,
+        "lng": -4.55,
+        "count": 5
+      },
+      {
+        "lat": 54.95,
+        "lng": -3.85,
+        "count": 8
+      },
+      {
+        "lat": 54.95,
+        "lng": -3.25,
+        "count": 7
+      },
+      {
+        "lat": 54.95,
+        "lng": -3.05,
+        "count": 10
+      },
+      {
+        "lat": 54.95,
+        "lng": -2.95,
+        "count": 31
+      },
+      {
+        "lat": 54.95,
+        "lng": -2.85,
+        "count": 7
+      },
+      {
+        "lat": 54.95,
+        "lng": -2.75,
+        "count": 10
+      },
+      {
+        "lat": 54.95,
+        "lng": -2.25,
+        "count": 5
+      },
+      {
+        "lat": 54.95,
+        "lng": -2.15,
+        "count": 11
+      },
+      {
+        "lat": 54.95,
+        "lng": -2.05,
+        "count": 15
+      },
+      {
+        "lat": 54.95,
+        "lng": -1.95,
+        "count": 7
+      },
+      {
+        "lat": 54.95,
+        "lng": -1.85,
+        "count": 12
+      },
+      {
+        "lat": 54.95,
+        "lng": -1.75,
+        "count": 54
+      },
+      {
+        "lat": 54.95,
+        "lng": -1.65,
+        "count": 384
+      },
+      {
+        "lat": 54.95,
+        "lng": -1.55,
+        "count": 276
+      },
+      {
+        "lat": 54.95,
+        "lng": -1.45,
+        "count": 192
+      },
+      {
+        "lat": 54.95,
+        "lng": -1.35,
+        "count": 79
+      },
+      {
+        "lat": 55.05,
+        "lng": -3.65,
+        "count": 23
+      },
+      {
+        "lat": 55.05,
+        "lng": -3.55,
+        "count": 15
+      },
+      {
+        "lat": 55.05,
+        "lng": -3.45,
+        "count": 7
+      },
+      {
+        "lat": 55.05,
+        "lng": -2.15,
+        "count": 5
+      },
+      {
+        "lat": 55.05,
+        "lng": -1.95,
+        "count": 5
+      },
+      {
+        "lat": 55.05,
+        "lng": -1.75,
+        "count": 16
+      },
+      {
+        "lat": 55.05,
+        "lng": -1.65,
+        "count": 112
+      },
+      {
+        "lat": 55.05,
+        "lng": -1.55,
+        "count": 138
+      },
+      {
+        "lat": 55.05,
+        "lng": -1.45,
+        "count": 110
+      },
+      {
+        "lat": 55.15,
+        "lng": -3.65,
+        "count": 5
+      },
+      {
+        "lat": 55.15,
+        "lng": -3.35,
+        "count": 6
+      },
+      {
+        "lat": 55.15,
+        "lng": -1.75,
+        "count": 8
+      },
+      {
+        "lat": 55.15,
+        "lng": -1.65,
+        "count": 50
+      },
+      {
+        "lat": 55.15,
+        "lng": -1.55,
+        "count": 117
+      },
+      {
+        "lat": 55.25,
+        "lng": -1.65,
+        "count": 5
+      },
+      {
+        "lat": 55.35,
+        "lng": -3.45,
+        "count": 5
+      },
+      {
+        "lat": 55.35,
+        "lng": -1.85,
+        "count": 8
+      },
+      {
+        "lat": 55.35,
+        "lng": -1.75,
+        "count": 5
+      },
+      {
+        "lat": 55.35,
+        "lng": -1.65,
+        "count": 6
+      },
+      {
+        "lat": 55.45,
+        "lng": -4.65,
+        "count": 26
+      },
+      {
+        "lat": 55.45,
+        "lng": -4.55,
+        "count": 11
+      },
+      {
+        "lat": 55.45,
+        "lng": -4.35,
+        "count": 10
+      },
+      {
+        "lat": 55.45,
+        "lng": -4.25,
+        "count": 13
+      },
+      {
+        "lat": 55.45,
+        "lng": -1.75,
+        "count": 7
+      },
+      {
+        "lat": 55.45,
+        "lng": -1.65,
+        "count": 6
+      },
+      {
+        "lat": 55.55,
+        "lng": -4.65,
+        "count": 6
+      },
+      {
+        "lat": 55.55,
+        "lng": -4.55,
+        "count": 6
+      },
+      {
+        "lat": 55.55,
+        "lng": -4.45,
+        "count": 15
+      },
+      {
+        "lat": 55.55,
+        "lng": -3.75,
+        "count": 5
+      },
+      {
+        "lat": 55.55,
+        "lng": -2.85,
+        "count": 9
+      },
+      {
+        "lat": 55.55,
+        "lng": -2.75,
+        "count": 6
+      },
+      {
+        "lat": 55.55,
+        "lng": -2.55,
+        "count": 5
+      },
+      {
+        "lat": 55.55,
+        "lng": -1.75,
+        "count": 9
+      },
+      {
+        "lat": 55.65,
+        "lng": -4.85,
+        "count": 6
+      },
+      {
+        "lat": 55.65,
+        "lng": -4.75,
+        "count": 19
+      },
+      {
+        "lat": 55.65,
+        "lng": -4.65,
+        "count": 42
+      },
+      {
+        "lat": 55.65,
+        "lng": -4.55,
+        "count": 16
+      },
+      {
+        "lat": 55.65,
+        "lng": -4.45,
+        "count": 23
+      },
+      {
+        "lat": 55.65,
+        "lng": -4.05,
+        "count": 8
+      },
+      {
+        "lat": 55.65,
+        "lng": -3.95,
+        "count": 7
+      },
+      {
+        "lat": 55.65,
+        "lng": -3.85,
+        "count": 13
+      },
+      {
+        "lat": 55.65,
+        "lng": -3.75,
+        "count": 10
+      },
+      {
+        "lat": 55.65,
+        "lng": -3.55,
+        "count": 5
+      },
+      {
+        "lat": 55.65,
+        "lng": -2.85,
+        "count": 7
+      },
+      {
+        "lat": 55.65,
+        "lng": -2.75,
+        "count": 6
+      },
+      {
+        "lat": 55.65,
+        "lng": -2.55,
+        "count": 6
+      },
+      {
+        "lat": 55.75,
+        "lng": -4.85,
+        "count": 6
+      },
+      {
+        "lat": 55.75,
+        "lng": -4.75,
+        "count": 5
+      },
+      {
+        "lat": 55.75,
+        "lng": -4.65,
+        "count": 12
+      },
+      {
+        "lat": 55.75,
+        "lng": -4.55,
+        "count": 8
+      },
+      {
+        "lat": 55.75,
+        "lng": -4.45,
+        "count": 7
+      },
+      {
+        "lat": 55.75,
+        "lng": -4.35,
+        "count": 35
+      },
+      {
+        "lat": 55.75,
+        "lng": -4.25,
+        "count": 22
+      },
+      {
+        "lat": 55.75,
+        "lng": -4.15,
+        "count": 36
+      },
+      {
+        "lat": 55.75,
+        "lng": -4.05,
+        "count": 55
+      },
+      {
+        "lat": 55.75,
+        "lng": -3.95,
+        "count": 57
+      },
+      {
+        "lat": 55.75,
+        "lng": -3.85,
+        "count": 18
+      },
+      {
+        "lat": 55.75,
+        "lng": -2.05,
+        "count": 12
+      },
+      {
+        "lat": 55.85,
+        "lng": -5.05,
+        "count": 5
+      },
+      {
+        "lat": 55.85,
+        "lng": -4.65,
+        "count": 5
+      },
+      {
+        "lat": 55.85,
+        "lng": -4.55,
+        "count": 18
+      },
+      {
+        "lat": 55.85,
+        "lng": -4.45,
+        "count": 58
+      },
+      {
+        "lat": 55.85,
+        "lng": -4.35,
+        "count": 168
+      },
+      {
+        "lat": 55.85,
+        "lng": -4.25,
+        "count": 341
+      },
+      {
+        "lat": 55.85,
+        "lng": -4.15,
+        "count": 129
+      },
+      {
+        "lat": 55.85,
+        "lng": -4.05,
+        "count": 84
+      },
+      {
+        "lat": 55.85,
+        "lng": -3.95,
+        "count": 53
+      },
+      {
+        "lat": 55.85,
+        "lng": -3.85,
+        "count": 13
+      },
+      {
+        "lat": 55.85,
+        "lng": -3.75,
+        "count": 22
+      },
+      {
+        "lat": 55.85,
+        "lng": -3.65,
+        "count": 39
+      },
+      {
+        "lat": 55.85,
+        "lng": -3.55,
+        "count": 28
+      },
+      {
+        "lat": 55.85,
+        "lng": -3.45,
+        "count": 10
+      },
+      {
+        "lat": 55.85,
+        "lng": -3.25,
+        "count": 22
+      },
+      {
+        "lat": 55.85,
+        "lng": -3.15,
+        "count": 33
+      },
+      {
+        "lat": 55.85,
+        "lng": -3.05,
+        "count": 28
+      },
+      {
+        "lat": 55.85,
+        "lng": -2.15,
+        "count": 7
+      },
+      {
+        "lat": 55.95,
+        "lng": -4.95,
+        "count": 6
+      },
+      {
+        "lat": 55.95,
+        "lng": -4.75,
+        "count": 18
+      },
+      {
+        "lat": 55.95,
+        "lng": -4.65,
+        "count": 14
+      },
+      {
+        "lat": 55.95,
+        "lng": -4.55,
+        "count": 26
+      },
+      {
+        "lat": 55.95,
+        "lng": -4.45,
+        "count": 21
+      },
+      {
+        "lat": 55.95,
+        "lng": -4.35,
+        "count": 31
+      },
+      {
+        "lat": 55.95,
+        "lng": -4.25,
+        "count": 17
+      },
+      {
+        "lat": 55.95,
+        "lng": -4.15,
+        "count": 10
+      },
+      {
+        "lat": 55.95,
+        "lng": -4.05,
+        "count": 35
+      },
+      {
+        "lat": 55.95,
+        "lng": -3.95,
+        "count": 18
+      },
+      {
+        "lat": 55.95,
+        "lng": -3.85,
+        "count": 6
+      },
+      {
+        "lat": 55.95,
+        "lng": -3.75,
+        "count": 22
+      },
+      {
+        "lat": 55.95,
+        "lng": -3.65,
+        "count": 14
+      },
+      {
+        "lat": 55.95,
+        "lng": -3.55,
+        "count": 28
+      },
+      {
+        "lat": 55.95,
+        "lng": -3.45,
+        "count": 29
+      },
+      {
+        "lat": 55.95,
+        "lng": -3.35,
+        "count": 50
+      },
+      {
+        "lat": 55.95,
+        "lng": -3.25,
+        "count": 176
+      },
+      {
+        "lat": 55.95,
+        "lng": -3.15,
+        "count": 186
+      },
+      {
+        "lat": 55.95,
+        "lng": -3.05,
+        "count": 28
+      },
+      {
+        "lat": 55.95,
+        "lng": -2.95,
+        "count": 27
+      },
+      {
+        "lat": 55.95,
+        "lng": -2.85,
+        "count": 8
+      },
+      {
+        "lat": 55.95,
+        "lng": -2.75,
+        "count": 8
+      },
+      {
+        "lat": 55.95,
+        "lng": -2.55,
+        "count": 9
+      },
+      {
+        "lat": 56.05,
+        "lng": -4.75,
+        "count": 8
+      },
+      {
+        "lat": 56.05,
+        "lng": -4.55,
+        "count": 7
+      },
+      {
+        "lat": 56.05,
+        "lng": -4.35,
+        "count": 5
+      },
+      {
+        "lat": 56.05,
+        "lng": -3.95,
+        "count": 19
+      },
+      {
+        "lat": 56.05,
+        "lng": -3.85,
+        "count": 26
+      },
+      {
+        "lat": 56.05,
+        "lng": -3.75,
+        "count": 48
+      },
+      {
+        "lat": 56.05,
+        "lng": -3.65,
+        "count": 5
+      },
+      {
+        "lat": 56.05,
+        "lng": -3.55,
+        "count": 5
+      },
+      {
+        "lat": 56.05,
+        "lng": -3.45,
+        "count": 30
+      },
+      {
+        "lat": 56.05,
+        "lng": -3.35,
+        "count": 25
+      },
+      {
+        "lat": 56.05,
+        "lng": -3.25,
+        "count": 7
+      },
+      {
+        "lat": 56.15,
+        "lng": -4.65,
+        "count": 7
+      },
+      {
+        "lat": 56.15,
+        "lng": -4.05,
+        "count": 8
+      },
+      {
+        "lat": 56.15,
+        "lng": -3.95,
+        "count": 25
+      },
+      {
+        "lat": 56.15,
+        "lng": -3.85,
+        "count": 6
+      },
+      {
+        "lat": 56.15,
+        "lng": -3.75,
+        "count": 16
+      },
+      {
+        "lat": 56.15,
+        "lng": -3.45,
+        "count": 12
+      },
+      {
+        "lat": 56.15,
+        "lng": -3.35,
+        "count": 20
+      },
+      {
+        "lat": 56.15,
+        "lng": -3.25,
+        "count": 19
+      },
+      {
+        "lat": 56.15,
+        "lng": -3.15,
+        "count": 61
+      },
+      {
+        "lat": 56.15,
+        "lng": -3.05,
+        "count": 20
+      },
+      {
+        "lat": 56.25,
+        "lng": -4.75,
+        "count": 5
+      },
+      {
+        "lat": 56.25,
+        "lng": -3.95,
+        "count": 6
+      },
+      {
+        "lat": 56.25,
+        "lng": -3.75,
+        "count": 5
+      },
+      {
+        "lat": 56.25,
+        "lng": -3.15,
+        "count": 12
+      },
+      {
+        "lat": 56.25,
+        "lng": -2.95,
+        "count": 10
+      },
+      {
+        "lat": 56.35,
+        "lng": -3.85,
+        "count": 5
+      },
+      {
+        "lat": 56.35,
+        "lng": -3.45,
+        "count": 22
+      },
+      {
+        "lat": 56.35,
+        "lng": -3.05,
+        "count": 5
+      },
+      {
+        "lat": 56.35,
+        "lng": -2.95,
+        "count": 5
+      },
+      {
+        "lat": 56.35,
+        "lng": -2.85,
+        "count": 6
+      },
+      {
+        "lat": 56.45,
+        "lng": -5.45,
+        "count": 6
+      },
+      {
+        "lat": 56.45,
+        "lng": -3.45,
+        "count": 23
+      },
+      {
+        "lat": 56.45,
+        "lng": -3.05,
+        "count": 42
+      },
+      {
+        "lat": 56.45,
+        "lng": -2.95,
+        "count": 96
+      },
+      {
+        "lat": 56.45,
+        "lng": -2.85,
+        "count": 15
+      },
+      {
+        "lat": 56.55,
+        "lng": -3.35,
+        "count": 5
+      },
+      {
+        "lat": 56.55,
+        "lng": -3.25,
+        "count": 5
+      },
+      {
+        "lat": 56.55,
+        "lng": -2.95,
+        "count": 5
+      },
+      {
+        "lat": 56.55,
+        "lng": -2.85,
+        "count": 6
+      },
+      {
+        "lat": 56.55,
+        "lng": -2.75,
+        "count": 9
+      },
+      {
+        "lat": 56.55,
+        "lng": -2.55,
+        "count": 15
+      },
+      {
+        "lat": 56.65,
+        "lng": -5.05,
+        "count": 6
+      },
+      {
+        "lat": 56.65,
+        "lng": -2.85,
+        "count": 12
+      },
+      {
+        "lat": 56.65,
+        "lng": -2.75,
+        "count": 7
+      },
+      {
+        "lat": 56.65,
+        "lng": -2.65,
+        "count": 6
+      },
+      {
+        "lat": 56.75,
+        "lng": -3.85,
+        "count": 5
+      },
+      {
+        "lat": 56.75,
+        "lng": -2.65,
+        "count": 10
+      },
+      {
+        "lat": 56.75,
+        "lng": -2.45,
+        "count": 6
+      },
+      {
+        "lat": 57.05,
+        "lng": -4.15,
+        "count": 5
+      },
+      {
+        "lat": 57.05,
+        "lng": -2.15,
+        "count": 7
+      },
+      {
+        "lat": 57.15,
+        "lng": -2.25,
+        "count": 11
+      },
+      {
+        "lat": 57.15,
+        "lng": -2.15,
+        "count": 65
+      },
+      {
+        "lat": 57.15,
+        "lng": -2.05,
+        "count": 18
+      },
+      {
+        "lat": 57.25,
+        "lng": -6.05,
+        "count": 5
+      },
+      {
+        "lat": 57.25,
+        "lng": -3.85,
+        "count": 7
+      },
+      {
+        "lat": 57.25,
+        "lng": -2.35,
+        "count": 7
+      },
+      {
+        "lat": 57.35,
+        "lng": -2.45,
+        "count": 5
+      },
+      {
+        "lat": 57.35,
+        "lng": -2.25,
+        "count": 6
+      },
+      {
+        "lat": 57.45,
+        "lng": -4.25,
+        "count": 18
+      },
+      {
+        "lat": 57.45,
+        "lng": -4.15,
+        "count": 15
+      },
+      {
+        "lat": 57.45,
+        "lng": -2.75,
+        "count": 5
+      },
+      {
+        "lat": 57.55,
+        "lng": -4.45,
+        "count": 8
+      },
+      {
+        "lat": 57.55,
+        "lng": -4.15,
+        "count": 5
+      },
+      {
+        "lat": 57.55,
+        "lng": -3.85,
+        "count": 8
+      },
+      {
+        "lat": 57.65,
+        "lng": -3.35,
+        "count": 8
+      },
+      {
+        "lat": 57.65,
+        "lng": -3.25,
+        "count": 8
+      },
+      {
+        "lat": 57.65,
+        "lng": -2.05,
+        "count": 7
+      },
+      {
+        "lat": 58.55,
+        "lng": -3.55,
+        "count": 6
+      },
+      {
+        "lat": 60.15,
+        "lng": -1.15,
+        "count": 5
+      }
+    ],
+    "total": 104258,
+    "valid_coordinates": 104246,
+    "displayed_records": 102547,
+    "cell_degrees": 0.1,
+    "minimum_cell_count": 5,
+    "coverage": "Great Britain, 2023",
+    "coordinate_system": "WGS84 source latitude/longitude"
+  }
+}

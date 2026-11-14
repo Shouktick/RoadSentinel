@@ -1,32 +1,35 @@
-import { describe, expect, it } from "vitest";
+﻿import { describe, expect, it } from "vitest";
 import {
-  convertSpeed,
   defaults,
   readSharedScenario,
   scenarioSchema,
   shareScenario,
+  inputLabel,
 } from "./contracts";
-
-describe("scenario boundaries", () => {
-  it("rejects unsupported categories and missing fields", () => {
+describe("documented scenario contract", () => {
+  it("accepts known mph limits, rejects unknown codes, fractions and legacy fields", () => {
+    expect(scenarioSchema.safeParse(defaults).success).toBe(true);
+    for (const patch of [
+      { speed_limit: 100 },
+      { speed_limit: 30.5 },
+      { weather_conditions: 77 },
+      { hour: 24 },
+      { Age_of_Driver: 35 },
+    ])
+      expect(scenarioSchema.safeParse({ ...defaults, ...patch }).success).toBe(
+        false,
+      );
     expect(
-      scenarioSchema.safeParse({ ...defaults, Vehicle_Type: 99 }).success,
-    ).toBe(false);
-    expect(scenarioSchema.safeParse({}).success).toBe(false);
-    expect(
-      scenarioSchema.safeParse({ ...defaults, Speed_limit: -1 }).success,
-    ).toBe(false);
+      scenarioSchema.safeParse({ ...defaults, speed_limit: -1 }).success,
+    ).toBe(true);
+    expect(inputLabel("speed_limit", 30)).toBe("30 mph");
+    expect(inputLabel("day_of_week", 1)).toBe("Sunday");
   });
-  it("round trips a validated share URL and rejects malformed scenarios", () => {
+  it("shares only current-schema scenarios", () => {
     expect(
       readSharedScenario(decodeURIComponent(shareScenario(defaults))),
     ).toEqual(defaults);
     expect(readSharedScenario("not-json")).toBeNull();
-  });
-  it("preserves canonical speed across display unit changes", () => {
-    expect(convertSpeed(60, "mph", "km/h")).toBeCloseTo(96.56064);
-    expect(
-      convertSpeed(convertSpeed(60, "mph", "km/h"), "km/h", "mph"),
-    ).toBeCloseTo(60);
+    expect(readSharedScenario('{"Speed_limit":30}')).toBeNull();
   });
 });

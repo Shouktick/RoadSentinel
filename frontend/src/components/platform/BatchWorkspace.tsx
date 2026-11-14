@@ -10,7 +10,12 @@ import {
 import { z } from "zod";
 import { api, downloadText } from "@/lib/api";
 import { uploadApi } from "@/lib/upload";
-import { defaults, predictionSchema } from "@/lib/contracts";
+import {
+  defaults,
+  predictionSchema,
+  inputLabel,
+  options,
+} from "@/lib/contracts";
 import { Failure, labels, Limitation, PageTitle, Panel, Status } from "./ui";
 
 const previewSchema = z.object({
@@ -126,7 +131,9 @@ export default function BatchWorkspace() {
           onClick={() =>
             downloadText(
               "roadsentinel-template.csv",
-              `${features.join(",")}\n${Object.values(defaults).join(",")}\n`,
+              `${features.join(",")}\n${Object.entries(defaults)
+                .map(([k, v]) => `"${inputLabel(k, v).replaceAll('"', '""')}"`)
+                .join(",")}\n`,
               "text/csv",
             )
           }
@@ -135,10 +142,27 @@ export default function BatchWorkspace() {
         </button>
       </PageTitle>
       <Limitation>
-        Maximum 2 MiB / 250 rows. Inputs are numeric model codes; speed units
-        and severity meanings remain unverified. Batch exploration is not added
-        to saved prediction history.
+        Maximum 2 MiB / 250 rows. Use the template&apos;s readable category
+        names (or documented codes). Posted speed limits are in mph. Batch
+        exploration is not added to saved prediction history.
       </Limitation>
+      <details className="details-panel">
+        <summary>CSV category guide</summary>
+        <p>
+          Use these labels exactly. The template includes a valid example.
+          Unknown categories are reported per row.
+        </p>
+        <dl>
+          {features.map((f) => (
+            <div key={f}>
+              <dt>
+                {labels[f]} ({f})
+              </dt>
+              <dd>{options[f].map(([, label]) => label).join("; ")}</dd>
+            </div>
+          ))}
+        </dl>
+      </details>
       <Panel
         title="01 / Upload & inspect"
         subtitle="UTF-8 CSV · unique headers · original input columns preserved"
@@ -371,7 +395,11 @@ export default function BatchWorkspace() {
                   ),
                 ).map((id) => (
                   <option key={id} value={id}>
-                    Class {id}
+                    {
+                      batch.data?.rows.find(
+                        (r) => r.prediction?.class_id === id,
+                      )?.prediction?.severity
+                    }
                   </option>
                 ))}
               </select>
@@ -387,7 +415,9 @@ export default function BatchWorkspace() {
                 }}
               >
                 <option value="row">Original row number</option>
-                <option value="confidence">Confidence descending</option>
+                <option value="confidence">
+                  Estimated probability descending
+                </option>
               </select>
             </div>
           </div>
@@ -398,7 +428,7 @@ export default function BatchWorkspace() {
                   <th>CSV row</th>
                   <th>Status</th>
                   <th>Model output</th>
-                  <th>Confidence</th>
+                  <th>Estimated probability</th>
                   <th>Validation details</th>
                 </tr>
               </thead>

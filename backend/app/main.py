@@ -2,6 +2,7 @@ import asyncio
 import hashlib
 import json
 import logging
+import os
 import re
 import time
 from collections import defaultdict, deque
@@ -76,9 +77,9 @@ def create_app(settings=None, model_service=None):
 
     app = FastAPI(
         title="RoadSentinel API",
-        version="1.0.0",
+        version="2.0.0",
         lifespan=lifespan,
-        description="Real Random Forest class inference. Severity meanings and units remain unavailable until verified.",
+        description="Documented STATS19 injury severity estimates conditional on a recorded crash in Great Britain.",
     )
     app.state.model, app.state.store, app.state.settings = model, store, settings
     app.add_middleware(BodyLimit, limit=settings.max_upload_bytes + 65536)
@@ -181,7 +182,7 @@ def create_app(settings=None, model_service=None):
         except Exception:
             database_available = False
         available = model.model is not None
-        return {
+        result = {
             "status": "online" if available and database_available else "degraded",
             "model_available": available,
             "model_version": model.manifest["model_version"],
@@ -191,7 +192,10 @@ def create_app(settings=None, model_service=None):
             "history_durable": settings.history_durable,
             "semantics_verified": model.manifest["semantics_verified"],
             "shap_available": model.explainer is not None,
+            "artifact_sha256": model.manifest["artifact_sha256"],
+            "code_version": os.getenv("RENDER_GIT_COMMIT", "local"),
         }
+        return JSONResponse(result, status_code=200 if available and database_available else 503)
 
     @app.get("/model/metadata")
     def metadata():
@@ -209,49 +213,20 @@ def create_app(settings=None, model_service=None):
         results = model.predict_many([payload.baseline, *payload.scenarios])
         baseline = results[0]
         for result in results[1:]:
-            result["risk_delta"] = (
-                round(result["risk_score"] - baseline["risk_score"], 2)
-                if baseline["risk_score"] is not None
-                else None
-            )
             result["feature_differences"] = [
                 f for f, value in result["scenario"].items() if value != baseline["scenario"][f]
             ]
-        best = None
-        if payload.find_best_change and baseline["risk_score"] is not None:
-            choices = {
-                "Speed_limit": [20, 30, 50, 70],
-                "Weather_Conditions": [1, 2, 3, 4, 5, 6, 7],
-                "Road_Surface_Conditions": [1, 2, 3, 4, 5],
-                "Light_Conditions": [1, 4, 5, 6],
-                "Vehicle_Type": [1, 2, 5, 8, 11],
-                "Age_of_Driver": [20, 35, 60, 75],
-                "Number_of_Vehicles": [1, 2, 3],
-            }
-            candidates = [
-                Scenario(**(baseline["scenario"] | {f: v}))
-                for f, values in choices.items()
-                for v in values
-                if v != baseline["scenario"][f]
-            ]
-            alternatives = model.predict_many(candidates)
-            candidate = min(alternatives, key=lambda r: r["risk_score"])
-            if candidate["risk_score"] < baseline["risk_score"]:
-                best = candidate
         return {
             "baseline": baseline,
             "scenarios": results[1:],
-            "best_change": best,
-            "best_change_status": "available"
-            if baseline["risk_score"] is not None
-            else "requires_verified_severity_labels",
-            "limitation": "Model comparisons are non-causal estimates. Changed weather or age is a hypothetical input, not an actionable safety guarantee.",
+            "model_version": model.manifest["model_version"],
+            "limitation": "Probability differences describe model associations, not the causal effect of changing a road or its speed limit.",
         }
 
     @app.post("/predict/speed-sweep")
     def sweep(payload: SweepRequest, token: str = Depends(bearer)):
         speeds = list(range(payload.start, payload.stop + 1, payload.step))
-        scenarios = [Scenario(**(payload.scenario.model_dump() | {"Speed_limit": s})) for s in speeds]
+        scenarios = [Scenario(**(payload.scenario.model_dump() | {"speed_limit": s})) for s in speeds]
         return {
             "speed_unit": model.manifest["speed_unit"],
             "points": [{"speed": s, "prediction": p} for s, p in zip(speeds, model.predict_many(scenarios))],
@@ -317,12 +292,8 @@ def create_app(settings=None, model_service=None):
     def local(scenario: Scenario, token: str = Depends(bearer)):
         result = model.predict_many([scenario], explain=True)[0]
         if result["explanation"] is None:
-            raise DataUnavailable("Local SHAP is unavailable for the current model runtime.")
+            raise DataUnavailable("Explanations are temporarily unavailable for this model.")
         return result
-
-    @app.get("/explain/global")
-    def global_explanation():
-        return app.state.dataset.global_shap(model)
 
     @app.get("/insights/overview")
     def dataset_overview():
@@ -331,21 +302,21 @@ def create_app(settings=None, model_service=None):
     @app.get("/insights/{dimension}")
     def aggregate(
         dimension: Literal[
-            "hourly", "weekday", "weather", "road-surface", "lighting", "vehicle", "age-groups", "speed-bands"
+            "hourly",
+            "weekday",
+            "weather",
+            "road-surface",
+            "lighting",
+            "road-type",
+            "area-type",
+            "speed-bands",
         ],
-        weather: int | None = Query(None, ge=1, le=7),
-        vehicle: int | None = Query(None),
     ):
-        return app.state.dataset.aggregate(dimension, weather, vehicle)
+        return app.state.dataset.aggregate(dimension)
 
     @app.get("/hotspots")
-    def hotspots(
-        severity: str = Query("", max_length=50),
-        weather: int | None = Query(None, ge=1, le=7),
-        vehicle: int | None = Query(None),
-        hour: int | None = Query(None, ge=0, le=23),
-    ):
-        return app.state.dataset.hotspots(severity, weather, vehicle, hour)
+    def hotspots():
+        return app.state.dataset.hotspots()
 
     @app.get("/activity")
     def activity(token: str = Depends(bearer)):
@@ -355,12 +326,12 @@ def create_app(settings=None, model_service=None):
     def history(
         token: str = Depends(bearer),
         search: str = Query("", max_length=100),
-        class_id: str = Query("", max_length=50),
+        label: str = Query("", max_length=50),
         page: int = Query(1, ge=1),
         limit: int = Query(20, ge=1, le=100),
         order: Literal["newest", "oldest", "confidence"] = "newest",
     ):
-        return store.history(token, search, class_id, page, limit, order)
+        return store.history(token, search, label, page, limit, order)
 
     @app.get("/predictions/{record_id}")
     def detail(record_id: str, token: str = Depends(bearer)):

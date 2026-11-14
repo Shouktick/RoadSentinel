@@ -19,3 +19,8 @@ playwright-report/
 .coverage
 coverage/
 .DS_Store
+
+.env.*
+!.env.example
+.vercel/
+tmp/

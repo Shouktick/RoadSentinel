@@ -6,6 +6,7 @@ import re
 from pydantic import ValidationError
 
 from app.schemas.scenario import FEATURES, Scenario
+from app.domain import CATEGORIES, FIELD_LABELS
 
 
 def read_csv(blob: bytes, max_rows: int):
@@ -43,6 +44,10 @@ def infer_batch(blob: bytes, mapping_text: str, service, max_rows: int):
     for row_number, row in enumerate(rows, start=2):
         try:
             values = {f: row[column] for f, column in mapping.items()}
+            for feature, value in values.items():
+                if isinstance(value, str):
+                    names = {label.casefold(): code for code, label in CATEGORIES[feature].items()}
+                    values[feature] = names.get(value.strip().casefold(), value)
             values = {
                 f: int(v.strip()) if isinstance(v, str) and re.fullmatch(r"[+-]?\d+", v.strip()) else v
                 for f, v in values.items()
@@ -54,7 +59,10 @@ def infer_batch(blob: bytes, mapping_text: str, service, max_rows: int):
                 {"row": row_number, "input": row, "status": "success", "prediction": None, "errors": []}
             )
         except ValidationError as exc:
-            errors = [f"{e['loc'][0]}: {e['msg']}" for e in exc.errors()]
+            errors = [
+                f"{FIELD_LABELS.get(str(e['loc'][0]), str(e['loc'][0])) if e['loc'] else 'Scenario'}: {e['msg']}"
+                for e in exc.errors()
+            ]
             outcomes.append(
                 {"row": row_number, "input": row, "status": "invalid", "prediction": None, "errors": errors}
             )
@@ -76,9 +84,13 @@ def export_csv(batch):
     fieldnames = [f"input:{x}" for x in inputs] + [
         "result:row",
         "result:status",
-        "result:class_id",
+        "result:model_version",
+        "result:speed_unit",
+        "result:probability_fatal",
+        "result:probability_serious",
+        "result:probability_slight",
         "result:label",
-        "result:confidence",
+        "result:estimated_probability",
         "result:errors",
     ]
     writer = csv.DictWriter(output, fieldnames=fieldnames)
@@ -90,9 +102,21 @@ def export_csv(batch):
             {
                 "result:row": row["row"],
                 "result:status": row["status"],
-                "result:class_id": prediction.get("class_id", ""),
+                "result:model_version": batch["model_version"],
+                "result:speed_unit": "mph",
+                **{
+                    f"result:probability_{name}": next(
+                        (
+                            p["probability"]
+                            for p in prediction.get("probabilities", [])
+                            if p["class_id"] == code
+                        ),
+                        "",
+                    )
+                    for code, name in [("1", "fatal"), ("2", "serious"), ("3", "slight")]
+                },
                 "result:label": safe_cell(prediction.get("severity", "")),
-                "result:confidence": prediction.get("confidence", ""),
+                "result:estimated_probability": prediction.get("confidence", ""),
                 "result:errors": safe_cell("; ".join(row["errors"])),
             }
         )

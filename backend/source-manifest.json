@@ -1,0 +1,12 @@
+{
+  "dataset": "Department for Transport STATS19 collisions, Great Britain, 2022–2023",
+  "landing_page": "https://www.gov.uk/government/statistical-data-sets/road-safety-open-data",
+  "license": "Open Government Licence v3.0",
+  "license_url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+  "retrieved": "2026-11-14",
+  "files": {
+    "collisions-2022.csv": {"url": "https://data.dft.gov.uk/road-accidents-safety-data/dft-road-casualty-statistics-collision-2022.csv", "sha256": "b0a704f7826f53774472254cf0dd5c0d2ec3fef006622a10a2a15f31571d4e7a"},
+    "collisions-2023.csv": {"url": "https://data.dft.gov.uk/road-accidents-safety-data/dft-road-casualty-statistics-collision-2023.csv", "sha256": "0c01d4194b4e4c5e1b242a43c633bc30e22cf16e8becca698e63a37f71410cfa"},
+    "codebook.xlsx": {"url": "https://assets.publishing.service.gov.uk/media/6ab2a71d997a4b2950cced58/dft-road-casualty-statistics-road-safety-open-dataset-data-guide-2025.xlsx", "sha256": "51b08606ef3dad1ae5d4c8726241b022fc8e4bbdc910ef0e5cc2fb92b054fc12"}
+  }
+}

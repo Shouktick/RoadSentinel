@@ -1,47 +1,40 @@
-# RoadSentinel API v1
+﻿# API v2
 
-FastAPI interactive documentation: backend `/docs`; OpenAPI: `/openapi.json`. All current resource routes have `/api/v1` aliases. Frontend calls the same-origin `/api/service/...` gateway, which forwards only content type and authorization to the centrally configured backend. No production API URL is embedded in individual components.
+Base: https://roadsentinel-api.onrender.com. Frontend gateway: `/api/service/`. `/api/v1/` aliases remain for route continuity, but the documented input contract is now v2; legacy requests fail validation rather than being reinterpreted.
 
-## Session authorization
-
-Prediction, comparison, sweep, local explanation, batch, activity and history requests require `Authorization: Bearer <64 lowercase hex characters>`. The frontend generates 32 cryptographically random bytes, stores the token in browser storage, and sends it only to the same-origin gateway. Database owners are SHA-256 token hashes. This is anonymous session isolation, not account authentication. Keep the token private. Clearing browser storage loses access to records. No cross-session listing or deletion is permitted.
+All mutation/history calls require `Authorization: Bearer <64 lowercase hexadecimal characters>`. The random browser token is an access capability, not a cross-device account. Use HTTPS. Histories are isolated by a server-side token hash; only explicitly saved requests retain full input/results. Unsaved activity retains summary metadata only.
 
 ## Scenario
 
 ```json
-{"Age_of_Driver":35,"Speed_limit":30,"Weather_Conditions":1,"Road_Surface_Conditions":1,"Light_Conditions":1,"Vehicle_Type":1,"Number_of_Vehicles":1}
+{"speed_limit":30,"weather_conditions":1,"road_surface_conditions":1,"light_conditions":1,"road_type":6,"urban_or_rural_area":1,"hour":12,"day_of_week":2}
 ```
 
-Operational bounds: age integer 16-100; speed-limit integer 10-140 native model units; vehicles integer 1-20. Source UI codes: weather 1-7; surface 1-5; light 1/4/5/6; vehicle 1/2/5/8/11. These categories' training meanings and speed units are unverified. Additional scenario fields are rejected.
+`speed_limit` is mph: 20/30/40/50/60/70 or -1 (unknown). Other categories follow `app/domain.py`, derived from the pinned official codebook. `hour` is 0–23 local time or -1. Weekday: Sunday=1 through Saturday=7 or -1. Extra fields, fractions, booleans and unknown categories are rejected. No age, vehicle count or casualty count is accepted.
 
-## Resource contracts
+## Endpoints
 
-- `GET /health`: status, model availability/version, database availability, class-inference ready, separately verified severity ready, SHAP availability, and history durability flag. HTTP liveness does not imply verified semantics.
-- `GET /model/metadata`: feature order, numeric classes/labels, algorithm, semantic verification, speed units, calibration, source/limitations, operational bounds.
-- `POST /predict`: `{scenario, save:false, explain:true}`. Returns ID, UTC timestamp, version, inputs, numeric class/label, normalized class probabilities, top-class confidence, semantics/calibration flags, nullable risk score, measured latency, explanation/status, saved flag. Single-prediction activity is recorded; raw scenario/result is retained only with save=true.
-- `POST /predict/whatif`: `{baseline, scenarios:[...], find_best_change:false}`; at most eight alternatives. Returns baseline/results, feature differences, nullable index deltas and best-change status. No automatic history writes. Search is withheld when severity semantics are unverified.
-- `POST /predict/speed-sweep`: `{scenario,start:20,stop:100,step:10}`. Native value range 10-140, step 5-50, maximum 27 points. Returns each genuine result and native-unit status. Not actual driving speed and not causal.
-- `POST /batch/preview`: multipart file; returns unique headers, total row count and first five input rows.
-- `POST /predict/batch`: multipart file plus optional JSON `mapping` from all seven feature names to distinct headers. CSV maximum 2 MiB/250 rows, UTF-8, unique headers, no silent invalid-row dropping. Returns total/success/invalid counts, original logical CSV row identifiers, original inputs, validation errors or predictions, model version and safely escaped downloadable CSV. `?format=csv` returns CSV directly. Row progress is not streamed.
-- `GET /metrics`: actual matching held-out evaluation artifact with model version/dataset fingerprint; 503 when absent/mismatched.
-- `POST /explain/local`: scenario directly; genuine prediction plus additive local SHAP. 503 if SHAP unavailable. Does not create history.
-- `GET /explain/global`: cached representative source-sample mean absolute SHAP and dependence values; requires verified data/explainer.
-- `GET /insights/overview`: actual dataset counts, target distribution, missingness and duplicates with provenance.
-- `GET /insights/{hourly,weekday,weather,road-surface,lighting,vehicle,age-groups,speed-bands}`: source counts, denominator, fingerprint/source; optional weather/vehicle code filters. Time dimensions require a verified timestamp column and use UTC.
-- `GET /hotspots`: source coordinate points, count and truncation status; optional severity/weather/vehicle/hour filters. Caps at 2,000 records and reports truncation. Coordinates are limited to India view bounds; a rectangular bound alone does not establish national membership. No city-coordinate guessing. No data yields 503.
-- `GET /activity`: this session's actual single-prediction counts, saved count, measured mean latency and numeric class distribution. Removing a saved record also removes its activity row.
-- `GET /predictions`: saved records only; search ID/label, class_id filter, page>=1, limit 1-100, order newest/oldest/confidence.
-- `GET /predictions/{id}`: owned saved record; cross-session requests return 404.
-- `DELETE /predictions/{id}`: owned deletion, 204; unavailable/cross-session 404. Deletion is permanent.
+| Method / route | Purpose |
+| --- | --- |
+| GET /health | Model/database readiness, deployed code SHA, model version and artifact SHA256; 503 if not ready |
+| GET /model/metadata | Target, labels/definitions, units, provenance, categories, limitations and artifact identity |
+| POST /predict | `{scenario, save: false, explain: true}`; real versioned probabilities and optional explanation |
+| POST /predict/whatif | `{baseline, scenarios: [...]}` up to eight alternatives; individual probabilities and changed inputs; no arbitrary risk score |
+| POST /predict/speed-sweep | `{scenario, start:20, stop:70, step:10}`; documented posted limits only |
+| POST /explain/local | Scenario directly; exact full-pipeline local contributions |
+| POST /batch/preview | Multipart CSV, UTF-8, 2 MiB / 250 rows; header/row preview |
+| POST /predict/batch | Multipart CSV and optional JSON `mapping` of feature → column; readable category labels or documented codes; per-row validation |
+| GET /metrics | Actual held-out evaluation, split counts, selection and baseline evidence matching serving version |
+| GET /insights/overview | 2023 source counts, missing input cells and source fingerprint |
+| GET /insights/{dimension} | weather, road-surface, lighting, road-type, area-type, speed-bands, hourly, weekday |
+| GET /hotspots | Great Britain 2023 aggregate coordinate cells, minimum count five; no individual points |
+| GET /activity | Current token's activity grouped by original label AND model version |
+| GET /predictions | Token-isolated saved history; `search`, `label`, `page`, `limit`, `order=newest/oldest/confidence` |
+| GET /predictions/{id} | Original stored payload with its version/label semantics |
+| DELETE /predictions/{id} | Deletes only the caller's saved record; 204 or 404 |
 
-Legacy `/model-metrics` and `/predict-batch` are aliases without heuristic fallbacks. The old flat `/predict` payload and percentage-scale response are intentionally replaced; old clients need the new contract.
+Result fields include `schema_version=2`, `model_version`, `artifact_sha256`, `code_version`, source label definitions, `speed_unit=mph`, original scenario, three probabilities, most likely outcome, latency and explanation. `confidence` is retained as an internal compatibility field meaning the selected outcome's estimated probability, not accuracy. `risk_score` is always null; no combined safety index is shown. CSV exports include model version, speed unit and all three probabilities; spreadsheet formula-leading cells are escaped.
 
-## Errors, limits and retries
+History is a snapshot. Old schemas/labels are returned unchanged; filtering by a label never silently remaps old class IDs. The UI identifies legacy records and prevents reusing their input dictionaries as new scenarios. Global SHAP and live GPS-speed prediction have been removed because they do not represent the supported release.
 
-```json
-{"error":{"code":"CAPABILITY_UNAVAILABLE","message":"A safe explanation of the unavailable capability.","request_id":"opaque-id","details":null}}
-```
-
-422 invalid fields/CSV; 413 upload/row/body budget; 429 rate limit with Retry-After; 503 unavailable service/capability; 500 safe internal error. Validation details omit raw input. No stack traces/environment values are returned. Limits are process-local and require an external gateway for distributed production abuse protection. Query retries are bounded. Mutations are not automatically retried; they do not have an idempotency-key implementation, so a user retry after an uncertain timeout can create another activity record.
-
-Gateway and API share a bounded request envelope. The API avoids whole unbounded file reads. CSV exports prefix potentially executable untrusted text. Unexpected errors are logged with request identifiers without payload logging.
+Errors: structured `error.code`, `message`, request ID and validation details. 401 for missing token, 422 for invalid data, 413 for oversized batch, 429 with Retry-After, and 503 for unavailable capabilities. The gateway has a bounded timeout and explains free-host wakeup delays. Mutations are never automatically retried.

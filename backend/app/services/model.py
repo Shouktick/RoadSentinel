@@ -1,13 +1,12 @@
-"""One pinned model path for all inference; never substitute a heuristic."""
+"""Integrity-pinned inference and exact interventional Shapley explanations."""
 
 import hashlib
-import io
 import json
 import logging
-import tempfile
+import math
+import os
 import threading
 import time
-import zipfile
 from datetime import datetime, timezone
 from uuid import uuid4
 
@@ -15,8 +14,7 @@ import joblib
 import numpy as np
 import pandas as pd
 import sklearn
-
-from app.schemas.scenario import FEATURES, Scenario
+from app.domain import CATEGORIES, DEFINITIONS, FEATURES, FIELD_LABELS, LABELS
 
 logger = logging.getLogger("roadsentinel.model")
 
@@ -25,146 +23,71 @@ class ModelUnavailable(Exception):
     pass
 
 
-class BoundedForestExplainer:
-    """Exact Tree SHAP without duplicating the whole forest into dense SHAP arrays."""
-
-    def __init__(self, model):
-        self.model = model
-        self.expected_value = None
-
-    def shap_values(self, frame, check_additivity=True):
-        import shap
-
-        values = np.zeros((len(frame), self.model.n_features_in_, len(self.model.classes_)))
-        expected = np.zeros(len(self.model.classes_))
-        for tree in self.model.estimators_:
-            explainer = shap.TreeExplainer(tree, feature_perturbation="tree_path_dependent")
-            values += np.asarray(explainer.shap_values(frame, check_additivity=check_additivity))
-            expected += np.asarray(explainer.expected_value)
-        count = len(self.model.estimators_)
-        self.expected_value = expected / count
-        return values / count
-
-
-def severity_index(probabilities: list[dict], verified: bool) -> float | None:
-    if not verified:
-        return None
-    weights = {"Slight": 0.0, "Serious": 0.5, "Fatal": 1.0}
-    if {p["label"] for p in probabilities} != set(weights):
-        return None
-    return round(100 * sum(p["probability"] * weights[p["label"]] for p in probabilities), 2)
-
-
 class ModelService:
     def __init__(self, settings):
         self.settings = settings
         self.manifest = json.loads(settings.model_manifest.read_text(encoding="utf-8"))
         self.model = None
         self.explainer = None
+        self.background = None
         self.failure = None
         self.lock = threading.Lock()
 
     def initialize(self):
         try:
             m = self.manifest
+            if (
+                m["class_labels"] != {str(code): label for code, label in LABELS.items()}
+                or m["class_definitions"] != DEFINITIONS
+                or m["speed_unit"] != "mph"
+            ):
+                raise ValueError("Manifest does not match the reviewed source semantics")
             if sklearn.__version__ != m["sklearn_version"]:
                 raise ValueError("Model runtime version does not match its manifest")
-            with self.settings.model_archive.open("rb") as archive_file:
-                if hashlib.file_digest(archive_file, "sha256").hexdigest() != m["archive_sha256"]:
-                    raise ValueError("Model archive checksum mismatch")
-            with zipfile.ZipFile(self.settings.model_archive) as archive:
-                if set(archive.namelist()) != {"rf_model.pkl", "feature_names.pkl"}:
-                    raise ValueError("Unexpected archive members")
-                if sum(i.file_size for i in archive.infolist()) > 200 * 1024 * 1024:
-                    raise ValueError("Model archive expands beyond its budget")
-                names_bytes = archive.read("feature_names.pkl")
-                if hashlib.sha256(names_bytes).hexdigest() != m["features_sha256"]:
-                    raise ValueError("Feature checksum mismatch")
-                # Stream the large member to an anonymous temporary file. Holding its
-                # full bytes alongside deserialization creates an avoidable RAM peak.
-                with tempfile.TemporaryFile() as model_file, archive.open("rf_model.pkl") as member:
-                    digest = hashlib.sha256()
-                    while chunk := member.read(1024 * 1024):
-                        digest.update(chunk)
-                        model_file.write(chunk)
-                    if digest.hexdigest() != m["model_sha256"]:
-                        raise ValueError("Model checksum mismatch")
-                    model_file.seek(0)
-                    # Only the explicitly pinned trusted artifact reaches deserialization.
-                    model = joblib.load(model_file)
-                names = joblib.load(io.BytesIO(names_bytes))
+            path = self.settings.model_archive
+            if path.stat().st_size > 15 * 1024 * 1024:
+                raise ValueError("Artifact exceeds serving budget")
+            if hashlib.sha256(path.read_bytes()).hexdigest() != m["artifact_sha256"]:
+                raise ValueError("Model artifact checksum mismatch")
+            bundle = joblib.load(path)
+            model = bundle["model"]
             if (
-                list(names) != FEATURES
-                or list(model.feature_names_in_) != FEATURES
+                bundle["features"] != FEATURES
                 or m["feature_order"] != FEATURES
+                or list(model.feature_names_in_) != FEATURES
             ):
                 raise ValueError("Feature order mismatch")
-            if not hasattr(model, "predict_proba"):
-                raise ValueError("Estimator has no probability interface")
-            labels = m.get("class_labels", {})
-            if m["semantics_verified"] and (
-                set(labels) != {str(c) for c in model.classes_}
-                or set(labels.values()) != {"Slight", "Serious", "Fatal"}
-                or m["speed_unit"] not in {"mph", "km/h"}
-            ):
-                raise ValueError("Verified metadata needs complete severity labels and speed units")
-            model.n_jobs = 1
+            if bundle["model_version"] != m["model_version"]:
+                raise ValueError("Artifact model version mismatch")
+            if set(str(c) for c in model.classes_) != set(m["class_labels"]):
+                raise ValueError("Class mapping mismatch")
+            self.background = bundle["background"][FEATURES].to_numpy()
             self.model = model
-            if self.settings.shap_enabled:
-                try:
-                    import shap
-
-                    # Training path counts supply the background, not invented records.
-                    self.explainer = (
-                        BoundedForestExplainer(model)
-                        if isinstance(model, sklearn.ensemble.RandomForestClassifier)
-                        else shap.TreeExplainer(model, feature_perturbation="tree_path_dependent")
-                    )
-                except Exception:
-                    logger.exception("shap_initialization_failed")
-            logger.info("model_initialized version=%s", m["model_version"])
+            self.explainer = self if self.settings.shap_enabled else None
+            logger.info("model_initialized version=%s sha256=%s", m["model_version"], m["artifact_sha256"])
         except Exception:
+            self.model = None
             self.failure = "Model failed integrity or compatibility checks. See server logs."
             logger.exception("model_initialization_failed")
 
     def metadata(self):
-        ids = [str(c) for c in self.model.classes_] if self.model is not None else []
         return {
-            **{
-                k: self.manifest[k]
-                for k in [
-                    "model_version",
-                    "feature_order",
-                    "semantics_verified",
-                    "speed_unit",
-                    "calibrated",
-                    "provenance",
-                    "limitations",
-                ]
-            },
-            "algorithm": type(self.model).__name__ if self.model is not None else "Unavailable",
-            "classes": [{"id": c, "label": self.label(c)} for c in ids],
-            "operational_bounds": {"age": [16, 100], "speed_limit": [10, 140], "vehicles": [1, 20]},
-            "category_source": "Existing UI codes; training codebook unavailable",
+            **self.manifest,
+            "classes": [{"id": c, "label": label} for c, label in self.manifest["class_labels"].items()],
+            "category_source": self.manifest["source"]["files"]["codebook.xlsx"]["url"],
+            "input_labels": FIELD_LABELS,
+            "categories": CATEGORIES,
         }
-
-    def label(self, class_id: str) -> str:
-        return (
-            self.manifest["class_labels"].get(class_id, f"Class {class_id}")
-            if self.manifest["semantics_verified"]
-            else f"Class {class_id}"
-        )
 
     def frame(self, scenarios):
         return pd.DataFrame([s.model_dump() for s in scenarios], columns=FEATURES)
 
-    def predict_many(self, scenarios: list[Scenario], explain=False):
+    def predict_many(self, scenarios, explain=False):
         if self.model is None:
-            raise ModelUnavailable("The model is not ready. Try again after service startup.")
+            raise ModelUnavailable("The service is waking up. Please wait about a minute and try again.")
         started = time.perf_counter()
-        frame = self.frame(scenarios)
         with self.lock:
-            matrix = self.model.predict_proba(frame)
+            matrix = self.model.predict_proba(self.frame(scenarios))
         if (
             not np.isfinite(matrix).all()
             or np.any(matrix < 0)
@@ -172,25 +95,30 @@ class ModelService:
         ):
             raise RuntimeError("Invalid model probabilities")
         latency = (time.perf_counter() - started) * 1000 / len(scenarios)
-        results = []
         ids = [str(c) for c in self.model.classes_]
+        results = []
         for row, scenario in zip(matrix, scenarios):
-            class_index = int(np.argmax(row))
-            probabilities = [
-                {"class_id": c, "label": self.label(c), "probability": float(p)} for c, p in zip(ids, row)
-            ]
+            index = int(np.argmax(row))
             result = {
                 "id": str(uuid4()),
                 "created_at": datetime.now(timezone.utc).isoformat(),
                 "model_version": self.manifest["model_version"],
+                "artifact_sha256": self.manifest["artifact_sha256"],
+                "code_version": os.getenv("RENDER_GIT_COMMIT", "local"),
+                "schema_version": 2,
                 "scenario": scenario.model_dump(),
-                "class_id": ids[class_index],
-                "severity": self.label(ids[class_index]),
-                "semantics_verified": self.manifest["semantics_verified"],
-                "probabilities": probabilities,
-                "confidence": float(row[class_index]),
+                "class_id": ids[index],
+                "severity": self.manifest["class_labels"][ids[index]],
+                "semantics_verified": True,
+                "class_definitions": DEFINITIONS,
+                "speed_unit": "mph",
+                "probabilities": [
+                    {"class_id": c, "label": self.manifest["class_labels"][c], "probability": float(p)}
+                    for c, p in zip(ids, row)
+                ],
+                "confidence": float(row[index]),
                 "calibrated": self.manifest["calibrated"],
-                "risk_score": severity_index(probabilities, self.manifest["semantics_verified"]),
+                "risk_score": None,
                 "latency_ms": round(latency, 3),
                 "explanation": None,
                 "explanation_status": "not_requested",
@@ -201,31 +129,40 @@ class ModelService:
                     result["explanation_status"] = "unavailable"
                 else:
                     explain_started = time.perf_counter()
-                    try:
-                        result["explanation"] = self.explain(scenario, class_index, float(row[class_index]))
-                        result["explanation_status"] = "available"
-                    except Exception:
-                        logger.exception("local_explanation_failed")
-                        result["explanation_status"] = "unavailable"
+                    result["explanation"] = self.explain(scenario, index, float(row[index]))
+                    result["explanation_status"] = "available"
                     result["latency_ms"] += round((time.perf_counter() - explain_started) * 1000, 3)
             results.append(result)
         return results
 
-    def explain(self, scenario: Scenario, class_index: int, expected_output: float):
+    def explain(self, scenario, class_index, expected_output):
+        # Exact enumeration of every coalition of the eight ORIGINAL inputs.
+        # Each coalition replaces absent features with each of 16 real fit rows.
+        # This explains the complete pipeline, including calibration when selected.
+        n = len(FEATURES)
+        masks = np.arange(2**n)
+        present = (masks[:, None] & (1 << np.arange(n))) != 0
+        values = np.asarray([scenario.model_dump()[f] for f in FEATURES])
+        hybrid = np.where(present[:, None, :], values[None, None, :], self.background[None, :, :])
         with self.lock:
-            values = np.asarray(self.explainer.shap_values(self.frame([scenario]), check_additivity=True))
-        if values.shape != (1, len(FEATURES), len(self.model.classes_)):
-            raise ValueError("Unexpected multiclass SHAP shape")
-        contributions = values[0, :, class_index]
-        base = float(np.asarray(self.explainer.expected_value)[class_index])
-        if not np.isclose(base + contributions.sum(), expected_output, atol=1e-5):
-            raise ValueError("SHAP additivity check failed")
+            probabilities = self.model.predict_proba(pd.DataFrame(hybrid.reshape(-1, n), columns=FEATURES))
+        coalition = probabilities.reshape(2**n, len(self.background), -1).mean(axis=1)[:, class_index]
+        contributions = np.zeros(n)
+        for feature in range(n):
+            for mask in masks[~present[:, feature]]:
+                size = int(mask).bit_count()
+                weight = 1 / (n * math.comb(n - 1, size))
+                contributions[feature] += weight * (coalition[mask | (1 << feature)] - coalition[mask])
+        base = float(coalition[0])
+        if not np.isclose(base + contributions.sum(), expected_output, atol=1e-8):
+            raise ValueError("Shapley additivity check failed")
         return {
             "class_id": str(self.model.classes_[class_index]),
             "base_value": base,
             "output_value": expected_output,
             "output_space": "class_probability",
-            "method": "Tree SHAP / tree_path_dependent; background from fitted tree path counts",
+            "method": "Exact interventional Shapley values; all 256 input coalitions; 16 seeded real training reference rows; complete serving pipeline",
+            "reference_rows": len(self.background),
             "contributions": [
                 {"feature": f, "value": scenario.model_dump()[f], "contribution": float(v)}
                 for f, v in zip(FEATURES, contributions)

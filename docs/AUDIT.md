@@ -1,3 +1,5 @@
+> Historical document from before the documented-model replacement. It is retained for project history, not as the current contract. See [README](../README.md), [MODEL_CARD.md](MODEL_CARD.md) and [RELEASE.md](RELEASE.md) for the current release.
+
 # RoadSentinel Phase 0 Audit and Implementation Plan
 
 Audit date: 14 November 2026 (Asia/Calcutta).

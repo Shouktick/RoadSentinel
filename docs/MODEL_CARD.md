@@ -1,33 +1,31 @@
-# RoadSentinel model card
+﻿# Model card — stats19-gb-2022-v1
 
-## Current artifact
+## Intended task
 
-Original repository artifact `backend/rf_model.zip`, version `legacy-rf-e76f2cb`. RandomForestClassifier, 200 estimators, max-depth configuration 20, serialized scikit-learn 1.8.0, numeric classes 1/2/3. Feature order and all archive/member SHA-256 hashes are in `backend/model_metadata.json`. The loader checks these before deserializing only this trusted artifact in a matching runtime.
+Estimate the distribution of **recorded injury severity**, conditional on a police-recorded personal-injury crash in Great Britain. The target is the most severely injured casualty in a collision. The model does not predict crash occurrence, actual speed, individual injuries, safe routes or causal effects of road changes.
 
-Actual inference and local Tree SHAP are tested. The former hand-written danger-score path and fabricated output probabilities have been removed.
+Official STATS19 labels: fatal injury, serious injury, slight injury. Definitions, units, licence and eligibility are documented in [DATASET.md](DATASET.md). The original undocumented model was retired and its meanings were not guessed.
 
-## Inputs and outputs
+## Model and evidence
 
-Ordered inputs: Age_of_Driver, Speed_limit, Weather_Conditions, Road_Surface_Conditions, Light_Conditions, Vehicle_Type, Number_of_Vehicles. Current operational API bounds and provisional UI code choices are documented in API.md. They are safeguards, not recovered training distributions.
+Multinomial logistic regression, C=1, max_iter=1000, random_state=20261114, with one-hot categorical preprocessing. Eight inputs: posted limit in mph, weather, surface, lighting, road type, urban/rural area, local hour and weekday. Missing values are explicit categories. No injury fields, counts of casualties/vehicles, post-crash assessments, coordinates or administrative IDs are inputs.
 
-Outputs: numeric predicted class and normalized estimator probabilities, top-class confidence, actual version/latency, optional local Tree SHAP, and optional server persistence. The highest probability determines the displayed class. No original class-to-severity meaning or speed unit is verified. Source once mapped 1=Slight, 2=Serious, 3=Fatal; this is insufficient training evidence and is not used as truth.
+The 2022 data supply separate fitting, calibration and validation partitions. All 104,258 records from 2023 were held out. Lowest validation log loss selected the unweighted logistic model over class-balanced alternatives and a prior baseline. Sigmoid calibration worsened its validation probability quality and was rejected. See [training](TRAINING.md) and [complete evaluation](EVALUATION.md).
 
-Severity-weighted index is null until a reviewed manifest supplies complete labels and units with `semantics_verified=true`. Proposed formula is 100 times (0*p(Slight)+0.5*p(Serious)+1*p(Fatal)). These are product weights, not a probability of crashing. Class probabilities are uncalibrated.
+Test: macro F1 0.288007; balanced accuracy 0.333333; log loss 0.590404; multiclass Brier 0.363452. The prior baseline has log loss 0.605443 and Brier 0.370785.
 
-## Dataset and methodology
+**The most likely output was slight injury for every test record. Fatal and serious recall are both zero.** The apparent 76.06% accuracy reflects the majority class; it is not evidence of effective severe-injury classification. Probabilities improve modestly on the prior baseline, but are not individual safety measurements. No subgroup, India, prospective, uncertainty-interval or current-year performance claim is supported.
 
-The user confirmed the original dataset/training material is unavailable. Source, license, row count, dates, geography, sampling, missingness, duplicate handling, label encoding, preprocessing, split protocol, leakage, and class balance remain unknown. No application history is reclassified as training observations.
+## Explanations
 
-## Evaluation
+Exact interventional Shapley values for all 256 feature subsets, using 16 fixed real fitting records as the reference. Every prediction's original feature contributions are preserved with its model version. A separate SHAP implementation verifies per-feature fidelity in tests. Contributions shift a probability from its reference value; they do not establish causation. Feature independence and a small reference sample can yield unrealistic combinations. No unverified global explanation is presented.
 
-No genuine accuracy, precision, recall, F1, confusion matrix, or ROC-AUC is available. Earlier dashboard/API values were hardcoded and inconsistent; they have been removed. Endpoint `/metrics` returns a structured unavailable response until a matching held-out artifact exists.
+## Release integrity and operations
 
-`backend/scripts/train.py` supports a future reviewed dataset, reproducible fingerprints, duplicate removal, time/group/stratified separation, RF/gradient-boosting validation comparison and one held-out test evaluation. It outputs a new artifact/manifest/metrics without replacing this legacy artifact. It has not been run to manufacture product metrics. Full cross-validation/calibration, sensitivity analysis and external validation remain future work.
+Artifact: `backend/release/model.joblib` (3,569 bytes). SHA256: `e49395dcc9860c39980391616afb78b41fbf0dc8d14c69654484f2437cd71687`. The loader checks checksum, version, class set and feature order before loading. scikit-learn 1.8.0; runtime dependency versions are pinned. Source and codebook checksums, split hashes and selection results ship with the release.
 
-## Explainability
+No training at service startup or deployment. One Render worker. The live frontend uses the actual backend through its same-origin gateway. Free-host cold starts may take about a minute. Temporary SQLite history is token-isolated and can disappear on restart/sleep/redeploy; no paid resource or unverified durability claim. Legacy records retain original label text, units and model identity, and cannot be shared as new-model scenarios.
 
-Local Tree SHAP uses fitted tree-path counts as background. Explained output is the selected class probability. The service verifies expected value plus seven signed contributions reconstructs that output. Global mean absolute SHAP and dependence views require verified representative records; they are unavailable without data. Impurity importance is not substituted for SHAP.
+## Limits and non-use
 
-## Intended use, limitations and ethics
-
-Intended: research/demonstration and model-behavior inspection. Excluded: live safety decisions, emergency services, insurance, enforcement, causal recommendations or claims of India validity. The model classifies an incident dataset; it does not estimate whether an individual will crash. What-If inputs are hypothetical, and changing driver age/weather in a model is not an actionable safety intervention. Sampling bias, confounding, age-group bias and geographic domain shift cannot be quantified without data. General safety guidance is not derived as a guarantee from this model.
+This is an educational model-behaviour explorer. Do not use it for emergency response, insurance, enforcement, individual driving decisions or to claim an intervention will prevent a crash. Police under-reporting, force-specific injury recording, historical distribution shifts and omitted driver/vehicle characteristics limit validity. Training roads can recur in the temporal test; unseen-location generalisation is not measured. Map counts have no exposure denominator and are not safety scores.

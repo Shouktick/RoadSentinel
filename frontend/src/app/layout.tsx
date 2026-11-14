@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: "%s | RoadSentinel",
   },
   description:
-    "Inspect real road accident severity model responses, compare scenarios, and understand genuine SHAP explanations with transparent limitations.",
+    "Explore documented Great Britain injury severity estimates, road scenarios, source observations and model limitations.",
   icons: { icon: "/icon.svg", apple: "/icon.svg" },
   manifest: "/manifest.webmanifest",
 };

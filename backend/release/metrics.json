@@ -1,0 +1,900 @@
+{
+  "accuracy": 0.7605939112586084,
+  "macro_f1": 0.28800656657005674,
+  "weighted_f1": 0.6571681228070467,
+  "balanced_accuracy": 0.3333333333333333,
+  "log_loss": 0.59040353510403,
+  "brier_multiclass": 0.3634522892285941,
+  "ece_10_bins": 0.006849669392148534,
+  "reliability": [
+    {
+      "lower": 0.4,
+      "count": 41,
+      "mean_probability": 0.4813686400594341,
+      "observed_correct": 0.6341463414634146
+    },
+    {
+      "lower": 0.5,
+      "count": 1514,
+      "mean_probability": 0.5670126338706956,
+      "observed_correct": 0.6056803170409512
+    },
+    {
+      "lower": 0.6,
+      "count": 15285,
+      "mean_probability": 0.6617271799127311,
+      "observed_correct": 0.6465816159633627
+    },
+    {
+      "lower": 0.7,
+      "count": 58990,
+      "mean_probability": 0.7604807945848758,
+      "observed_correct": 0.7610442447872521
+    },
+    {
+      "lower": 0.8,
+      "count": 25787,
+      "mean_probability": 0.8336291266759648,
+      "observed_correct": 0.8190173343157405
+    },
+    {
+      "lower": 0.9,
+      "count": 2641,
+      "mean_probability": 0.9277569438046505,
+      "observed_correct": 0.9307080651268459
+    }
+  ],
+  "class_counts": {
+    "Fatal injury": 1522,
+    "Serious injury": 23438,
+    "Slight injury": 79298
+  },
+  "confusion_matrix": [
+    [
+      0,
+      0,
+      1522
+    ],
+    [
+      0,
+      0,
+      23438
+    ],
+    [
+      0,
+      0,
+      79298
+    ]
+  ],
+  "classification_report": {
+    "Fatal injury": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 1522.0
+    },
+    "Serious injury": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 23438.0
+    },
+    "Slight injury": {
+      "precision": 0.7605939112586084,
+      "recall": 1.0,
+      "f1-score": 0.8640196997101702,
+      "support": 79298.0
+    },
+    "accuracy": 0.7605939112586084,
+    "macro avg": {
+      "precision": 0.2535313037528695,
+      "recall": 0.3333333333333333,
+      "f1-score": 0.28800656657005674,
+      "support": 104258.0
+    },
+    "weighted avg": {
+      "precision": 0.5785030978436679,
+      "recall": 0.7605939112586084,
+      "f1-score": 0.6571681228070467,
+      "support": 104258.0
+    }
+  },
+  "model_version": "stats19-gb-2022-v1",
+  "dataset_sha256": "0c01d4194b4e4c5e1b242a43c633bc30e22cf16e8becca698e63a37f71410cfa",
+  "evaluation_set": "held_out_test",
+  "test_size": 104258,
+  "class_labels": [
+    "Fatal injury",
+    "Serious injury",
+    "Slight injury"
+  ],
+  "split": "2022 stratified 60% fit / 20% calibration / 20% validation; all 2023 held out for test",
+  "splits": {
+    "fit_2022": {
+      "size": 63602,
+      "class_counts": {
+        "Fatal injury": 961,
+        "Serious injury": 14000,
+        "Slight injury": 48641
+      },
+      "collision_ids_sha256": "e976dc8a2d7e0a6efec6da488c36ea4d4c6998dc961dd00459f4d94e2f04e6d5"
+    },
+    "calibration_2022": {
+      "size": 21201,
+      "class_counts": {
+        "Fatal injury": 321,
+        "Serious injury": 4666,
+        "Slight injury": 16214
+      },
+      "collision_ids_sha256": "9ed8c801ea6f5799b1ae24acf5bd203ee965e43cfacd1822e827943e4e77a7e3"
+    },
+    "validation_2022": {
+      "size": 21201,
+      "class_counts": {
+        "Fatal injury": 320,
+        "Serious injury": 4667,
+        "Slight injury": 16214
+      },
+      "collision_ids_sha256": "72f4f7d8cf69537f22e542974143beda4ae6a48c89c6f6f50014f052f9afcd4a"
+    }
+  },
+  "selected_model": "logistic",
+  "comparison": [
+    {
+      "candidate": "prior_baseline",
+      "validation": {
+        "accuracy": 0.7647752464506391,
+        "macro_f1": 0.2889037373602388,
+        "weighted_f1": 0.662839280820562,
+        "balanced_accuracy": 0.3333333333333333,
+        "log_loss": 0.6015626410324548,
+        "brier_multiclass": 0.36643329265347946,
+        "ece_10_bins": 3.6983861126937967e-06,
+        "reliability": [
+          {
+            "lower": 0.7,
+            "count": 21201,
+            "mean_probability": 0.7647715480645264,
+            "observed_correct": 0.7647752464506391
+          }
+        ],
+        "class_counts": {
+          "Fatal injury": 320,
+          "Serious injury": 4667,
+          "Slight injury": 16214
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            320
+          ],
+          [
+            0,
+            0,
+            4667
+          ],
+          [
+            0,
+            0,
+            16214
+          ]
+        ],
+        "classification_report": {
+          "Fatal injury": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 320.0
+          },
+          "Serious injury": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 4667.0
+          },
+          "Slight injury": {
+            "precision": 0.7647752464506391,
+            "recall": 1.0,
+            "f1-score": 0.8667112120807163,
+            "support": 16214.0
+          },
+          "accuracy": 0.7647752464506391,
+          "macro avg": {
+            "precision": 0.25492508215021303,
+            "recall": 0.3333333333333333,
+            "f1-score": 0.2889037373602388,
+            "support": 21201.0
+          },
+          "weighted avg": {
+            "precision": 0.5848811775836358,
+            "recall": 0.7647752464506391,
+            "f1-score": 0.662839280820562,
+            "support": 21201.0
+          }
+        }
+      },
+      "fit_seconds": 0.06700120000004972,
+      "calibration_selected": false,
+      "validation_macro_f1": 0.2889037373602388,
+      "selected_log_loss": 0.6015626410324548
+    },
+    {
+      "candidate": "logistic",
+      "validation": {
+        "accuracy": 0.7647752464506391,
+        "macro_f1": 0.2889037373602388,
+        "weighted_f1": 0.662839280820562,
+        "balanced_accuracy": 0.3333333333333333,
+        "log_loss": 0.5842213560505847,
+        "brier_multiclass": 0.3582636328021125,
+        "ece_10_bins": 0.008069572416392988,
+        "reliability": [
+          {
+            "lower": 0.4,
+            "count": 7,
+            "mean_probability": 0.4897377204629262,
+            "observed_correct": 0.5714285714285714
+          },
+          {
+            "lower": 0.5,
+            "count": 311,
+            "mean_probability": 0.5678989251349251,
+            "observed_correct": 0.5659163987138264
+          },
+          {
+            "lower": 0.6,
+            "count": 3097,
+            "mean_probability": 0.6620532348261527,
+            "observed_correct": 0.6393283823054569
+          },
+          {
+            "lower": 0.7,
+            "count": 12086,
+            "mean_probability": 0.7602963997080879,
+            "observed_correct": 0.7664239616084726
+          },
+          {
+            "lower": 0.8,
+            "count": 5317,
+            "mean_probability": 0.833877224202719,
+            "observed_correct": 0.8365619710362987
+          },
+          {
+            "lower": 0.9,
+            "count": 383,
+            "mean_probability": 0.924760372917596,
+            "observed_correct": 0.8955613577023499
+          }
+        ],
+        "class_counts": {
+          "Fatal injury": 320,
+          "Serious injury": 4667,
+          "Slight injury": 16214
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            320
+          ],
+          [
+            0,
+            0,
+            4667
+          ],
+          [
+            0,
+            0,
+            16214
+          ]
+        ],
+        "classification_report": {
+          "Fatal injury": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 320.0
+          },
+          "Serious injury": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 4667.0
+          },
+          "Slight injury": {
+            "precision": 0.7647752464506391,
+            "recall": 1.0,
+            "f1-score": 0.8667112120807163,
+            "support": 16214.0
+          },
+          "accuracy": 0.7647752464506391,
+          "macro avg": {
+            "precision": 0.25492508215021303,
+            "recall": 0.3333333333333333,
+            "f1-score": 0.2889037373602388,
+            "support": 21201.0
+          },
+          "weighted avg": {
+            "precision": 0.5848811775836358,
+            "recall": 0.7647752464506391,
+            "f1-score": 0.662839280820562,
+            "support": 21201.0
+          }
+        }
+      },
+      "fit_seconds": 0.46145069999965926,
+      "calibrated_validation": {
+        "accuracy": 0.7647752464506391,
+        "macro_f1": 0.2889037373602388,
+        "weighted_f1": 0.662839280820562,
+        "balanced_accuracy": 0.3333333333333333,
+        "log_loss": 0.58952600500193,
+        "brier_multiclass": 0.36207511837371137,
+        "ece_10_bins": 0.007400497985669498,
+        "reliability": [
+          {
+            "lower": 0.5,
+            "count": 74,
+            "mean_probability": 0.5774836967183575,
+            "observed_correct": 0.5405405405405406
+          },
+          {
+            "lower": 0.6,
+            "count": 1384,
+            "mean_probability": 0.6713536171498881,
+            "observed_correct": 0.6567919075144508
+          },
+          {
+            "lower": 0.7,
+            "count": 16466,
+            "mean_probability": 0.7634032871599074,
+            "observed_correct": 0.7603546702295639
+          },
+          {
+            "lower": 0.8,
+            "count": 3277,
+            "mean_probability": 0.8120804907761547,
+            "observed_correct": 0.8376563930424168
+          }
+        ],
+        "class_counts": {
+          "Fatal injury": 320,
+          "Serious injury": 4667,
+          "Slight injury": 16214
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            320
+          ],
+          [
+            0,
+            0,
+            4667
+          ],
+          [
+            0,
+            0,
+            16214
+          ]
+        ],
+        "classification_report": {
+          "Fatal injury": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 320.0
+          },
+          "Serious injury": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 4667.0
+          },
+          "Slight injury": {
+            "precision": 0.7647752464506391,
+            "recall": 1.0,
+            "f1-score": 0.8667112120807163,
+            "support": 16214.0
+          },
+          "accuracy": 0.7647752464506391,
+          "macro avg": {
+            "precision": 0.25492508215021303,
+            "recall": 0.3333333333333333,
+            "f1-score": 0.2889037373602388,
+            "support": 21201.0
+          },
+          "weighted avg": {
+            "precision": 0.5848811775836358,
+            "recall": 0.7647752464506391,
+            "f1-score": 0.662839280820562,
+            "support": 21201.0
+          }
+        }
+      },
+      "calibration_selected": false,
+      "validation_macro_f1": 0.2889037373602388,
+      "selected_log_loss": 0.5842213560505847
+    },
+    {
+      "candidate": "logistic_balanced",
+      "validation": {
+        "accuracy": 0.46233668223197016,
+        "macro_f1": 0.3155386563952519,
+        "weighted_f1": 0.5398964660962726,
+        "balanced_accuracy": 0.49307879038283814,
+        "log_loss": 1.0225842090670152,
+        "brier_multiclass": 0.6248028493978321,
+        "ece_10_bins": 0.06627585391536163,
+        "reliability": [
+          {
+            "lower": 0.3,
+            "count": 5419,
+            "mean_probability": 0.37946682293382183,
+            "observed_correct": 0.32293781140431815
+          },
+          {
+            "lower": 0.4,
+            "count": 9957,
+            "mean_probability": 0.44144925107743016,
+            "observed_correct": 0.5049713769207592
+          },
+          {
+            "lower": 0.5,
+            "count": 3472,
+            "mean_probability": 0.5425857189384315,
+            "observed_correct": 0.4927995391705069
+          },
+          {
+            "lower": 0.6,
+            "count": 1575,
+            "mean_probability": 0.644721531325153,
+            "observed_correct": 0.5707936507936507
+          },
+          {
+            "lower": 0.7,
+            "count": 608,
+            "mean_probability": 0.7379511707198693,
+            "observed_correct": 0.47039473684210525
+          },
+          {
+            "lower": 0.8,
+            "count": 169,
+            "mean_probability": 0.8356821392191208,
+            "observed_correct": 0.7514792899408284
+          },
+          {
+            "lower": 0.9,
+            "count": 1,
+            "mean_probability": 0.9047629578883243,
+            "observed_correct": 1.0
+          }
+        ],
+        "class_counts": {
+          "Fatal injury": 320,
+          "Serious injury": 4667,
+          "Slight injury": 16214
+        },
+        "confusion_matrix": [
+          [
+            229,
+            47,
+            44
+          ],
+          [
+            1687,
+            1135,
+            1845
+          ],
+          [
+            4112,
+            3664,
+            8438
+          ]
+        ],
+        "classification_report": {
+          "Fatal injury": {
+            "precision": 0.03798938287989383,
+            "recall": 0.715625,
+            "f1-score": 0.07214870825456837,
+            "support": 320.0
+          },
+          "Serious injury": {
+            "precision": 0.23421378456458936,
+            "recall": 0.2431969145061067,
+            "f1-score": 0.23862083464732473,
+            "support": 4667.0
+          },
+          "Slight injury": {
+            "precision": 0.8170814370097802,
+            "recall": 0.5204144566424078,
+            "f1-score": 0.6358464262838627,
+            "support": 16214.0
+          },
+          "accuracy": 0.46233668223197016,
+          "macro avg": {
+            "precision": 0.36309486815142117,
+            "recall": 0.49307879038283814,
+            "f1-score": 0.3155386563952519,
+            "support": 21201.0
+          },
+          "weighted avg": {
+            "precision": 0.6770147990548125,
+            "recall": 0.46233668223197016,
+            "f1-score": 0.5398964660962726,
+            "support": 21201.0
+          }
+        }
+      },
+      "fit_seconds": 0.7786394999998265,
+      "calibrated_validation": {
+        "accuracy": 0.7647752464506391,
+        "macro_f1": 0.2889037373602388,
+        "weighted_f1": 0.662839280820562,
+        "balanced_accuracy": 0.3333333333333333,
+        "log_loss": 0.5887051257295585,
+        "brier_multiclass": 0.36155531515940253,
+        "ece_10_bins": 0.007941509770079895,
+        "reliability": [
+          {
+            "lower": 0.5,
+            "count": 50,
+            "mean_probability": 0.5768167675958111,
+            "observed_correct": 0.52
+          },
+          {
+            "lower": 0.6,
+            "count": 1482,
+            "mean_probability": 0.6699882268516656,
+            "observed_correct": 0.655195681511471
+          },
+          {
+            "lower": 0.7,
+            "count": 16215,
+            "mean_probability": 0.7614916432923986,
+            "observed_correct": 0.7580018501387604
+          },
+          {
+            "lower": 0.8,
+            "count": 3356,
+            "mean_probability": 0.8193380024945768,
+            "observed_correct": 0.8444576877234803
+          },
+          {
+            "lower": 0.9,
+            "count": 98,
+            "mean_probability": 0.9110622607442683,
+            "observed_correct": 0.9387755102040817
+          }
+        ],
+        "class_counts": {
+          "Fatal injury": 320,
+          "Serious injury": 4667,
+          "Slight injury": 16214
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            320
+          ],
+          [
+            0,
+            0,
+            4667
+          ],
+          [
+            0,
+            0,
+            16214
+          ]
+        ],
+        "classification_report": {
+          "Fatal injury": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 320.0
+          },
+          "Serious injury": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 4667.0
+          },
+          "Slight injury": {
+            "precision": 0.7647752464506391,
+            "recall": 1.0,
+            "f1-score": 0.8667112120807163,
+            "support": 16214.0
+          },
+          "accuracy": 0.7647752464506391,
+          "macro avg": {
+            "precision": 0.25492508215021303,
+            "recall": 0.3333333333333333,
+            "f1-score": 0.2889037373602388,
+            "support": 21201.0
+          },
+          "weighted avg": {
+            "precision": 0.5848811775836358,
+            "recall": 0.7647752464506391,
+            "f1-score": 0.662839280820562,
+            "support": 21201.0
+          }
+        }
+      },
+      "calibration_selected": true,
+      "validation_macro_f1": 0.2889037373602388,
+      "selected_log_loss": 0.5887051257295585
+    },
+    {
+      "candidate": "forest_balanced",
+      "validation": {
+        "accuracy": 0.528041130135371,
+        "macro_f1": 0.3328573084444368,
+        "weighted_f1": 0.5866107492574568,
+        "balanced_accuracy": 0.47539405459589057,
+        "log_loss": 0.9686356737623555,
+        "brier_multiclass": 0.5954194126888194,
+        "ece_10_bins": 0.0683066241522024,
+        "reliability": [
+          {
+            "lower": 0.3,
+            "count": 4236,
+            "mean_probability": 0.37513040283619725,
+            "observed_correct": 0.3640226628895184
+          },
+          {
+            "lower": 0.4,
+            "count": 11257,
+            "mean_probability": 0.443030061653175,
+            "observed_correct": 0.5485475704006396
+          },
+          {
+            "lower": 0.5,
+            "count": 4074,
+            "mean_probability": 0.5360322251477283,
+            "observed_correct": 0.5763377515954835
+          },
+          {
+            "lower": 0.6,
+            "count": 1267,
+            "mean_probability": 0.6361404102256507,
+            "observed_correct": 0.6495659037095501
+          },
+          {
+            "lower": 0.7,
+            "count": 332,
+            "mean_probability": 0.7410565778031581,
+            "observed_correct": 0.8283132530120482
+          },
+          {
+            "lower": 0.8,
+            "count": 35,
+            "mean_probability": 0.8250935684315553,
+            "observed_correct": 0.9142857142857143
+          }
+        ],
+        "class_counts": {
+          "Fatal injury": 320,
+          "Serious injury": 4667,
+          "Slight injury": 16214
+        },
+        "confusion_matrix": [
+          [
+            193,
+            64,
+            63
+          ],
+          [
+            1365,
+            947,
+            2355
+          ],
+          [
+            3395,
+            2764,
+            10055
+          ]
+        ],
+        "classification_report": {
+          "Fatal injury": {
+            "precision": 0.03896628306077125,
+            "recall": 0.603125,
+            "f1-score": 0.073203110183956,
+            "support": 320.0
+          },
+          "Serious injury": {
+            "precision": 0.2508609271523179,
+            "recall": 0.20291407756588814,
+            "f1-score": 0.22435441838426914,
+            "support": 4667.0
+          },
+          "Slight injury": {
+            "precision": 0.8061412651326866,
+            "recall": 0.6201430862217836,
+            "f1-score": 0.7010143967650853,
+            "support": 16214.0
+          },
+          "accuracy": 0.528041130135371,
+          "macro avg": {
+            "precision": 0.36532282511525854,
+            "recall": 0.47539405459589057,
+            "f1-score": 0.3328573084444368,
+            "support": 21201.0
+          },
+          "weighted avg": {
+            "precision": 0.672327325619579,
+            "recall": 0.528041130135371,
+            "f1-score": 0.5866107492574568,
+            "support": 21201.0
+          }
+        }
+      },
+      "fit_seconds": 23.43392760000006,
+      "calibrated_validation": {
+        "accuracy": 0.7647752464506391,
+        "macro_f1": 0.2889037373602388,
+        "weighted_f1": 0.662839280820562,
+        "balanced_accuracy": 0.3333333333333333,
+        "log_loss": 0.5916698819011602,
+        "brier_multiclass": 0.3628327296139052,
+        "ece_10_bins": 0.006602000881230386,
+        "reliability": [
+          {
+            "lower": 0.5,
+            "count": 1,
+            "mean_probability": 0.5997668163939444,
+            "observed_correct": 0.0
+          },
+          {
+            "lower": 0.6,
+            "count": 834,
+            "mean_probability": 0.6826473100974342,
+            "observed_correct": 0.6103117505995204
+          },
+          {
+            "lower": 0.7,
+            "count": 20366,
+            "mean_probability": 0.767257124754723,
+            "observed_correct": 0.771138171462241
+          }
+        ],
+        "class_counts": {
+          "Fatal injury": 320,
+          "Serious injury": 4667,
+          "Slight injury": 16214
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            320
+          ],
+          [
+            0,
+            0,
+            4667
+          ],
+          [
+            0,
+            0,
+            16214
+          ]
+        ],
+        "classification_report": {
+          "Fatal injury": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 320.0
+          },
+          "Serious injury": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1-score": 0.0,
+            "support": 4667.0
+          },
+          "Slight injury": {
+            "precision": 0.7647752464506391,
+            "recall": 1.0,
+            "f1-score": 0.8667112120807163,
+            "support": 16214.0
+          },
+          "accuracy": 0.7647752464506391,
+          "macro avg": {
+            "precision": 0.25492508215021303,
+            "recall": 0.3333333333333333,
+            "f1-score": 0.2889037373602388,
+            "support": 21201.0
+          },
+          "weighted avg": {
+            "precision": 0.5848811775836358,
+            "recall": 0.7647752464506391,
+            "f1-score": 0.662839280820562,
+            "support": 21201.0
+          }
+        }
+      },
+      "calibration_selected": true,
+      "validation_macro_f1": 0.2889037373602388,
+      "selected_log_loss": 0.5916698819011602
+    }
+  ],
+  "rule": "Lowest validation log loss (probability estimation is the product); ties use higher macro F1. Calibration only if validation log loss and Brier both improve. Class-weighted models are compared honestly, including their uncalibrated probability distortion.",
+  "test_used_for_selection": false,
+  "baseline_test": {
+    "accuracy": 0.7605939112586084,
+    "macro_f1": 0.28800656657005674,
+    "weighted_f1": 0.6571681228070467,
+    "balanced_accuracy": 0.3333333333333333,
+    "log_loss": 0.6054434810237366,
+    "brier_multiclass": 0.37078499104476637,
+    "ece_10_bins": 0.004177636805917984,
+    "reliability": [
+      {
+        "lower": 0.7,
+        "count": 104258,
+        "mean_probability": 0.7647715480645264,
+        "observed_correct": 0.7605939112586084
+      }
+    ],
+    "class_counts": {
+      "Fatal injury": 1522,
+      "Serious injury": 23438,
+      "Slight injury": 79298
+    },
+    "confusion_matrix": [
+      [
+        0,
+        0,
+        1522
+      ],
+      [
+        0,
+        0,
+        23438
+      ],
+      [
+        0,
+        0,
+        79298
+      ]
+    ],
+    "classification_report": {
+      "Fatal injury": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 1522.0
+      },
+      "Serious injury": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 23438.0
+      },
+      "Slight injury": {
+        "precision": 0.7605939112586084,
+        "recall": 1.0,
+        "f1-score": 0.8640196997101702,
+        "support": 79298.0
+      },
+      "accuracy": 0.7605939112586084,
+      "macro avg": {
+        "precision": 0.2535313037528695,
+        "recall": 0.3333333333333333,
+        "f1-score": 0.28800656657005674,
+        "support": 104258.0
+      },
+      "weighted avg": {
+        "precision": 0.5785030978436679,
+        "recall": 0.7605939112586084,
+        "f1-score": 0.6571681228070467,
+        "support": 104258.0
+      }
+    }
+  }
+}

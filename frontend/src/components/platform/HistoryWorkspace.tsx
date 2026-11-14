@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Download, ExternalLink, Trash2 } from "lucide-react";
 import { z } from "zod";
 import { api, downloadText } from "@/lib/api";
-import { predictionSchema } from "@/lib/contracts";
+import { predictionSchema, inputLabel } from "@/lib/contracts";
 import PredictionResult from "./PredictionResult";
 import {
   Empty,
@@ -40,7 +40,7 @@ export default function HistoryWorkspace() {
     queryKey: ["history", search, filter, order, page],
     queryFn: () =>
       api(
-        `predictions?${new URLSearchParams({ search, class_id: filter, order, page: String(page), limit: "10" })}`,
+        `predictions?${new URLSearchParams({ search, label: filter, order, page: String(page), limit: "10" })}`,
         historySchema,
       ),
   });
@@ -67,9 +67,9 @@ export default function HistoryWorkspace() {
       />
       {!health.data?.history_durable && (
         <Limitation>
-          The backend stores records in a database, but this deployment has not
-          confirmed durable storage. Records may be lost on a host restart or
-          redeployment. Export results you need to retain.
+          History is temporary on this free backend. Records may be lost when
+          the service sleeps, restarts or redeploys. Export results you need to
+          retain.
         </Limitation>
       )}
       <Panel
@@ -105,7 +105,7 @@ export default function HistoryWorkspace() {
             />
           </div>
           <div className="field">
-            <label htmlFor="history-class">Model class</label>
+            <label htmlFor="history-class">Injury outcome</label>
             <select
               id="history-class"
               value={filter}
@@ -114,9 +114,9 @@ export default function HistoryWorkspace() {
                 setPage(1);
               }}
             >
-              <option value="">All model classes</option>
+              <option value="">All injury outcomes</option>
               {metadata.data?.classes.map((c) => (
-                <option key={c.id} value={c.id}>
+                <option key={c.id} value={c.label}>
                   {c.label}
                 </option>
               ))}
@@ -134,7 +134,9 @@ export default function HistoryWorkspace() {
             >
               <option value="newest">Newest first</option>
               <option value="oldest">Oldest first</option>
-              <option value="confidence">Confidence descending</option>
+              <option value="confidence">
+                Estimated probability descending
+              </option>
             </select>
           </div>
         </div>
@@ -151,8 +153,8 @@ export default function HistoryWorkspace() {
                     <th>Prediction ID</th>
                     <th>Created</th>
                     <th>Output</th>
-                    <th>Confidence</th>
-                    <th>Severity index</th>
+                    <th>Estimated probability</th>
+                    <th>Model version</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -163,7 +165,7 @@ export default function HistoryWorkspace() {
                       <td>{new Date(row.created_at).toLocaleString()}</td>
                       <td>{row.severity}</td>
                       <td>{(row.confidence * 100).toFixed(1)}%</td>
-                      <td>{row.risk_score ?? "Withheld"}</td>
+                      <td>{row.model_version}</td>
                       <td>
                         <div className="actions">
                           <button
@@ -260,10 +262,15 @@ export default function HistoryWorkspace() {
                       {Object.entries(detail.data.scenario).map(
                         ([key, value]) => (
                           <tr key={key}>
-                            <td>{labels[key]}</td>
+                            <td>
+                              {detail.data.schema_version === 2
+                                ? labels[key]
+                                : key}
+                            </td>
                             <td className="mono">
-                              {value}
-                              {key === "Speed_limit" ? " model units" : ""}
+                              {detail.data.schema_version === 2
+                                ? inputLabel(key, value)
+                                : value}
                             </td>
                           </tr>
                         ),

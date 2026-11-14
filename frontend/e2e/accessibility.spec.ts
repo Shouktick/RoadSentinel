@@ -40,14 +40,14 @@ test("responsive HUD, keyboard navigation, themes and accessibility", async ({
     .getByRole("link", { name: "Documentation" })
     .click();
   await expect(
-    page.getByRole("heading", { name: "Engineering you can inspect." }),
+    page.getByRole("heading", { name: "How to use RoadSentinel." }),
   ).toBeVisible();
   if (testInfo.project.name === "mobile") {
     await page.getByRole("button", { name: "Open navigation" }).click();
     await page.getByRole("link", { name: "Model card", exact: true }).click();
     await expect(
       page.getByRole("heading", {
-        name: "Trust starts with what we can verify.",
+        name: "The evidence and its limits.",
       }),
     ).toBeVisible();
   }

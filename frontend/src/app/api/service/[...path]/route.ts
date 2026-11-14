@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 
 export const maxDuration = 60;
 const allowed =
-  /^(health|model\/metadata|metrics|activity|predictions(?:\/[a-f0-9-]+)?|predict(?:\/whatif|\/speed-sweep|\/batch)?|batch\/preview|explain\/(?:local|global)|insights\/(?:overview|hourly|weekday|weather|road-surface|lighting|vehicle|age-groups|speed-bands)|hotspots)$/;
+  /^(health|model\/metadata|metrics|activity|predictions(?:\/[a-f0-9-]+)?|predict(?:\/whatif|\/speed-sweep|\/batch)?|batch\/preview|explain\/local|insights\/(?:overview|hourly|weekday|weather|road-surface|lighting|road-type|area-type|speed-bands)|hotspots)$/;
 
 async function proxy(
   request: NextRequest,
@@ -86,7 +86,7 @@ async function proxy(
         error: {
           code: "BACKEND_UNAVAILABLE",
           message:
-            "The backend may be waking up or unavailable. Wait a moment, then retry.",
+            "The free backend may be waking up. Wait about a minute, then retry. Your result has not been confirmed; check history before saving the same scenario again.",
         },
       },
       { status: 503 },

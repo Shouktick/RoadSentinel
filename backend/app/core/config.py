@@ -15,13 +15,15 @@ class Settings:
         )
     )
     model_archive: Path = field(
-        default_factory=lambda: Path(os.getenv("MODEL_ARCHIVE", str(BACKEND / "rf_model.zip")))
+        default_factory=lambda: Path(os.getenv("MODEL_ARCHIVE", str(BACKEND / "release" / "model.joblib")))
     )
     model_manifest: Path = field(
-        default_factory=lambda: Path(os.getenv("MODEL_MANIFEST", str(BACKEND / "model_metadata.json")))
+        default_factory=lambda: Path(
+            os.getenv("MODEL_MANIFEST", str(BACKEND / "release" / "model_metadata.json"))
+        )
     )
     metrics_path: Path = field(
-        default_factory=lambda: Path(os.getenv("METRICS_PATH", str(BACKEND / "artifacts" / "metrics.json")))
+        default_factory=lambda: Path(os.getenv("METRICS_PATH", str(BACKEND / "release" / "metrics.json")))
     )
     dataset_path: str | None = field(default_factory=lambda: os.getenv("DATASET_PATH"))
     dataset_manifest: str | None = field(default_factory=lambda: os.getenv("DATASET_MANIFEST"))

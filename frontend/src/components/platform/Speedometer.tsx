@@ -26,13 +26,13 @@ function arc(start: number, end: number, radius: number, max: number) {
 
 export default function Speedometer({
   value,
-  max = 140,
-  unit = "model units",
+  max = 70,
+  unit = "mph",
   label = "Posted speed limit",
   compact = false,
   legalLimit,
   onChange,
-  min = 10,
+  min = 20,
 }: Props) {
   const reduced = useReducedMotion();
   const bounded = Math.max(0, Math.min(max, value));
@@ -49,16 +49,6 @@ export default function Speedometer({
           stroke="var(--stroke)"
           strokeWidth="12"
         />
-        {[0, 1, 2].map((zone) => (
-          <path
-            key={zone}
-            d={arc((zone * max) / 3, ((zone + 1) * max) / 3 - 1, 143, max)}
-            fill="none"
-            stroke={["var(--teal)", "var(--amber)", "var(--red)"][zone]}
-            strokeOpacity={0.45}
-            strokeWidth="3"
-          />
-        ))}
         <path
           d={arc(0, bounded, 143, max)}
           fill="none"
@@ -170,7 +160,7 @@ export default function Speedometer({
             type="range"
             min={min}
             max={max}
-            step="1"
+            step="10"
             value={value}
             onChange={(event) => onChange(Number(event.target.value))}
             aria-valuetext={`${value} ${unit}`}
@@ -178,7 +168,7 @@ export default function Speedometer({
         </label>
       )}
       <p className="microcopy">
-        Color bands mark the gauge scale, not legal or safe driving thresholds.
+        The gauge shows a posted limit, not a safe driving speed.
       </p>
     </div>
   );

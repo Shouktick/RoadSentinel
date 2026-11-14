@@ -26,17 +26,25 @@ export async function api<T>(
   schema: z.ZodType<T>,
   options: RequestInit = {},
 ): Promise<T> {
-  const response = await fetch(`/api/service/${path}`, {
-    ...options,
-    signal: options.signal ?? AbortSignal.timeout(55000),
-    headers: {
-      ...(options.body && !(options.body instanceof FormData)
-        ? { "Content-Type": "application/json" }
-        : {}),
-      Authorization: `Bearer ${sessionToken()}`,
-      ...options.headers,
-    },
-  });
+  let response: Response;
+  try {
+    response = await fetch(`/api/service/${path}`, {
+      ...options,
+      signal: options.signal ?? AbortSignal.timeout(55000),
+      headers: {
+        ...(options.body && !(options.body instanceof FormData)
+          ? { "Content-Type": "application/json" }
+          : {}),
+        Authorization: `Bearer ${sessionToken()}`,
+        ...options.headers,
+      },
+    });
+  } catch {
+    throw new ApiError(
+      503,
+      "The connection timed out or is unavailable. The free service may need about a minute to wake up. Please retry; check history before saving again.",
+    );
+  }
   const body: unknown = await response.json().catch(() => null);
   if (!response.ok) {
     const parsed = z

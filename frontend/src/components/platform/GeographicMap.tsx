@@ -4,40 +4,31 @@ import "leaflet/dist/leaflet.css";
 export default function GeographicMap({
   points,
 }: {
-  points: { lat: number; lng: number; severity: string; city: string }[];
+  points: { lat: number; lng: number; count: number }[];
 }) {
   return (
     <MapContainer
-      center={[22.5, 79]}
-      zoom={4}
+      center={[54, -2]}
+      zoom={5}
       style={{ height: "100%", width: "100%" }}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      {points.map((p, i) => (
+      {points.map((p) => (
         <CircleMarker
-          key={`${p.lat}-${p.lng}-${i}`}
+          key={`${p.lat}:${p.lng}`}
           center={[p.lat, p.lng]}
-          radius={5}
-          pathOptions={{
-            color:
-              p.severity === "Fatal"
-                ? "#b73a35"
-                : p.severity === "Serious"
-                  ? "#966413"
-                  : "#247966",
-            fillOpacity: 0.55,
-            weight: 1,
-          }}
+          radius={Math.min(16, 3 + Math.log2(p.count))}
+          pathOptions={{ color: "#3676ad", fillOpacity: 0.35, weight: 1 }}
         >
           <Popup>
-            <strong>{p.city}</strong>
+            <strong>{p.count} recorded crashes</strong>
             <br />
-            Source severity: {p.severity}
+            0.1° cell centred at {p.lat}, {p.lng}
             <br />
-            Verified source coordinates
+            Great Britain, 2023. This marker is not a crash location.
           </Popup>
         </CircleMarker>
       ))}

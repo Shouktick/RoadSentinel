@@ -1,3 +1,5 @@
+> Historical document from before the documented-model replacement. It is retained for project history, not as the current contract. See [README](../README.md), [MODEL_CARD.md](MODEL_CARD.md) and [RELEASE.md](RELEASE.md) for the current release.
+
 # RoadSentinel design system
 
 The interface resembles a restrained automotive instrument panel: graphite surfaces, fine structural borders, tabular metrics, and a single lime interactive accent. Teal/amber/red are reserved for explicitly identified severity or status; unknown numeric classes use neutral class palettes.

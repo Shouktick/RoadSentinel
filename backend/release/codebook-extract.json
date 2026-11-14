@@ -1,0 +1,386 @@
+{
+  "source": {
+    "url": "https://assets.publishing.service.gov.uk/media/6ab2a71d997a4b2950cced58/dft-road-casualty-statistics-road-safety-open-dataset-data-guide-2025.xlsx",
+    "sha256": "51b08606ef3dad1ae5d4c8726241b022fc8e4bbdc910ef0e5cc2fb92b054fc12"
+  },
+  "columns": [
+    "table",
+    "field",
+    "code_or_format",
+    "label",
+    "note"
+  ],
+  "rows": [
+    [
+      "collision",
+      "longitude",
+      null,
+      null,
+      "Null if not known"
+    ],
+    [
+      "collision",
+      "latitude",
+      null,
+      null,
+      "Null if not known"
+    ],
+    [
+      "collision",
+      "collision_severity",
+      1,
+      "Fatal",
+      null
+    ],
+    [
+      "collision",
+      "collision_severity",
+      2,
+      "Serious",
+      null
+    ],
+    [
+      "collision",
+      "collision_severity",
+      3,
+      "Slight",
+      null
+    ],
+    [
+      "collision",
+      "day_of_week",
+      1,
+      "Sunday",
+      null
+    ],
+    [
+      "collision",
+      "day_of_week",
+      2,
+      "Monday",
+      null
+    ],
+    [
+      "collision",
+      "day_of_week",
+      3,
+      "Tuesday",
+      null
+    ],
+    [
+      "collision",
+      "day_of_week",
+      4,
+      "Wednesday",
+      null
+    ],
+    [
+      "collision",
+      "day_of_week",
+      5,
+      "Thursday",
+      null
+    ],
+    [
+      "collision",
+      "day_of_week",
+      6,
+      "Friday",
+      null
+    ],
+    [
+      "collision",
+      "day_of_week",
+      7,
+      "Saturday",
+      null
+    ],
+    [
+      "collision",
+      "time",
+      "(HH:MM)",
+      null,
+      "Null if not known"
+    ],
+    [
+      "collision",
+      "road_type",
+      1,
+      "Roundabout",
+      null
+    ],
+    [
+      "collision",
+      "road_type",
+      2,
+      "One way street",
+      null
+    ],
+    [
+      "collision",
+      "road_type",
+      3,
+      "Dual carriageway",
+      null
+    ],
+    [
+      "collision",
+      "road_type",
+      6,
+      "Single carriageway",
+      null
+    ],
+    [
+      "collision",
+      "road_type",
+      7,
+      "Slip road",
+      null
+    ],
+    [
+      "collision",
+      "road_type",
+      9,
+      "Unknown",
+      null
+    ],
+    [
+      "collision",
+      "road_type",
+      12,
+      "One way street/Slip road",
+      null
+    ],
+    [
+      "collision",
+      "road_type",
+      -1,
+      "Data missing or out of range",
+      null
+    ],
+    [
+      "collision",
+      "speed_limit",
+      null,
+      null,
+      "20,30,40,50,60,70 are the only valid speed limits on public highways"
+    ],
+    [
+      "collision",
+      "speed_limit",
+      -1,
+      "Data missing or out of range",
+      null
+    ],
+    [
+      "collision",
+      "speed_limit",
+      99,
+      "unknown (self reported)",
+      null
+    ],
+    [
+      "collision",
+      "light_conditions",
+      1,
+      "Daylight",
+      null
+    ],
+    [
+      "collision",
+      "light_conditions",
+      4,
+      "Darkness - lights lit",
+      null
+    ],
+    [
+      "collision",
+      "light_conditions",
+      5,
+      "Darkness - lights unlit",
+      null
+    ],
+    [
+      "collision",
+      "light_conditions",
+      6,
+      "Darkness - no lighting",
+      null
+    ],
+    [
+      "collision",
+      "light_conditions",
+      7,
+      "Darkness - lighting unknown",
+      null
+    ],
+    [
+      "collision",
+      "light_conditions",
+      -1,
+      "Data missing or out of range",
+      null
+    ],
+    [
+      "collision",
+      "weather_conditions",
+      1,
+      "Fine no high winds",
+      null
+    ],
+    [
+      "collision",
+      "weather_conditions",
+      2,
+      "Raining no high winds",
+      null
+    ],
+    [
+      "collision",
+      "weather_conditions",
+      3,
+      "Snowing no high winds",
+      null
+    ],
+    [
+      "collision",
+      "weather_conditions",
+      4,
+      "Fine + high winds",
+      null
+    ],
+    [
+      "collision",
+      "weather_conditions",
+      5,
+      "Raining + high winds",
+      null
+    ],
+    [
+      "collision",
+      "weather_conditions",
+      6,
+      "Snowing + high winds",
+      null
+    ],
+    [
+      "collision",
+      "weather_conditions",
+      7,
+      "Fog or mist",
+      null
+    ],
+    [
+      "collision",
+      "weather_conditions",
+      8,
+      "Other",
+      null
+    ],
+    [
+      "collision",
+      "weather_conditions",
+      9,
+      "Unknown",
+      null
+    ],
+    [
+      "collision",
+      "weather_conditions",
+      -1,
+      "Data missing or out of range",
+      null
+    ],
+    [
+      "collision",
+      "road_surface_conditions",
+      1,
+      "Dry",
+      null
+    ],
+    [
+      "collision",
+      "road_surface_conditions",
+      2,
+      "Wet or damp",
+      null
+    ],
+    [
+      "collision",
+      "road_surface_conditions",
+      3,
+      "Snow",
+      null
+    ],
+    [
+      "collision",
+      "road_surface_conditions",
+      4,
+      "Frost or ice",
+      null
+    ],
+    [
+      "collision",
+      "road_surface_conditions",
+      5,
+      "Flood over 3cm. deep",
+      null
+    ],
+    [
+      "collision",
+      "road_surface_conditions",
+      6,
+      "Oil or diesel",
+      null
+    ],
+    [
+      "collision",
+      "road_surface_conditions",
+      7,
+      "Mud",
+      null
+    ],
+    [
+      "collision",
+      "road_surface_conditions",
+      -1,
+      "Data missing or out of range",
+      null
+    ],
+    [
+      "collision",
+      "road_surface_conditions",
+      9,
+      "unknown (self reported)",
+      null
+    ],
+    [
+      "collision",
+      "urban_or_rural_area",
+      1,
+      "Urban",
+      "field introduced in 1994"
+    ],
+    [
+      "collision",
+      "urban_or_rural_area",
+      2,
+      "Rural",
+      "field introduced in 1994"
+    ],
+    [
+      "collision",
+      "urban_or_rural_area",
+      3,
+      "Unallocated",
+      "field introduced in 1994"
+    ],
+    [
+      "collision",
+      "urban_or_rural_area",
+      -1,
+      "Data missing or out of range",
+      "field introduced in 1994"
+    ]
+  ]
+}

@@ -1,3 +1,5 @@
+> Historical document from before the documented-model replacement. It is retained for project history, not as the current contract. See [README](../README.md), [MODEL_CARD.md](MODEL_CARD.md) and [RELEASE.md](RELEASE.md) for the current release.
+
 # RoadSentinel implementation record
 
 The user authorized all remaining phases and repository deployment on 14 November 2026, superseding the Phase 0 approval boundary. The user confirmed that the original dataset/training material is unavailable.

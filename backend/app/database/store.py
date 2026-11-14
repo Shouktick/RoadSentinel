@@ -84,14 +84,14 @@ class Store:
                 )
             )
 
-    def history(self, token: str, search="", class_id="", page=1, limit=20, order="newest"):
+    def history(self, token: str, search="", label="", page=1, limit=20, order="newest"):
         condition = (records.c.owner == self.owner(token)) & records.c.saved.is_(True)
         if search:
             condition &= records.c.id.contains(search, autoescape=True) | records.c.severity.contains(
                 search, autoescape=True
             )
-        if class_id:
-            condition &= records.c.class_id == class_id
+        if label:
+            condition &= records.c.severity == label
         with self.engine.connect() as connection:
             total = connection.scalar(select(func.count()).select_from(records).where(condition))
             ordering = {
@@ -139,7 +139,9 @@ class Store:
                 select(func.count(), func.avg(records.c.latency_ms)).select_from(records).where(condition)
             ).one()
             distribution = connection.execute(
-                select(records.c.class_id, func.count()).where(condition).group_by(records.c.class_id)
+                select(records.c.model_version, records.c.severity, func.count())
+                .where(condition)
+                .group_by(records.c.model_version, records.c.severity)
             ).all()
             saved = connection.scalar(
                 select(func.count()).select_from(records).where(condition, records.c.saved.is_(True))
@@ -148,6 +150,8 @@ class Store:
             "prediction_count": total,
             "saved_count": saved,
             "average_latency_ms": round(latency, 2) if latency is not None else None,
-            "class_distribution": [{"class_id": c, "count": n} for c, n in distribution],
+            "class_distribution": [
+                {"model_version": v, "label": label, "count": n} for v, label, n in distribution
+            ],
             "scope": "This browser's actual single-prediction activity. Deleted saved records are removed from activity too.",
         }

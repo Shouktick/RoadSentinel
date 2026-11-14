@@ -176,12 +176,4 @@ export function Stat({
     </div>
   );
 }
-export const labels: Record<string, string> = {
-  Age_of_Driver: "Driver age",
-  Speed_limit: "Speed limit",
-  Weather_Conditions: "Weather",
-  Road_Surface_Conditions: "Road surface",
-  Light_Conditions: "Lighting",
-  Vehicle_Type: "Vehicle type",
-  Number_of_Vehicles: "Vehicles involved",
-};
+export { labels } from "@/lib/contracts";

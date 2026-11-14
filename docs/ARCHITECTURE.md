@@ -1,35 +1,17 @@
-# RoadSentinel architecture
+﻿# Architecture
 
-The existing Next.js/FastAPI monorepo is retained. `backend/main.py` remains compatible with provider start commands and imports the app factory in `backend/app/main.py`. No FastAPI inference is moved into a serverless JavaScript runtime.
+Next.js 16 / React frontend → same-origin `/api/service/*` gateway → FastAPI on Render → integrity-pinned scikit-learn pipeline. SQLAlchemy manages token-isolated temporary SQLite history. No paid/durable datastore is configured. The existing RoadSentinel repo and hosting targets are preserved.
 
-## Frontend boundaries
+`backend/app/domain.py` is the reviewed STATS19 field/category allowlist. Training exports the matching frontend `domain.json`. Pydantic and Zod reject unknown categories and legacy feature dictionaries. Requests to every prediction surface use the same `ModelService`; no rule-based fallback is substituted on errors.
 
-Routes compose client workspace components under one provider/shell. TanStack Query handles query state and invalidation, Zod validates responses, and React Hook Form validates prediction inputs. Types are shared inside the frontend; OpenAPI and tests document the backend contract. They are not generated automatically from OpenAPI yet.
+Offline scripts verify official-source checksums, split 2022 fitting/calibration/validation partitions, select probability models, freeze the artifact, and evaluate the held-out 2023 test. Runtime does not train or download data. `backend/release` carries the small fitted model, manifest, selection/split evidence, test report, codebook extract and source aggregates. JSON metrics must match the serving version and source fingerprint.
 
-The same-origin Next route gateway reads NEXT_PUBLIC_API_URL, with a temporary legacy variable fallback. It allowlists resources, bounds bodies, forwards session authorization, disables caching and limits timeouts. It does not let a browser choose an arbitrary proxy target. Maps use dynamic imports. No production frontend silently substitutes local/demo predictions.
+Local explanation enumerates every original-feature coalition, evaluating the actual probability pipeline against 16 real fitting reference rows. It is exact for that empirical reference distribution, not a causal explanation or population-wide importance estimate. An independent library verifies individual contributions in tests.
 
-## Backend boundaries
+Every stored prediction keeps its original payload, model version, label text, definitions, speed units and explanation. Legacy records are displayed explicitly as legacy; no new category mapping is applied. Activity groups labels together with their model version. Missing/other-owner records both return 404.
 
-- core/config: environment configuration and resource budgets.
-- schemas/scenario: operational bounds and source category codes.
-- services/model: fingerprinted trusted artifact loading, exact feature order/runtime checks, genuine probabilities, SHAP and nullable severity index.
-- services/batch: strict CSV parsing, mapping, per-row outcomes, formula-safe export.
-- services/dataset: optional verified fingerprinted source analytics, coordinate filters and global SHAP cache.
-- database/store: SQLAlchemy parameter-bound persistence with per-session hashed ownership.
-- main: lifespan initialization, HTTP/body/rate/error handling and API wiring.
+Frontend forms disable edits during submission and clear results when inputs change. Comparisons and posted-limit exploration use valid documented mph categories. CSV previews preserve original columns; batches report individual invalid rows and versioned probability exports. CSV formulas are escaped. Explicit outage tests are separate from genuine inference journeys.
 
-The original model archive is preserved, not dynamically downloaded at runtime. Startup initializes the model/explainer once per worker. Use one worker unless RAM and throughput have been profiled. A deployment can be live with class inference available while verified severity readiness remains false.
+The geographic runtime contains only 0.1-degree source-derived cell counts with a minimum of five observations. It never ships individual coordinates. The Leaflet component is loaded only on the map route, with an accessible cell table and OSM attribution. Dataset analytics, model evaluation and personal application activity have separate views and denominators.
 
-## Persistence and privacy
-
-Schema version 1 creates a prediction table and schema-version marker. An unsaved prediction stores operational metadata only; an explicitly saved prediction stores scenario/result/SHAP. Search/delete always includes owner criteria. SQLite is the local default; PostgreSQL URLs are supported. Future schema changes need explicit migration code; there is not an Alembic migration series yet.
-
-Durability depends on hosting storage, not the use of SQL alone. Default HISTORY_DURABLE=false is displayed in the UI. Local Docker uses a named volume; hosted PostgreSQL or persistent storage is required for durable production history. Anonymous bearer sessions do not provide account recovery or cross-device access. Operational history currently has no automatic retention scheduler.
-
-## Model/data integrity
-
-Class semantics and speed units are held in a versioned manifest. Legacy semantics are unverified and cannot generate severity risk claims. Source analytics and observed geography require a separate dataset provenance manifest. Metrics must identify the serving model version and a held-out evaluation. No illustrative observations are mixed with real ones.
-
-## Deployment
-
-Frontend targets Vercel; backend targets existing Render integration or Railway. Root/ backend Python version files select 3.12.13. Docker Compose supplies local orchestration. `render.yaml` is an optional new-service blueprint, not evidence of deployed configuration. Deployment status and HTTP inference must be checked separately from Git push success. No paid infrastructure is provisioned automatically.
+Deployment health fails with 503 if the model is unavailable; both artifact hash and Render Git commit are exposed for release verification. Rate/body limits and error envelopes remain in the API. Free-service wakeups have honest retry messaging, and model probabilities are never converted into a safety score.

@@ -27,15 +27,15 @@ import { useHealth, Status } from "./ui";
 const navigation = [
   { name: "Command center", href: "/", icon: Gauge, section: "WORKSPACE" },
   { name: "Prediction", href: "/predict", icon: SlidersHorizontal },
-  { name: "What-If simulator", href: "/what-if", icon: FlaskConical },
+  { name: "Scenario comparison", href: "/what-if", icon: FlaskConical },
   { name: "Batch processing", href: "/batch", icon: Layers },
   {
-    name: "Explainable AI",
+    name: "Explanations",
     href: "/explain",
     icon: Activity,
     section: "INTELLIGENCE",
   },
-  { name: "India map", href: "/map", icon: MapPinned },
+  { name: "Great Britain map", href: "/map", icon: MapPinned },
   { name: "Analytics", href: "/analytics", icon: ChartNoAxesCombined },
   { name: "Prediction history", href: "/history", icon: History },
   {
@@ -116,7 +116,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         <div className="sidebar-bottom">
           <div className="model-mini">
             <span className="eyebrow">MODEL INTEGRITY</span>
-            <strong>Original Random Forest</strong>
+            <strong>Documented STATS19 model</strong>
             <p>Real inference. Transparent limits.</p>
             <Link href="/model-card">
               Inspect model card <ArrowUpRight size={14} />
@@ -204,7 +204,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
               <span>
                 {item.name === "Command center"
                   ? "Overview"
-                  : item.name === "What-If simulator"
+                  : item.name === "Scenario comparison"
                     ? "Compare"
                     : item.name === "Prediction history"
                       ? "History"
@@ -263,15 +263,15 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           Understand its limits.
         </h2>
         <p>
-          Build a scenario, compare model outputs, and inspect genuine Tree SHAP
-          explanations. Save results to your browser session&apos;s server-side
-          history.
+          Build a road-condition scenario, compare injury severity estimates,
+          and explore what influenced them. Saved history is temporary.
         </p>
         <div className="notice">
           <div>
-            The original training data is unavailable. Severity meanings, speed
-            units, evaluation, and geographic claims remain unverified. Numeric
-            classes are shown honestly.
+            This model uses documented Great Britain collision records and mph
+            speed limits. It does not estimate the chance of a crash. It missed
+            all serious and fatal outcomes as top predictions in testing; never
+            use it to judge safety.
           </div>
         </div>
         <button
