@@ -20,6 +20,8 @@ Vercel root: `frontend`; Node 22; Next.js; `npm ci`; `npm run build`. Production
 
 Run the README quality checks and real desktop/mobile journeys first. Commit/push to the existing repository, capture the full commit SHA, and monitor the particular Render deploy to a terminal `live` state. A push alone is not evidence of a working release.
 
+During this release, Render reported `autoDeploy=yes`, but no deployment appeared after the push (the preceding app commit had also not deployed automatically). The service was therefore deployed manually through the connected Render tool. Render documents that services connected by public repository URL require manual deployment even though branch metadata is available: https://render.com/docs/deploys. Check deployment history before triggering a deploy so a working automatic integration does not receive duplicate deploys.
+
 The Vercel connector lacked team access during this release, while the authenticated CLI was already authorised for the correct team. The user had selected completion without Vercel Git integration. From the repository root:
 
 ```powershell
