@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import SpeedWorkspace from "@/components/platform/SpeedWorkspace";
 export default function Page() {
-  redirect("/what-if");
+  return <SpeedWorkspace />;
 }

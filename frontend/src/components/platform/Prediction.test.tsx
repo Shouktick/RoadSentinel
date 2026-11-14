@@ -1,19 +1,32 @@
 import { render, screen } from "@testing-library/react";
 import { expect, it } from "vitest";
-import PredictionUnavailable from "./PredictionUnavailable";
+import { CurrentResult } from "./KarnatakaWorkspace";
 import PredictionResult from "./PredictionResult";
-it("offers supported analytics without prediction inputs or run buttons", () => {
-  render(<PredictionUnavailable />);
+it("shows research scores without a personal-risk claim", () => {
+  render(
+    <CurrentResult
+      result={{
+        id: "fixture",
+        created_at: "2026-01-01",
+        model_version: "india-karnataka-test",
+        source_country: "India",
+        region: "Karnataka",
+        historical_only: false,
+        scenario: {},
+        severity: "Fatal",
+        confidence: 0.4,
+        probabilities: [
+          { class_id: "Fatal", label: "Fatal", probability: 0.4 },
+        ],
+      }}
+    />,
+  );
   expect(
-    screen.getByRole("heading", {
-      name: "Severity prediction is unavailable.",
-    }),
+    screen.getByText(/not calibrated personal probabilities/),
   ).toBeVisible();
-  expect(screen.queryByRole("button", { name: /predict/i })).toBeNull();
-  expect(screen.queryByRole("combobox")).toBeNull();
   expect(
-    screen.getByRole("link", { name: "Explore Indian statistics" }),
-  ).toHaveAttribute("href", "/analytics");
+    screen.getByRole("progressbar", { name: "Fatal model score" }),
+  ).toHaveAttribute("value", "0.4");
 });
 it("keeps archived foreign results explicit and cannot rerun or relabel", () => {
   render(

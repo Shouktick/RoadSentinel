@@ -1,29 +1,94 @@
 import { z } from "zod";
-export const unavailableReason =
-  "Severity prediction is unavailable because suitable licensed Indian crash-level records with multiple injury outcomes have not been verified. State/UT totals support analytics, not individual predictions.";
 export const healthSchema = z.object({
   status: z.string(),
   country: z.literal("India"),
   ready: z.boolean(),
   analytics_ready: z.boolean(),
-  model_available: z.literal(false),
-  model_version: z.null(),
-  severity_ready: z.literal(false),
+  model_available: z.boolean(),
+  model_version: z.string().nullable(),
+  severity_ready: z.boolean(),
   database_available: z.boolean(),
   history_durable: z.boolean(),
   dataset_version: z.string().nullable(),
   code_version: z.string(),
   artifact_sha256: z.string().nullable(),
 });
+const classMetrics = z.object({
+  precision: z.number(),
+  recall: z.number(),
+  "f1-score": z.number(),
+  support: z.number(),
+});
+const evaluationSchema = z.object({
+  macro_f1: z.number(),
+  balanced_accuracy: z.number(),
+  confusion_matrix: z.array(z.array(z.number())),
+  per_class: z.record(z.string(), z.union([classMetrics, z.number()])),
+  predicted_counts: z.record(z.string(), z.number()),
+  n: z.number(),
+  probability_quality: z.object({
+    multiclass_brier_sum: z.number(),
+    log_loss: z.number(),
+    definition: z.string(),
+  }),
+});
 export const metadataSchema = z.object({
   country: z.literal("India"),
-  model_available: z.literal(false),
-  model_version: z.null(),
-  status: z.literal("disabled"),
-  reason: z.string(),
-  dataset_version: z.string(),
+  region: z.literal("Karnataka"),
+  model_available: z.literal(true),
+  model_version: z.string().startsWith("india-karnataka-"),
+  status: z.literal("research"),
+  source: z.string(),
+  source_url: z.string(),
+  source_sha256: z.string(),
+  license: z.string(),
+  license_url: z.string(),
+  features: z.array(
+    z.object({
+      key: z.string(),
+      label: z.string(),
+      options: z.array(z.string()),
+      default: z.string(),
+    }),
+  ),
+  classes: z.array(z.string()),
+  algorithm: z.string(),
+  evaluation: evaluationSchema,
+  baseline: evaluationSchema,
+  split: z.record(z.string(), z.number()),
+  cleaning: z.record(z.string(), z.number()),
+  limitations: z.array(z.string()),
   capabilities: z.array(z.string()),
-  evaluation: z.null(),
+  explanation: z.object({
+    method: z.string(),
+    units: z.string(),
+    global: z.record(
+      z.string(),
+      z.array(
+        z.object({
+          feature: z.string(),
+          label: z.string(),
+          mean_absolute_shap: z.number(),
+        }),
+      ),
+    ),
+  }),
+});
+export type ModelMetadata = z.infer<typeof metadataSchema>;
+export const explanationSchema = z.object({
+  class: z.string(),
+  base_value: z.number(),
+  output_logit: z.number(),
+  units: z.literal("logit"),
+  method: z.string(),
+  contributions: z.array(
+    z.object({
+      feature: z.string(),
+      label: z.string(),
+      value: z.string(),
+      contribution: z.number(),
+    }),
+  ),
 });
 export const metricLabels = {
   accidents: "Reported accidents",
@@ -79,7 +144,9 @@ export const predictionSchema = z
     created_at: z.string(),
     model_version: z.string(),
     source_country: z.string(),
-    historical_only: z.literal(true),
+    historical_only: z.boolean(),
+    explanation: explanationSchema.optional(),
+    region: z.string().optional(),
     scenario: z.record(z.string(), z.unknown()),
     severity: z.string(),
     confidence: z.number(),

@@ -1,12 +1,38 @@
 "use client";
-import { Prediction } from "@/lib/contracts";
-import { downloadText } from "@/lib/api";
-import { Limitation, Panel } from "./ui";
+import { Prediction, predictionSchema } from "@/lib/contracts";
+import { api, downloadText } from "@/lib/api";
+import { useMutation } from "@tanstack/react-query";
+import { Failure, Limitation, Panel } from "./ui";
+import { CurrentResult } from "./KarnatakaWorkspace";
+function SavedIndianResult({ prediction }: { prediction: Prediction }) {
+  const rerun = useMutation({
+    mutationFn: () =>
+      api("predict", predictionSchema, {
+        method: "POST",
+        body: JSON.stringify({ scenario: prediction.scenario, save: false }),
+      }),
+  });
+  return (
+    <>
+      <CurrentResult result={rerun.data ?? prediction} />
+      <button
+        className="button"
+        disabled={rerun.isPending}
+        onClick={() => rerun.mutate()}
+      >
+        Run these inputs again
+      </button>
+      {rerun.error && <Failure error={rerun.error} />}
+    </>
+  );
+}
 export default function PredictionResult({
   prediction,
 }: {
   prediction: Prediction;
 }) {
+  if (!prediction.historical_only && prediction.source_country === "India")
+    return <SavedIndianResult prediction={prediction} />;
   return (
     <Panel
       title="Historical model result"

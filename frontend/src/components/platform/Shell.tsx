@@ -31,12 +31,17 @@ const navigation = [
   { name: "State statistics", href: "/analytics", icon: ChartNoAxesCombined },
   { name: "India regional map", href: "/map", icon: MapPinned },
   {
-    name: "Prediction unavailable",
+    name: "Severity research",
     href: "/predict",
     icon: SlidersHorizontal,
     section: "CAPABILITIES",
   },
-  { name: "Historical records", href: "/history", icon: History },
+  { name: "What-if comparison", href: "/what-if", icon: SlidersHorizontal },
+  { name: "Model explanations", href: "/explain", icon: FileBarChart2 },
+  { name: "Batch analysis", href: "/batch", icon: FileBarChart2 },
+  { name: "Speed explorer", href: "/speed-monitor", icon: Gauge },
+  { name: "Crash patterns", href: "/crash-patterns", icon: MapPinned },
+  { name: "Saved records", href: "/history", icon: History },
   {
     name: "Data & model status",
     href: "/model-card",
@@ -116,7 +121,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           <div className="model-mini">
             <span className="eyebrow">INDIA ONLY</span>
             <strong>Official Indian statistics</strong>
-            <p>Aggregate data. Clear limits.</p>
+            <p>National statistics. Karnataka research.</p>
             <Link href="/model-card">
               Data & model status <ArrowUpRight size={14} />
             </Link>
@@ -265,9 +270,9 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         </p>
         <div className="notice">
           <div>
-            Individual severity prediction is disabled: suitable Indian
-            crash-level training data have not been verified. Foreign models and
-            synthetic accident records are not used.
+            Individual severity predictions use Karnataka crash records: a
+            separately evaluated model with modest performance. Foreign models
+            and synthetic accident records are not used.
           </div>
         </div>
         <button

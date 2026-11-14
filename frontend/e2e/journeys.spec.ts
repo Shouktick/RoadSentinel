@@ -66,53 +66,163 @@ test("real Indian aggregates, filters, CSV export and regional geometry", async 
   ).toBe(true);
   expect(errors).toEqual([]);
 });
-test("all unsupported inference flows are disabled and history keeps its scope", async ({
+test("Karnataka prediction, exact explanation, saved history and comparison", async ({
+  page,
+}, testInfo) => {
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto("/predict");
+  await expect(
+    page.getByRole("button", { name: "Run prediction", exact: true }),
+  ).toBeVisible();
+  await page.getByLabel("Save this result to history").check();
+  await page
+    .getByRole("button", { name: "Run prediction", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: /Model outcome:/ }),
+  ).toBeVisible();
+  await expect(page.getByRole("progressbar")).toHaveCount(4);
+  await page.locator("#baseline-weather").selectOption("Heavy Rain");
+  await expect(
+    page.getByRole("heading", { name: /Model outcome:/ }),
+  ).toHaveCount(0);
+  await page.getByLabel("Save this result to history").uncheck();
+  await page
+    .getByRole("button", { name: "Run prediction", exact: true })
+    .click();
+  await expect(page.getByRole("progressbar")).toHaveCount(4);
+  await expect(
+    page.getByText(/not calibrated personal probabilities/),
+  ).toBeVisible();
+  await page.screenshot({
+    path: `../docs/screenshots/karnataka-prediction-${testInfo.project.name}.png`,
+    fullPage: false,
+  });
+  const token = await page.evaluate(() =>
+    localStorage.getItem("roadsentinel-session"),
+  );
+  const history = await page.request.get("/api/service/predictions", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const saved = (await history.json()).items[0];
+  expect(saved.source_country).toBe("India");
+  expect(saved.region).toBe("Karnataka");
+  expect(saved.historical_only).toBe(false);
+  const e = saved.explanation;
+  expect(
+    e.base_value +
+      e.contributions.reduce(
+        (a: number, c: { contribution: number }) => a + c.contribution,
+        0,
+      ),
+  ).toBeCloseTo(e.output_logit, 10);
+  await page.goto("/history");
+  await page.getByRole("button", { name: "Open record" }).click();
+  await expect(
+    page.getByRole("heading", { name: /Model outcome:/ }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Run these inputs again" }).click();
+  await expect(
+    page.getByRole("button", { name: "Run these inputs again" }),
+  ).toBeEnabled();
+  await page.goto("/what-if");
+  await page.locator("#alternative-road_type").selectOption("Village Road");
+  await page
+    .getByRole("button", { name: "Compare scenarios", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Score changes", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /Model outcome:/ }),
+  ).toHaveCount(2);
+  await page.goto("/explain");
+  await page.getByRole("button", { name: "Explain scenario" }).click();
+  await expect(
+    page.getByRole("heading", { name: "Why this outcome?" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Global feature contributions" }),
+  ).toBeVisible();
+  await page.request.delete(`/api/service/predictions/${saved.id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  expect(errors).toEqual([]);
+});
+
+test("CSV validation, batch prediction and exports", async ({ page }) => {
+  await page.goto("/batch");
+  const downloading = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Download CSV template" }).click();
+  const file = await downloading;
+  const template = await readFile((await file.path())!, "utf8");
+  expect(template).toContain('"district"');
+  expect(template).not.toContain("speed_limit");
+  await page.getByLabel(/Scenario file/).setInputFiles({
+    name: "invalid.csv",
+    mimeType: "text/csv",
+    buffer: Buffer.from("speed_limit\n30"),
+  });
+  await page.getByRole("button", { name: "Validate CSV" }).click();
+  await expect(
+    page.getByRole("alert").filter({ hasText: "CSV headers" }),
+  ).toBeVisible();
+  await page.getByLabel(/Scenario file/).setInputFiles({
+    name: "scenarios.csv",
+    mimeType: "text/csv",
+    buffer: Buffer.from(template),
+  });
+  await page.getByRole("button", { name: "Validate CSV" }).click();
+  await expect(
+    page.getByText("1 valid scenarios. Ready to run."),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Run batch", exact: true }).click();
+  await expect(
+    page.getByRole("heading", { name: "1 results", exact: true }),
+  ).toBeVisible();
+  const exporting = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Export results CSV" }).click();
+  const output = await exporting;
+  const csv = await readFile((await output.path())!, "utf8");
+  expect(csv).toContain('"India","Karnataka","india-karnataka-2016-2023-v1"');
+  expect(csv).toContain("Fatal_model_score");
+});
+
+test("speed physics, observed crash grid and genuine evaluation", async ({
   page,
 }) => {
-  for (const path of [
-    "/predict",
-    "/what-if",
-    "/speed-monitor",
-    "/batch",
-    "/explain",
-  ]) {
-    await page.goto(path);
-    await expect(
-      page.getByRole("heading", {
-        name: "Severity prediction is unavailable.",
-      }),
-    ).toBeVisible();
-    await expect(
-      page.getByRole("button", { name: /run model|compare scenarios|upload/i }),
-    ).toHaveCount(0);
-    await expect(page.getByRole("combobox")).toHaveCount(0);
-  }
-  for (const path of ["predict", "predict/batch", "explain/local"]) {
-    const r = await page.request.post(`/api/service/${path}`, { data: {} });
-    expect(r.status()).toBe(410);
-    expect((await r.json()).error.code).toBe("INDIA_MODEL_UNAVAILABLE");
-  }
+  await page.goto("/speed-monitor");
+  await page.getByLabel("Speed (km/h)", { exact: true }).fill("36");
+  await page.getByLabel("Assumed reaction time (seconds)").fill("2");
+  await page.getByRole("button", { name: "Calculate speed effects" }).click();
+  await expect(page.getByText("30.0 m", { exact: true })).toBeVisible();
+  await expect(
+    page.getByText(/separate from the severity model/),
+  ).toBeVisible();
+  await page.goto("/crash-patterns");
+  await expect(page.locator(".leaflet-container")).toBeVisible();
+  expect(await page.locator(".leaflet-interactive").count()).toBeGreaterThan(
+    10,
+  );
   await page.goto("/model-card");
   await expect(
-    page.getByText(/not applicable: no Indian model was trained/),
+    page.getByRole("heading", { name: "Held-out 2023 results" }),
   ).toBeVisible();
-  await page.goto("/history");
+  await expect(page.getByText("0.326", { exact: true })).toBeVisible();
   await expect(
-    page.getByRole("heading", {
-      name: "Historical records, original context.",
-    }),
+    page.getByRole("heading", { name: "Confusion matrix" }),
   ).toBeVisible();
-  await expect(
-    page.getByText("No historical records available", { exact: true }),
-  ).toBeVisible();
-  const history = await page.request.get("/api/service/predictions");
-  expect(history.status()).toBe(401);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth + 1,
+    ),
+  ).toBe(true);
   const h = await (await page.request.get("/api/service/health")).json();
-  expect(h.model_available).toBe(false);
-  expect(h.severity_ready).toBe(false);
-  expect(h.ready).toBe(true);
-  expect(h.model_version).toBeNull();
+  expect(h.model_available).toBe(true);
+  expect(h.model_version).toBe("india-karnataka-2016-2023-v1");
 });
+
 test("aggregate outage is visible and retry restores real data", async ({
   page,
 }) => {

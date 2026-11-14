@@ -39,7 +39,7 @@ export default function HistoryWorkspace() {
       <PageTitle
         eyebrow="ARCHIVE / ORIGINAL RESULTS"
         title="Historical records, original context."
-        description="Old records retain their source country, model version, labels and units. No new predictions can be saved."
+        description="Old records retain their source country, model version, labels and units. New Karnataka research results keep their own country and model version."
       />
       <Limitation>
         History is temporary on the existing free backend and may disappear on
@@ -155,8 +155,8 @@ export default function HistoryWorkspace() {
           </>
         ) : (
           <Empty title="No historical records available">
-            New prediction storage is disabled. Existing temporary records may
-            have expired with a deployment.
+            Run a scenario and choose Save this result. Existing temporary
+            records may have expired with a deployment.
           </Empty>
         )}
         {remove.error && <Failure error={remove.error} />}

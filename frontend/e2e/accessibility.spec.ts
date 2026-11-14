@@ -51,7 +51,7 @@ test("responsive HUD, keyboard navigation, themes and accessibility", async ({
       .click();
     await expect(
       page.getByRole("heading", {
-        name: "Evidence before predictions.",
+        name: "Evidence before confidence.",
       }),
     ).toBeVisible();
   }

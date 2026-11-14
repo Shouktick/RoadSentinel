@@ -7,7 +7,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import Link from "next/link";
-import { api } from "@/lib/api";
+import { api, ApiError } from "@/lib/api";
 import { healthSchema, metadataSchema } from "@/lib/contracts";
 
 export function useHealth() {
@@ -110,7 +110,11 @@ export function Failure({
     <div className="notice error" role="alert">
       <AlertTriangle size={20} />
       <div>
-        <strong>Service unavailable</strong>
+        <strong>
+          {error instanceof ApiError && error.status === 422
+            ? "Check your inputs"
+            : "Service unavailable"}
+        </strong>
         <p>{error.message}</p>
         {retry && (
           <button className="button small" onClick={retry}>

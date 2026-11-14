@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: "%s | RoadSentinel",
   },
   description:
-    "Explore official Indian state and union territory road accident statistics, annual trends and regional maps. Severity prediction is unavailable.",
+    "Explore official Indian state and union territory road accident statistics, annual trends and regional maps. Explore Karnataka crash-severity research, explanations and scenario comparisons.",
   icons: { icon: "/icon.svg", apple: "/icon.svg" },
   manifest: "/manifest.webmanifest",
 };

@@ -1,6 +1,6 @@
 # RoadSentinel - India only
 
-Official Indian road accident analytics. **No severity prediction model is deployed.**
+Indian road accident analytics and Karnataka crash-severity research. National statistics cover 36 states/UTs; individual scenario modeling is explicitly limited to Karnataka.
 
 - [Application](https://roadsentinel-ashy.vercel.app)
 - [Backend readiness](https://roadsentinel-api.onrender.com/health)
@@ -14,7 +14,9 @@ Explore reported accidents, persons killed and persons injured across India's 36
 
 MoRTH's Road Accidents in India 2023, Annexures 2-4, supplies the statistics. Its copyright policy permits accurate reproduction with prominent attribution (third-party material excluded). Boundary geometry is from geoBoundaries/DataMeet, separately attributed. See the source checksums, missing-value handling and geographic caveats in [DATASET](docs/DATASET.md).
 
-Suitable licensed Indian crash-level data with multiple injury outcomes were not obtained. State totals cannot train an individual-crash classifier. A verified open media dataset contains fatal crashes only. Prediction, scenario comparison, speed exploration, batch inference and explanations therefore return a clear disabled state, including HTTP 410 at the API. No Indian accuracy, recall, F1 or confusion matrix is claimed.
+A renewed source review found the licensed Karnataka Accident Dataset v2: 301,761 published rows from 2016-2023, with 188,448 retained event groups after documented filtering. The four-outcome research model supports prediction, exact linear SHAP explanations, what-if comparisons, validated batch CSV inference and exports, saved results and reruns. Crash patterns show observed district/unit counts and coarse coordinate cells. Speed exploration is an independent km/h physics calculator, because measured speeds are absent from this dataset.
+
+The untouched 2023 test has 23,551 crashes. Macro F1 is 0.326 versus 0.158 for a majority baseline; balanced accuracy is 0.373 versus 0.250. Overall accuracy is only 0.350, below the baseline's 0.462. All four outcomes are predicted. These are modest research results, not calibrated personal risk or a safety-critical system. See [full evaluation](docs/EVALUATION.md) and [crash-level source review](docs/KARNATAKA_DATASET.md). The Karnataka data and derived artifacts are **CC BY-NC-SA 4.0**, for noncommercial use with attribution/share-alike terms. This is not nationwide model validation or a government-certified dataset.
 
 The previous British model, map aggregates, category mappings and evaluation artifacts have been removed from the active release. Old saved payloads retain their original country and model version. Unknown legacy provenance remains unknown. See [the correction audit](docs/INDIA_AUDIT.md). History is temporary SQLite on the existing free Render service, not verified durable storage.
 

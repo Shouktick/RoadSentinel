@@ -90,7 +90,7 @@ export default function IndiaExplorer({
       <Limitation>
         Aggregate statistics describe reported events. They do not predict
         individual injury severity or the chance of a crash.{" "}
-        <Link href="/predict">Severity prediction is unavailable.</Link>
+        <Link href="/predict">Explore Karnataka severity research.</Link>
       </Limitation>
       {data.isPending ? (
         <Loading />

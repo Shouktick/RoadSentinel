@@ -27,5 +27,16 @@
     "upstream_license": "CC BY 2.5 India",
     "geoboundaries_license": "CC BY 4.0"
   },
-  "serving_model": null
+  "serving_model": "india-karnataka-2016-2023-v1",
+  "crash_level": {
+    "publisher": "Shubham Sharma",
+    "publication": "Karnataka Accident Dataset v2",
+    "url": "https://www.kaggle.com/datasets/shubham2703/karnataka-accident-dataset",
+    "license": "CC BY-NC-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+    "zip_sha256": "fa841b6c420ee4a06ef7a9c4b12bb0de6c0f75123abf7c96882c88162d435134",
+    "csv_sha256": "b7bcdd6a57a6a795ff366b2f95e5f1b5196c16ab4773c64daed1b5e531848edb",
+    "provenance": "KSP Datathon source corroborated on first 30 rows; third-party publication, not government-endorsed",
+    "audit": "docs/KARNATAKA_DATASET.md"
+  }
 }

@@ -1,5 +1,7 @@
 # India-only correction audit
 
+The table below records the initial aggregate-only correction at `5889df4`. A subsequent Karnataka research release restores supported Indian inference; see the update after the table. Statements about disabled endpoints describe that initial release, not current capabilities.
+
 Audit started from deployed code `11d5a625bb091c5e80cef89c413838342028b121`, documentation HEAD `7690459`. Public backend health confirmed `stats19-gb-2022-v1`, SHA256 `e49395dcc9860c39980391616afb78b41fbf0dc8d14c69654484f2437cd71687`, before the correction. Existing Render free service and Vercel project were inspected; targets are preserved.
 
 | British dependency / assumption | Previous locations | Correction |
@@ -15,3 +17,10 @@ Audit started from deployed code `11d5a625bb091c5e80cef89c413838342028b121`, doc
 | Foreign screenshots and old walkthroughs | docs/screenshots; AUDIT, DESIGN, PROGRESS, RELEASE | Current screenshots/docs replaced. Historical versions remain in Git history. |
 
 The active backend contains no model artifact and cannot be switched to the foreign model using former model-path environment overrides. Test coverage asserts no model files, no foreign fallback, all prediction aliases disabled, and preservation/isolation of old records. Current release results identify India and the data version; historical results identify their original country and model.
+
+
+## Karnataka research extension
+
+The current serving tree adds a newly trained Indian-only JSON linear model; it does not restore any British artifact or numeric category mapping. Its independent source review is in [KARNATAKA_DATASET](KARNATAKA_DATASET.md). All national aggregate data remain separate from crash-level fitting. New active categories come from Indian training records; NH is expanded to National Highway in the UI and CSV results, and the source weather typo is explained when displayed. Speed uses explicit metric physics inputs, never the old mph model feature.
+
+Prediction, what-if, batch and exact linear SHAP now use only the Karnataka model. Both JSON manifests are verified and corruption tests fail closed. Old country/version labels remain intact and foreign results cannot be rerun in the Indian model. The current model card shows new Indian test results, including the lower overall accuracy than the majority baseline. No historical British metric supports this release. National polygons plus Karnataka coarse observed-coordinate cells replace all foreign geometry.

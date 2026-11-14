@@ -20,13 +20,18 @@ def test_published_totals_reconcile_and_records_are_aggregates():
     assert d["source_sha256"] == "901505420d5b387052ac51e36b4bdce0274f6326b614f9ebcee6e7954d45b5b0"
 
 
-def test_release_has_no_model_or_foreign_analytics():
+def test_release_has_only_documented_indian_artifacts():
     root = Settings().release_dir
     assert {p.name for p in root.iterdir()} == {
         "india-analytics.json",
         "india-boundaries.json",
         "india-manifest.json",
+        "karnataka-model.json",
+        "karnataka-metadata.json",
+        "karnataka-manifest.json",
+        "karnataka-analytics.json",
     }
-    m = json.loads((root / "india-manifest.json").read_text())
-    for name, digest in m["files"].items():
-        assert hashlib.sha256((root / name).read_bytes()).hexdigest() == digest
+    for manifest in ["india-manifest.json", "karnataka-manifest.json"]:
+        m = json.loads((root / manifest).read_text())
+        for name, digest in m["files"].items():
+            assert hashlib.sha256((root / name).read_bytes()).hexdigest() == digest

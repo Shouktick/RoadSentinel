@@ -13,6 +13,9 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
 from sqlalchemy import text
+from pydantic import BaseModel, ConfigDict, Field
+
+from app.services.karnataka import KarnatakaModel
 
 from app.core.config import Settings
 from app.database.store import Store
@@ -20,7 +23,32 @@ from app.services.dataset import DataUnavailable, DatasetService
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 logger = logging.getLogger("roadsentinel.api")
-UNSUPPORTED = "Severity prediction is unavailable: suitable licensed Indian crash-level records with multiple injury outcomes have not been verified. State/UT totals support analytics, not individual predictions."
+
+
+class ScenarioRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    scenario: dict[str, str]
+    save: bool = False
+
+
+class ComparisonRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    baseline: dict[str, str]
+    alternative: dict[str, str]
+
+
+class BatchRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    csv: str = Field(min_length=1, max_length=2_000_000)
+    save: bool = False
+
+
+class SpeedRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
+    speed_kmh: float = Field(default=50, ge=5, le=150)
+    reaction_seconds: float = Field(default=1.5, ge=0.5, le=5)
+    deceleration_ms2: float = Field(default=5, ge=1, le=10)
+    mass_kg: float = Field(default=1500, ge=50, le=40000)
 
 
 class PayloadTooLarge(Exception):
@@ -61,14 +89,15 @@ def create_app(settings=None):
     async def lifespan(app):
         store.initialize()
         app.state.dataset = DatasetService(settings)
+        app.state.model = KarnatakaModel(settings.release_dir)
         yield
         store.engine.dispose()
 
     app = FastAPI(
         title="RoadSentinel API",
-        version="3.0.0",
+        version="4.0.0",
         lifespan=lifespan,
-        description="India-only official state/UT road accident analytics. Individual severity prediction is disabled.",
+        description="Indian road analytics and Karnataka crash-severity research tools.",
     )
     app.state.store, app.state.settings = store, settings
     app.add_middleware(BodyLimit, limit=settings.max_upload_bytes + 65536)
@@ -171,19 +200,20 @@ def create_app(settings=None):
             database_available = False
         dataset = app.state.dataset
         available = dataset.data is not None
-        ready = available and database_available
+        ready = available and database_available and app.state.model.model is not None
         result = {
             "status": "online" if ready else "degraded",
             "country": "India",
-            "model_available": False,
-            "model_version": None,
+            "model_available": app.state.model.model is not None,
+            "model_version": app.state.model.model["model_version"] if app.state.model.model else None,
             "ready": ready,
             "analytics_ready": available,
-            "severity_ready": False,
+            "severity_ready": app.state.model.model is not None,
             "database_available": database_available,
             "history_durable": settings.history_durable,
-            "semantics_verified": False,
-            "shap_available": False,
+            "semantics_verified": app.state.model.model is not None,
+            "shap_available": app.state.model.model is not None,
+            "model_artifact_sha256": app.state.model.digest,
             "dataset_version": dataset.version,
             "artifact_sha256": dataset.digest,
             "code_version": os.getenv("RENDER_GIT_COMMIT", "local"),
@@ -191,46 +221,97 @@ def create_app(settings=None):
         return JSONResponse(result, status_code=200 if ready else 503)
 
     @app.get("/model/metadata")
-    def metadata():
+    def model_metadata():
+        app.state.model.require()
+        return app.state.model.metadata
+
+    @app.get("/metrics")
+    @app.get("/model-metrics")
+    def metrics():
+        app.state.model.require()
+        m = app.state.model.metadata
         return {
-            "country": "India",
-            "model_available": False,
-            "model_version": None,
-            "status": "disabled",
-            "reason": UNSUPPORTED,
-            "dataset_version": app.state.dataset.version,
-            "capabilities": [
-                "state_ut_analytics",
-                "year_comparison",
-                "regional_map",
-                "aggregate_csv_export",
-                "historical_record_access",
-            ],
-            "evaluation": None,
+            k: m[k]
+            for k in [
+                "country",
+                "region",
+                "model_version",
+                "evaluation",
+                "baseline",
+                "classes",
+                "split",
+                "selection",
+            ]
         }
 
-    def disabled():
-        return JSONResponse(
-            {
-                "error": {"code": "INDIA_MODEL_UNAVAILABLE", "message": UNSUPPORTED},
-                "country": "India",
-                "model_version": None,
-            },
-            status_code=410,
-        )
+    @app.get("/explain/global")
+    def global_explanation():
+        app.state.model.require()
+        return app.state.model.metadata["explanation"]
 
-    for path in [
-        "/predict",
-        "/predict/whatif",
-        "/predict/speed-sweep",
-        "/predict/batch",
-        "/predict-batch",
-        "/batch/preview",
-        "/explain/local",
-    ]:
-        app.add_api_route(path, disabled, methods=["POST"])
-    for path in ["/metrics", "/model-metrics", "/explain/global"]:
-        app.add_api_route(path, disabled, methods=["GET"])
+    @app.post("/predict")
+    def predict(body: ScenarioRequest, token: str = Depends(bearer)):
+        result = app.state.model.predict(body.scenario, body.save)
+        store.record(token, result)
+        return result
+
+    @app.post("/explain/local")
+    def explain(body: ScenarioRequest):
+        return app.state.model.predict(body.scenario)
+
+    @app.post("/predict/whatif")
+    def whatif(body: ComparisonRequest):
+        return {
+            "baseline": app.state.model.predict(body.baseline),
+            "alternative": app.state.model.predict(body.alternative),
+            "interpretation": "Changes in model scores, not evidence of causal effects.",
+        }
+
+    @app.post("/batch/preview")
+    def preview(body: BatchRequest):
+        rows = app.state.model.csv_rows(body.csv)
+        return {"count": len(rows), "preview": rows[:5]}
+
+    @app.post("/predict/batch")
+    @app.post("/predict-batch")
+    def batch(body: BatchRequest, token: str = Depends(bearer)):
+        rows = app.state.model.csv_rows(body.csv)
+        results = [app.state.model.predict(row, body.save) for row in rows]
+        for result in results:
+            store.record(token, result)
+        return {
+            "country": "India",
+            "region": "Karnataka",
+            "model_version": app.state.model.model["model_version"],
+            "results": results,
+            "count": len(results),
+        }
+
+    @app.post("/predict/speed-sweep")
+    def speed(body: SpeedRequest):
+        def calculate(kmh):
+            v = kmh / 3.6
+            return {
+                "speed_kmh": kmh,
+                "reaction_distance_m": v * body.reaction_seconds,
+                "braking_distance_m": v * v / (2 * body.deceleration_ms2),
+                "stopping_distance_m": v * body.reaction_seconds + v * v / (2 * body.deceleration_ms2),
+                "kinetic_energy_kj": 0.5 * body.mass_kg * v * v / 1000,
+            }
+
+        return {
+            "kind": "physics_calculation",
+            "model_version": None,
+            "assumptions": body.model_dump(),
+            "selected": calculate(body.speed_kmh),
+            "curve": [calculate(k) for k in range(10, 151, 10)],
+            "explanation": "Idealized level-road calculation with constant deceleration. User assumptions, not measured crash data, a safety guarantee or a recommended speed.",
+        }
+
+    @app.get("/insights/crashes")
+    def crashes():
+        app.state.model.require()
+        return app.state.model.analytics
 
     @app.get("/insights/overview")
     def dataset_overview():

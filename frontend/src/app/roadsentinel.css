@@ -1845,3 +1845,52 @@ input[type="checkbox"] {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+.scenario-fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  display: grid;
+  gap: 20px;
+}
+.scenario-fieldset .button {
+  justify-self: start;
+}
+.save-choice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+.save-choice input {
+  width: 18px;
+  height: 18px;
+}
+.result-score {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 15px 0;
+}
+.result-score span {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+}
+.score-list {
+  display: grid;
+  gap: 15px;
+  margin: 24px 0;
+}
+.score-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.score-list progress {
+  width: 100%;
+  height: 12px;
+  accent-color: #68b7a8;
+}
+.panel details {
+  margin: 15px 0;
+}

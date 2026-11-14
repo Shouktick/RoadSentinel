@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 
 export const maxDuration = 60;
 const allowed =
-  /^(health|model\/metadata|metrics|activity|predictions(?:\/[a-f0-9-]+)?|predict(?:\/whatif|\/speed-sweep|\/batch)?|batch\/preview|explain\/local|insights\/(?:overview|states|export)|hotspots)$/;
+  /^(health|model\/metadata|metrics|activity|predictions(?:\/[a-f0-9-]+)?|predict(?:\/whatif|\/speed-sweep|\/batch)?|batch\/preview|explain\/(?:local|global)|insights\/(?:overview|states|export|crashes)|hotspots)$/;
 
 async function proxy(
   request: NextRequest,

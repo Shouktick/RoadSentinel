@@ -39,10 +39,11 @@ export default function About() {
         </p>
       </Panel>
       <Limitation>
-        Individual injury-severity prediction and explanations are unavailable
-        because suitable Indian crash-level training data have not been
-        verified. These aggregate statistics cannot estimate whether you will
-        crash or what injuries you would sustain.
+        Severity research uses separately published Karnataka crash-level
+        records. Prediction, SHAP explanations, comparisons and CSV batches use
+        the same evaluated model. Speed exploration is an independent physics
+        calculator. These tools do not estimate your chance of crashing or
+        recommend a safe speed.
       </Limitation>
       <Panel title="Sources, history and availability">
         <p>
@@ -53,8 +54,8 @@ export default function About() {
         <p>
           Existing history retains original country, labels and model versions.
           Records are browser-session isolated and temporary on the free
-          backend; exporting is the way to retain a copy. No new predictions can
-          be created.
+          backend; exporting is the way to retain a copy. New Karnataka results
+          can be saved from prediction or batch analysis.
         </p>
         <p>
           If the service is waking, wait about a minute and use Retry
@@ -62,7 +63,7 @@ export default function About() {
           zero.
         </p>
         <Link className="text-link" href="/model-card">
-          Read provenance, reuse terms and the data blocker
+          Read provenance, reuse terms and model evaluation
         </Link>
       </Panel>
     </div>

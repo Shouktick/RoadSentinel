@@ -10,9 +10,9 @@ Retain these targets. The old Accident Atlas hosting is unrelated and unchanged.
 
 ## Runtime setup
 
-Render root: `backend`; Python 3.12.13. Build: `pip install -r requirements.txt` (includes the full pinned runtime lock). Start: `uvicorn main:app --host 0.0.0.0 --port $PORT --workers 1`. Health path `/health` returns 503 if verified Indian analytics or the database is unavailable; otherwise 200. Severity prediction is intentionally disabled. Former `SHAP_ENABLED` and model-path overrides are ignored. `HISTORY_DURABLE=false`. Default database: temporary local SQLite. No durable datastore has been provisioned or verified.
+Render root: `backend`; Python 3.12.13. Build: `pip install -r requirements.txt` (includes the full pinned runtime lock). Start: `uvicorn main:app --host 0.0.0.0 --port $PORT --workers 1`. Health path `/health` returns 503 if verified national analytics, the Karnataka model or the database is unavailable; otherwise 200. Karnataka severity research is available only with verified model artifacts. Former `SHAP_ENABLED` and model-path overrides are ignored. `HISTORY_DURABLE=false`. Default database: temporary local SQLite. No durable datastore has been provisioned or verified.
 
-The serving artifacts are `release/india-analytics.json`, `india-boundaries.json` and `india-manifest.json`. They contain Indian aggregate data and regional geometry, not a trained model. Source data remain ignored. Release artifacts and reports are checked into Git. No source download or fitting runs during builds/startup.
+The serving artifacts are `release/india-analytics.json`, `india-boundaries.json` and `india-manifest.json`. These contain national aggregate data and regional geometry. The additional four `release/karnataka-*.json` files contain the Indian research model, metadata, coarse crash aggregates and checksum manifest. Source data remain ignored. Release artifacts and reports are checked into Git. No source download or fitting runs during builds/startup.
 
 Vercel root: `frontend`; Node 22; Next.js; `npm ci`; `npm run build`. Production and preview use `NEXT_PUBLIC_API_URL=https://roadsentinel-api.onrender.com`. The browser talks only to `/api/service/*`; the server gateway calls Render. Never put credentials in NEXT_PUBLIC variables. `.vercelignore` excludes backend, virtual environments, source data, docs and environment files from frontend uploads.
 
@@ -34,11 +34,11 @@ Do not deploy from `frontend` while the project root-directory setting already p
 
 ## Gates and constraints
 
-- Match `/health` code version to the Render deployment commit and aggregate SHA256 to the checked-in India manifest.
-- Verify provider states, public frontend access and real gateway analytics, regional map, CSV export, disabled inference and isolated history.
+- Match `/health` code version to the Render deployment commit and aggregate/model SHA256 values to both checked-in India manifests.
+- Verify provider states, public frontend access and real gateway analytics, regional map, CSV export, Karnataka inference, comparisons, explanations, batch exports, physics calculations and isolated history.
 - Verify count units, filter updates, responsive navigation, source analytics and licensed Indian state/UT polygons.
 - Scan recent runtime logs and measure hosted API latency/memory. Local observations are not hosted guarantees.
-- GitHub warns above 50 MiB and blocks files above 100 MiB; the India release JSON files are below 1 MiB in total. Raw CSV downloads are not committed or uploaded.
+- GitHub warns above 50 MiB and blocks files above 100 MiB; the India release JSON files are small JSON files. Raw CSV downloads are not committed or uploaded.
 - Free Render service sleeps after inactivity; local changes are ephemeral. Explain the cold start and allow explicit retry. History is temporary and historical exports retain original country/model definitions and aggregate exports retain the Indian dataset version.
 
 Observed deployment identifiers and production verification belong in [RELEASE.md](RELEASE.md), after the actual release has completed.

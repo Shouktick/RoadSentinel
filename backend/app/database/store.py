@@ -131,7 +131,11 @@ class Store:
             if version.startswith("stats19-gb-")
             else payload.get("source_country", "Unknown (legacy)")
         )
-        return {**payload, "source_country": country, "historical_only": True}
+        return {
+            **payload,
+            "source_country": country,
+            "historical_only": not version.startswith("india-karnataka-"),
+        }
 
     def remove(self, token: str, record_id: str) -> bool:
         with self.engine.begin() as connection:
