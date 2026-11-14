@@ -46,6 +46,11 @@ test("prediction, real SHAP, comparison, CSV and saved history", async ({
     mimeType: "text/csv",
     buffer: Buffer.from(csv),
   });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth + 1,
+    ),
+  ).toBe(true);
   await page.getByRole("button", { name: "Run 2 scenarios" }).click();
   await expect(
     page.getByRole("heading", { name: "03 / Processing results" }),

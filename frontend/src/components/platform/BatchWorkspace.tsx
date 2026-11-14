@@ -164,7 +164,7 @@ export default function BatchWorkspace() {
               : "Upload actual scenarios. Results are never substituted with sample rows."}
           </p>
           <input
-            className="sr-only"
+            hidden
             ref={chooser}
             type="file"
             accept=".csv,text/csv"
