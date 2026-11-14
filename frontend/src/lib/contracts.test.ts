@@ -1,35 +1,36 @@
-﻿import { describe, expect, it } from "vitest";
+import { expect, it } from "vitest";
 import {
-  defaults,
-  readSharedScenario,
-  scenarioSchema,
-  shareScenario,
-  inputLabel,
+  aggregateCsv,
+  formatCount,
+  healthSchema,
+  indiaSchema,
 } from "./contracts";
-describe("documented scenario contract", () => {
-  it("accepts known mph limits, rejects unknown codes, fractions and legacy fields", () => {
-    expect(scenarioSchema.safeParse(defaults).success).toBe(true);
-    for (const patch of [
-      { speed_limit: 100 },
-      { speed_limit: 30.5 },
-      { weather_conditions: 77 },
-      { hour: 24 },
-      { Age_of_Driver: 35 },
-    ])
-      expect(scenarioSchema.safeParse({ ...defaults, ...patch }).success).toBe(
-        false,
-      );
-    expect(
-      scenarioSchema.safeParse({ ...defaults, speed_limit: -1 }).success,
-    ).toBe(true);
-    expect(inputLabel("speed_limit", 30)).toBe("30 mph");
-    expect(inputLabel("day_of_week", 1)).toBe("Sunday");
-  });
-  it("shares only current-schema scenarios", () => {
-    expect(
-      readSharedScenario(decodeURIComponent(shareScenario(defaults))),
-    ).toEqual(defaults);
-    expect(readSharedScenario("not-json")).toBeNull();
-    expect(readSharedScenario('{"Speed_limit":30}')).toBeNull();
-  });
+it("preserves missing values and explicit India units/version in exports", () => {
+  const csv = aggregateCsv(
+    [
+      {
+        state: "Lakshadweep",
+        year: 2023,
+        accidents: 1,
+        fatalities: null,
+        injuries: 1,
+        source_missing: { fatalities: "-" },
+      },
+    ],
+    "india-morth-2023-v1",
+    "https://morth.gov.in",
+  );
+  expect(csv).toContain('"India","india-morth-2023-v1"');
+  expect(csv).toContain('"persons_killed_count"');
+  expect(csv).toContain('"2023","1","","1"');
+  expect(formatCount(null)).toBe("Not reported (source dash)");
+  expect(formatCount(0)).toBe("0");
+});
+it("rejects a foreign dataset or serving model contract", () => {
+  expect(indiaSchema.safeParse({ country: "Great Britain" }).success).toBe(
+    false,
+  );
+  expect(
+    healthSchema.safeParse({ country: "India", model_available: true }).success,
+  ).toBe(false);
 });

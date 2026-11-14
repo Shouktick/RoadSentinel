@@ -14,19 +14,7 @@ class Settings:
             "DATABASE_URL", f"sqlite:///{(BACKEND / 'data' / 'roadsentinel.db').as_posix()}"
         )
     )
-    model_archive: Path = field(
-        default_factory=lambda: Path(os.getenv("MODEL_ARCHIVE", str(BACKEND / "release" / "model.joblib")))
-    )
-    model_manifest: Path = field(
-        default_factory=lambda: Path(
-            os.getenv("MODEL_MANIFEST", str(BACKEND / "release" / "model_metadata.json"))
-        )
-    )
-    metrics_path: Path = field(
-        default_factory=lambda: Path(os.getenv("METRICS_PATH", str(BACKEND / "release" / "metrics.json")))
-    )
-    dataset_path: str | None = field(default_factory=lambda: os.getenv("DATASET_PATH"))
-    dataset_manifest: str | None = field(default_factory=lambda: os.getenv("DATASET_MANIFEST"))
+    release_dir: Path = field(default_factory=lambda: BACKEND / "release")
     origins: list[str] = field(
         default_factory=lambda: [
             x.strip()
@@ -40,4 +28,3 @@ class Settings:
     max_upload_bytes: int = 2 * 1024 * 1024
     max_batch_rows: int = 250
     requests_per_minute: int = 120
-    shap_enabled: bool = field(default_factory=lambda: os.getenv("SHAP_ENABLED", "true").lower() == "true")

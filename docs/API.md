@@ -1,40 +1,16 @@
-﻿# API v2
+# India analytics API v3
 
-Base: https://roadsentinel-api.onrender.com. Frontend gateway: `/api/service/`. `/api/v1/` aliases remain for route continuity, but the documented input contract is now v2; legacy requests fail validation rather than being reinterpreted.
+Public reads:
 
-All mutation/history calls require `Authorization: Bearer <64 lowercase hexadecimal characters>`. The random browser token is an access capability, not a cross-device account. Use HTTPS. Histories are isolated by a server-side token hash; only explicitly saved requests retain full input/results. Unsaved activity retains summary metadata only.
+- `GET /health`: 200 when verified Indian data and database are ready; `country=India`, `analytics_ready`, `dataset_version`, aggregate artifact SHA256 and deployed code version. `model_available=false`, `severity_ready=false`, `model_version=null` are intentional.
+- `GET /model/metadata`: disabled model status, reason, supported capabilities and `evaluation=null`.
+- `GET /insights/overview`: all 108 aggregate rows, national totals, definitions, units, source URLs/checksums, reuse policy and caveats.
+- `GET /insights/states?year=2023`: 36 rows for a supported year (2021-2023 only).
+- `GET /insights/export[?year=2023]`: CSV with country, dataset version, region, calendar year, event/person count columns, missing marker note and source URL. Missing counts are blank, not zero.
+- `GET /hotspots`: historical URL name returning `kind=state_ut_boundaries`, Indian polygons and boundary provenance. No hotspots or crash points are asserted.
 
-## Scenario
+All POST prediction, what-if, speed-sweep, batch inference, batch preview and local-explanation routes return 410 `INDIA_MODEL_UNAVAILABLE`, including versioned aliases. GET `/metrics`, `/model-metrics` and `/explain/global` are also disabled. Unknown old category analytics routes return 404. There are no numeric-category input schemas for new predictions.
 
-```json
-{"speed_limit":30,"weather_conditions":1,"road_surface_conditions":1,"light_conditions":1,"road_type":6,"urban_or_rural_area":1,"hour":12,"day_of_week":2}
-```
+Historical records require `Authorization: Bearer <64 lowercase hex characters>`: `GET /predictions`, `GET /predictions/{id}`, `DELETE /predictions/{id}`, `GET /activity`. History supports search, label, page, limit and order. Access is scoped by hashed session token; another session sees 404. Old payload values are preserved, with `source_country` and `historical_only=true` added on read. No public endpoint writes new model records.
 
-`speed_limit` is mph: 20/30/40/50/60/70 or -1 (unknown). Other categories follow `app/domain.py`, derived from the pinned official codebook. `hour` is 0–23 local time or -1. Weekday: Sunday=1 through Saturday=7 or -1. Extra fields, fractions, booleans and unknown categories are rejected. No age, vehicle count or casualty count is accepted.
-
-## Endpoints
-
-| Method / route | Purpose |
-| --- | --- |
-| GET /health | Model/database readiness, deployed code SHA, model version and artifact SHA256; 503 if not ready |
-| GET /model/metadata | Target, labels/definitions, units, provenance, categories, limitations and artifact identity |
-| POST /predict | `{scenario, save: false, explain: true}`; real versioned probabilities and optional explanation |
-| POST /predict/whatif | `{baseline, scenarios: [...]}` up to eight alternatives; individual probabilities and changed inputs; no arbitrary risk score |
-| POST /predict/speed-sweep | `{scenario, start:20, stop:70, step:10}`; documented posted limits only |
-| POST /explain/local | Scenario directly; exact full-pipeline local contributions |
-| POST /batch/preview | Multipart CSV, UTF-8, 2 MiB / 250 rows; header/row preview |
-| POST /predict/batch | Multipart CSV and optional JSON `mapping` of feature → column; readable category labels or documented codes; per-row validation |
-| GET /metrics | Actual held-out evaluation, split counts, selection and baseline evidence matching serving version |
-| GET /insights/overview | 2023 source counts, missing input cells and source fingerprint |
-| GET /insights/{dimension} | weather, road-surface, lighting, road-type, area-type, speed-bands, hourly, weekday |
-| GET /hotspots | Great Britain 2023 aggregate coordinate cells, minimum count five; no individual points |
-| GET /activity | Current token's activity grouped by original label AND model version |
-| GET /predictions | Token-isolated saved history; `search`, `label`, `page`, `limit`, `order=newest/oldest/confidence` |
-| GET /predictions/{id} | Original stored payload with its version/label semantics |
-| DELETE /predictions/{id} | Deletes only the caller's saved record; 204 or 404 |
-
-Result fields include `schema_version=2`, `model_version`, `artifact_sha256`, `code_version`, source label definitions, `speed_unit=mph`, original scenario, three probabilities, most likely outcome, latency and explanation. `confidence` is retained as an internal compatibility field meaning the selected outcome's estimated probability, not accuracy. `risk_score` is always null; no combined safety index is shown. CSV exports include model version, speed unit and all three probabilities; spreadsheet formula-leading cells are escaped.
-
-History is a snapshot. Old schemas/labels are returned unchanged; filtering by a label never silently remaps old class IDs. The UI identifies legacy records and prevents reusing their input dictionaries as new scenarios. Global SHAP and live GPS-speed prediction have been removed because they do not represent the supported release.
-
-Errors: structured `error.code`, `message`, request ID and validation details. 401 for missing token, 422 for invalid data, 413 for oversized batch, 429 with Retry-After, and 503 for unavailable capabilities. The gateway has a bounded timeout and explains free-host wakeup delays. Mutations are never automatically retried.
+The frontend gateway is `/api/service/*`, restricted to supported paths. Runtime data loading validates the India manifest and checksums; failed integrity yields 503 readiness/data responses, never a foreign fallback.

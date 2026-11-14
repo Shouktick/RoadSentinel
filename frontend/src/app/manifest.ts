@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "RoadSentinel",
     short_name: "RoadSentinel",
     description:
-      "Road accident severity model intelligence with transparent limitations.",
+      "Official Indian state and union territory road accident statistics.",
     start_url: "/",
     display: "standalone",
     background_color: "#0d1114",

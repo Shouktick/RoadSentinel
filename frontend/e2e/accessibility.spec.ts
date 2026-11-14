@@ -9,10 +9,10 @@ test("responsive HUD, keyboard navigation, themes and accessibility", async ({
     localStorage.setItem("roadsentinel-onboarded", "true"),
   );
   await page.goto("/");
-  await expect(page.getByText("Model online", { exact: true })).toBeVisible();
+  await expect(page.getByText("Data online", { exact: true })).toBeVisible();
   await mkdir("../docs/screenshots", { recursive: true });
   await page.screenshot({
-    path: `../docs/screenshots/command-center-${testInfo.project.name}.png`,
+    path: `../docs/screenshots/india-overview-${testInfo.project.name}.png`,
     fullPage: testInfo.project.name === "desktop",
   });
   expect(
@@ -40,14 +40,18 @@ test("responsive HUD, keyboard navigation, themes and accessibility", async ({
     .getByRole("link", { name: "Documentation" })
     .click();
   await expect(
-    page.getByRole("heading", { name: "How to use RoadSentinel." }),
+    page.getByRole("heading", { name: "Explore the data responsibly." }),
   ).toBeVisible();
   if (testInfo.project.name === "mobile") {
     await page.getByRole("button", { name: "Open navigation" }).click();
-    await page.getByRole("link", { name: "Model card", exact: true }).click();
+    await page
+      .getByRole("complementary", { name: "Main navigation" })
+      .getByRole("navigation")
+      .getByRole("link", { name: "Data & model status", exact: true })
+      .click();
     await expect(
       page.getByRole("heading", {
-        name: "The evidence and its limits.",
+        name: "Evidence before predictions.",
       }),
     ).toBeVisible();
   }

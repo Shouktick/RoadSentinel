@@ -1,201 +1,157 @@
 import csv
 import io
 import json
-import hashlib
-import numpy as np
-import pandas as pd
+import sys
+from pathlib import Path
+from uuid import uuid4
+
 import pytest
 from fastapi.testclient import TestClient
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from app.core.config import Settings
-from app.domain import DEFAULTS, FEATURES, LABELS
 from app.main import create_app
-from app.schemas.scenario import Scenario
-from app.services.model import ModelService
-from app.services.batch import safe_cell
 
-HEADERS = {"Authorization": "Bearer " + "a" * 64}
-OTHER = {"Authorization": "Bearer " + "b" * 64}
+TOKEN = "a" * 64
+AUTH = {"Authorization": "Bearer " + TOKEN}
 
 
-@pytest.fixture(scope="module")
-def model():
-    service = ModelService(Settings())
-    service.initialize()
-    assert service.model is not None, service.failure
-    return service
+@pytest.fixture
+def client():
+    with TestClient(create_app(Settings(database_url="sqlite:///:memory:"))) as c:
+        yield c
 
 
-@pytest.fixture(scope="module")
-def client(model):
-    with TestClient(create_app(Settings(database_url="sqlite:///:memory:"), model)) as client:
-        yield client
+def test_health_is_analytics_readiness_not_model_readiness(client):
+    r = client.get("/health")
+    assert r.status_code == 200
+    h = r.json()
+    assert h["ready"] and h["analytics_ready"] and h["country"] == "India"
+    assert not h["model_available"] and not h["severity_ready"] and h["model_version"] is None
+    assert h["dataset_version"] == "india-morth-2023-v1"
+    assert len(h["artifact_sha256"]) == 64
 
 
-def test_readiness_metadata_and_evaluation(client):
-    health = client.get("/health").json()
-    assert health["ready"] and health["severity_ready"] and not health["history_durable"]
-    metadata = client.get("/model/metadata").json()
-    assert metadata["speed_unit"] == "mph"
-    assert metadata["classes"] == [{"id": str(i), "label": LABELS[i]} for i in [1, 2, 3]]
-    metrics = client.get("/metrics").json()
-    assert metrics["model_version"] == health["model_version"]
-    assert metrics["test_size"] == 104258
-    assert sum(map(sum, metrics["confusion_matrix"])) == metrics["test_size"]
-    assert metrics["classification_report"]["Fatal injury"]["recall"] == 0
-    assert client.get("/api/v1/health").status_code == 200
-
-
-def test_actual_inference_and_exact_explanation(client, model):
-    result = client.post("/predict", json={"scenario": DEFAULTS, "explain": True}, headers=HEADERS).json()
-    assert sum(p["probability"] for p in result["probabilities"]) == pytest.approx(1)
-    assert result["severity"] in LABELS.values() and result["risk_score"] is None
-    assert result["schema_version"] == 2 and result["speed_unit"] == "mph"
-    assert len(result["artifact_sha256"]) == 64
-    explanation = result["explanation"]
-    assert len(explanation["contributions"]) == 8
-    assert explanation["base_value"] + sum(
-        c["contribution"] for c in explanation["contributions"]
-    ) == pytest.approx(result["confidence"], abs=1e-10)
-    # Independent library implementation verifies individual contributions, not just their sum.
-    import shap
-
-    background = pd.DataFrame(model.background, columns=FEATURES)
-    reference = shap.ExactExplainer(
-        lambda rows: model.model.predict_proba(pd.DataFrame(rows, columns=FEATURES)),
-        shap.maskers.Independent(background, max_samples=16),
-    )
-    exact = reference(pd.DataFrame([DEFAULTS], columns=FEATURES))
-    index = list(model.model.classes_).index(int(result["class_id"]))
-    np.testing.assert_allclose(
-        [c["contribution"] for c in explanation["contributions"]], exact.values[0, :, index], atol=1e-10
-    )
-
-
-def test_probabilities_for_each_documented_category(model):
-    from app.domain import CATEGORIES
-
-    scenarios = [Scenario(**(DEFAULTS | {f: code})) for f in FEATURES for code in CATEGORIES[f]]
-    results = model.predict_many(scenarios)
-    assert all(sum(p["probability"] for p in r["probabilities"]) == pytest.approx(1) for r in results)
-
-
-def test_auth_validation_and_sweep(client):
-    assert client.post("/predict", json={"scenario": DEFAULTS}).status_code == 401
-    for patch in [
-        {"weather_conditions": 999},
-        {"speed_limit": 100},
-        {"hour": True},
-        {"number_of_casualties": 2},
-    ]:
-        r = client.post("/predict", json={"scenario": DEFAULTS | patch}, headers=HEADERS)
-        assert r.status_code == 422
-    compare = client.post(
+@pytest.mark.parametrize(
+    "path",
+    [
+        "/predict",
         "/predict/whatif",
-        json={"baseline": DEFAULTS, "scenarios": [DEFAULTS | {"speed_limit": 70}]},
-        headers=HEADERS,
-    ).json()
-    assert compare["scenarios"][0]["feature_differences"] == ["speed_limit"]
-    assert compare["model_version"] == compare["baseline"]["model_version"]
-    sweep = client.post("/predict/speed-sweep", json={"scenario": DEFAULTS}, headers=HEADERS).json()
-    assert sweep["speed_unit"] == "mph"
-    assert [p["speed"] for p in sweep["points"]] == [20, 30, 40, 50, 60, 70]
-    assert (
-        client.post(
-            "/predict/speed-sweep", json={"scenario": DEFAULTS, "stop": 100}, headers=HEADERS
-        ).status_code
-        == 422
+        "/predict/speed-sweep",
+        "/predict/batch",
+        "/predict-batch",
+        "/batch/preview",
+        "/explain/local",
+    ],
+)
+def test_inference_disabled_for_any_payload_and_alias(client, path):
+    for prefix in ["", "/api/v1"]:
+        r = client.post(prefix + path, json={"scenario": {"speed_limit": 30}, "save": True}, headers=AUTH)
+        assert r.status_code == 410, (path, r.text)
+        assert r.json()["error"]["code"] == "INDIA_MODEL_UNAVAILABLE"
+        assert r.json()["model_version"] is None
+    assert client.get("/predictions", headers=AUTH).json()["total"] == 0
+
+
+def test_no_foreign_evaluation_or_explanation(client):
+    for path in ["/metrics", "/model-metrics", "/explain/global"]:
+        assert client.get(path).status_code == 410
+    m = client.get("/model/metadata").json()
+    assert m["evaluation"] is None and m["country"] == "India"
+    assert client.get("/insights/weather").status_code == 404
+
+
+def test_real_totals_and_csv_units_missing_and_version(client):
+    data = client.get("/insights/overview").json()
+    assert len(data["records"]) == 108
+    assert data["national"][-1] == {
+        "year": 2023,
+        "accidents": 480583,
+        "fatalities": 172890,
+        "injuries": 462825,
+    }
+    rows = list(csv.DictReader(io.StringIO(client.get("/insights/export?year=2023").text)))
+    assert len(rows) == 36 and all(r["country"] == "India" for r in rows)
+    assert all(r["dataset_version"] == data["dataset_version"] for r in rows)
+    tn = next(r for r in rows if r["state_or_union_territory"] == "Tamil Nadu")
+    assert (tn["reported_accidents_count"], tn["persons_killed_count"], tn["persons_injured_count"]) == (
+        "67213",
+        "18347",
+        "72292",
     )
+    ld = next(r for r in rows if r["state_or_union_territory"] == "Lakshadweep")
+    assert ld["persons_killed_count"] == "" and json.loads(ld["source_missing_note"])["fatalities"] == "-"
+    assert len(list(csv.DictReader(io.StringIO(client.get("/insights/export").text)))) == 108
+    assert client.get("/insights/states?year=2020").status_code == 422
+    assert client.get("/insights/export?year=2024").status_code == 422
 
 
-def test_history_isolation_and_legacy_semantics(client):
-    result = client.post("/predict", json={"scenario": DEFAULTS, "save": True}, headers=HEADERS).json()
-    identifier = result["id"]
-    assert client.get(f"/predictions/{identifier}", headers=OTHER).status_code == 404
-    assert client.delete(f"/predictions/{identifier}", headers=OTHER).status_code == 404
-    assert client.get(f"/predictions/{identifier}", headers=HEADERS).json() == result
-    old = dict(
-        result,
-        id="legacy-record",
-        model_version="legacy-undocumented-v0",
-        severity="Class 3",
-        semantics_verified=False,
-        schema_version=1,
-        scenario={"Speed_limit": 30},
-    )
-    client.app.state.store.record("a" * 64, old)
-    assert client.get("/predictions/legacy-record", headers=HEADERS).json() == old
-    selected = client.get("/predictions?label=Slight%20injury", headers=HEADERS).json()
-    assert all(r["severity"] == "Slight injury" for r in selected["items"])
-    activity = client.get("/activity", headers=HEADERS).json()
-    assert any(
-        r["label"] == "Class 3" and r["model_version"] == old["model_version"]
-        for r in activity["class_distribution"]
-    )
-    assert client.delete(f"/predictions/{identifier}", headers=HEADERS).status_code == 204
-    assert client.get(f"/predictions/{identifier}", headers=HEADERS).status_code == 404
-    assert client.get("/predictions?search=%27%20OR%201=1--", headers=HEADERS).json()["total"] == 0
+def test_map_is_only_matched_indian_regions(client):
+    geo = client.get("/hotspots").json()
+    assert geo["kind"] == "state_ut_boundaries" and geo["country"] == "India"
+    features = geo["geojson"]["features"]
+    assert len(features) == 36
+    assert all(f["geometry"]["type"] in ["Polygon", "MultiPolygon"] for f in features)
+    names = {r["state"] for r in client.get("/insights/overview").json()["records"]}
+    assert {f["properties"]["state"] for f in features} == names
+
+    def coords(value):
+        if isinstance(value[0], (int, float)):
+            yield value
+        else:
+            for sub in value:
+                yield from coords(sub)
+
+    for f in features:
+        assert all(65 < lon < 100 and 5 < lat < 40 for lon, lat in coords(f["geometry"]["coordinates"]))
 
 
-def test_batch_readable_names_mixed_validation_and_versioned_export(client):
-    from app.domain import CATEGORIES
-
-    output = io.StringIO()
-    writer = csv.writer(output)
-    writer.writerow(FEATURES)
-    writer.writerow([CATEGORIES[f][DEFAULTS[f]] for f in FEATURES])
-    writer.writerow([999] + [DEFAULTS[f] for f in FEATURES[1:]])
-    files = {"file": ("cases.csv", output.getvalue().encode(), "text/csv")}
-    preview = client.post("/batch/preview", files=files, headers=HEADERS)
-    assert preview.json()["row_count"] == 2
-    response = client.post("/predict/batch", files=files, headers=HEADERS)
-    assert response.status_code == 200, response.text
-    batch = response.json()
-    assert batch["successful"] == 1 and batch["invalid"] == 1
-    rows = list(csv.DictReader(io.StringIO(batch["csv"])))
-    assert all(
-        r["result:model_version"] == batch["model_version"] and r["result:speed_unit"] == "mph" for r in rows
-    )
-    assert rows[0]["result:label"] in LABELS.values()
-    assert sum(
-        float(rows[0][f"result:probability_{label}"]) for label in ["fatal", "serious", "slight"]
-    ) == pytest.approx(1)
-    assert safe_cell("=2+2").startswith("'")
-    assert (
-        client.post("/predict/batch", files={"file": ("bad.csv", b"a,a\n1,2\n")}, headers=HEADERS).status_code
-        == 422
-    )
-    big = (",".join(FEATURES) + "\n" + (",".join(str(DEFAULTS[f]) for f in FEATURES) + "\n") * 251).encode()
-    assert client.post("/predict/batch", files={"file": ("big.csv", big)}, headers=HEADERS).status_code == 413
-
-
-def test_integrity_and_runtime_compatibility_fail_closed(tmp_path):
-    settings = Settings()
-    broken = tmp_path / "bad.joblib"
-    broken.write_bytes(settings.model_archive.read_bytes() + b"tampered")
-    service = ModelService(Settings(model_archive=broken))
-    service.initialize()
-    assert service.model is None
-    manifest = json.loads(settings.model_manifest.read_text(encoding="utf-8"))
-    manifest["sklearn_version"] = "0.0"
-    changed = tmp_path / "metadata.json"
-    changed.write_text(json.dumps(manifest))
-    service = ModelService(Settings(model_manifest=changed))
-    service.initialize()
-    assert service.model is None
-    with TestClient(create_app(Settings(database_url="sqlite:///:memory:"), service)) as client:
-        assert client.get("/health").status_code == 503
-    assert (
-        hashlib.sha256(settings.model_archive.read_bytes()).hexdigest()
-        == json.loads(settings.model_manifest.read_text())["artifact_sha256"]
-    )
+def test_historical_country_and_original_semantics_isolation(client):
+    for version, label, country in [
+        ("stats19-gb-2022-v1", "Slight injury", "Great Britain"),
+        ("legacy-rf-e76f2cb", "Class 3", "Unknown (legacy)"),
+    ]:
+        payload = {
+            "id": str(uuid4()),
+            "created_at": "2026-11-14T00:00:00Z",
+            "model_version": version,
+            "class_id": "3",
+            "severity": label,
+            "confidence": 0.7,
+            "risk_score": None,
+            "saved": True,
+            "latency_ms": 1,
+            "scenario": {"speed_limit": 30},
+            "speed_unit": "mph" if version.startswith("stats19") else "unknown",
+            "probabilities": [{"class_id": "3", "label": label, "probability": 0.7}],
+        }
+        client.app.state.store.record(TOKEN, payload)
+        result = client.get("/predictions/" + payload["id"], headers=AUTH).json()
+        assert result["source_country"] == country and result["historical_only"]
+        assert all(result[k] == v for k, v in payload.items())
+        assert (
+            client.get(
+                "/predictions/" + payload["id"], headers={"Authorization": "Bearer " + "b" * 64}
+            ).status_code
+            == 404
+        )
+        assert (
+            client.delete(
+                "/predictions/" + payload["id"], headers={"Authorization": "Bearer " + "b" * 64}
+            ).status_code
+            == 404
+        )
+        assert client.get("/predictions/" + payload["id"]).status_code == 401
+        assert client.delete("/predictions/" + payload["id"], headers=AUTH).status_code == 204
+    assert client.get("/predictions", headers=AUTH).json()["total"] == 0
 
 
-def test_artifact_cannot_be_relabelled(tmp_path):
-    settings = Settings()
-    manifest = json.loads(settings.model_manifest.read_text(encoding="utf-8"))
-    manifest["class_labels"]["1"] = "Slight injury"
-    path = tmp_path / "relabelled.json"
-    path.write_text(json.dumps(manifest), encoding="utf-8")
-    model = ModelService(Settings(model_manifest=path))
-    model.initialize()
-    assert model.model is None
+def test_corrupt_or_missing_india_release_cannot_fallback(tmp_path):
+    root = Path(__file__).resolve().parents[1] / "release"
+    for p in root.glob("india-*.json"):
+        (tmp_path / p.name).write_bytes(p.read_bytes())
+    (tmp_path / "india-analytics.json").write_text('{"country":"Great Britain"}')
+    with TestClient(create_app(Settings(database_url="sqlite:///:memory:", release_dir=tmp_path))) as c:
+        assert c.get("/health").status_code == 503
+        assert c.get("/insights/overview").status_code == 503
+        assert c.post("/predict", json={}).status_code == 410

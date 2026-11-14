@@ -1,12 +1,31 @@
 {
-  "dataset": "Department for Transport STATS19 collisions, Great Britain, 2022–2023",
-  "landing_page": "https://www.gov.uk/government/statistical-data-sets/road-safety-open-data",
-  "license": "Open Government Licence v3.0",
-  "license_url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
-  "retrieved": "2026-11-14",
-  "files": {
-    "collisions-2022.csv": {"url": "https://data.dft.gov.uk/road-accidents-safety-data/dft-road-casualty-statistics-collision-2022.csv", "sha256": "b0a704f7826f53774472254cf0dd5c0d2ec3fef006622a10a2a15f31571d4e7a"},
-    "collisions-2023.csv": {"url": "https://data.dft.gov.uk/road-accidents-safety-data/dft-road-casualty-statistics-collision-2023.csv", "sha256": "0c01d4194b4e4c5e1b242a43c633bc30e22cf16e8becca698e63a37f71410cfa"},
-    "codebook.xlsx": {"url": "https://assets.publishing.service.gov.uk/media/6ab2a71d997a4b2950cced58/dft-road-casualty-statistics-road-safety-open-dataset-data-guide-2025.xlsx", "sha256": "51b08606ef3dad1ae5d4c8726241b022fc8e4bbdc910ef0e5cc2fb92b054fc12"}
-  }
+  "dataset_version": "india-morth-2023-v1",
+  "country": "India",
+  "statistics": {
+    "url": "https://morth.gov.in/backend/documents/uploaded/Road-Accident-in-India-2023-Publications.pdf",
+    "sha256": "901505420d5b387052ac51e36b4bdce0274f6326b614f9ebcee6e7954d45b5b0",
+    "pdf_pages": [
+      141,
+      143,
+      145
+    ],
+    "years_used": [
+      2021,
+      2022,
+      2023
+    ]
+  },
+  "permission": {
+    "url": "https://morth.gov.in/backend/api/copyright-policy",
+    "verified_on": "2026-11-14",
+    "response_sha256": "7a78803cfb6049c391f5eb087d6e04d7d59d0ab4e4b03b218f7e3d923fc7fb8b"
+  },
+  "boundaries": {
+    "url": "https://media.githubusercontent.com/media/wmgeolab/geoBoundaries/9469f09/releaseData/gbOpen/IND/ADM1/geoBoundaries-IND-ADM1_simplified.geojson",
+    "sha256": "4c63fe43294a391e8f2de4e9f86f3edb60f8688275b9fee90c61fb2aa0c26061",
+    "metadata_year": "2011 (inconsistent with included newer units; illustrative only)",
+    "upstream_license": "CC BY 2.5 India",
+    "geoboundaries_license": "CC BY 4.0"
+  },
+  "serving_model": null
 }

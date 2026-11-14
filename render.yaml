@@ -1,5 +1,5 @@
 # Optional setup blueprint. Applying it creates a new free service; no paid resources are requested.
-# The existing Render service can instead retain its GitHub deployment integration.
+# The existing service is deployed directly; do not create another service for this correction.
 services:
   - type: web
     name: roadsentinel-api
@@ -14,7 +14,5 @@ services:
         value: 3.12.13
       - key: HISTORY_DURABLE
         value: "false"
-      - key: SHAP_ENABLED
-        value: "true"
       # Set DATABASE_URL to managed PostgreSQL for durable hosted history.
       # Free service local disks are ephemeral; the UI reports this honestly.

@@ -110,15 +110,28 @@ class Store:
                 .scalars()
                 .all()
             )
-        return {"items": rows, "total": total, "page": page, "limit": limit}
+        return {"items": [self.historical(r) for r in rows], "total": total, "page": page, "limit": limit}
 
     def get(self, token: str, record_id: str):
         with self.engine.connect() as connection:
-            return connection.scalar(
+            result = connection.scalar(
                 select(records.c.payload).where(
                     records.c.owner == self.owner(token), records.c.id == record_id, records.c.saved.is_(True)
                 )
             )
+
+        return self.historical(result) if result else None
+
+    @staticmethod
+    def historical(payload):
+        # Add provenance without changing original labels, probabilities, units or inputs.
+        version = payload.get("model_version", "")
+        country = (
+            "Great Britain"
+            if version.startswith("stats19-gb-")
+            else payload.get("source_country", "Unknown (legacy)")
+        )
+        return {**payload, "source_country": country, "historical_only": True}
 
     def remove(self, token: str, record_id: str) -> bool:
         with self.engine.begin() as connection:

@@ -1,58 +1,42 @@
-﻿# Dataset provenance and leakage review
+# Indian data provenance and suitability
 
-## Selection and lawful access
+Dataset version: `india-morth-2023-v1`. Country: India. Granularity: state/union territory and calendar year. This is a pinned historical release, not a claim to publish the latest available annual report.
 
-The [official Indian road-accident catalogue](https://data.gov.in/catalog/road-accidents-india-classified-according-various-parameters) found during this review provides state/UT aggregate counts. Those tables cannot reconstruct individual crashes with linked pre-impact conditions and injury severity. This does not claim that no suitable Indian data exist; no accessible official record-level source meeting this task's requirements was verified.
+## Statistics
 
-The selected source is [Department for Transport road safety open data](https://www.gov.uk/government/statistical-data-sets/road-safety-open-data). Its downloadable collision CSVs and [data guide](https://assets.publishing.service.gov.uk/media/6ab2a71d997a4b2950cced58/dft-road-casualty-statistics-road-safety-open-dataset-data-guide-2025.xlsx) were downloaded without credentials and inspected on 14 November 2026. The current guide's `2024_code_list` sheet decodes the revised annual extracts, including older years. Neither casualty nor vehicle tables are joined.
+Publisher: Transport Research Wing, Ministry of Road Transport and Highways, Government of India. Source: [Road Accidents in India 2023](https://morth.gov.in/backend/documents/uploaded/Road-Accident-in-India-2023-Publications.pdf), police-reported aggregates collected from states/UTs. Downloaded without credentials on 2026-11-14.
 
-The [official catalogue identifies OGL coverage](https://www.data.gov.uk/dataset/cb7ae6f0-4be6-4935-9277-47e5ce24a11f/road-accidents-safety-data). [OGL v3](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/) allows copying, adaptation and commercial/non-commercial reuse subject to attribution and its exclusions. These are the publisher's public non-sensitive records. Only model parameters and aggregated geography are shipped. Contains public sector information licensed under the Open Government Licence v3.0. No official endorsement is claimed.
+SHA256: `901505420d5b387052ac51e36b4bdce0274f6326b614f9ebcee6e7954d45b5b0`.
 
-## Verified downloads
+| Field | Definition / unit | Source |
+|---|---|---|
+| state | Official source state/UT name; merged Dadra & Nagar Haveli and Daman & Diu kept together | All three tables |
+| year | Calendar year, 2021-2023 | All three tables |
+| accidents | Reported road accidents; events | Annexure 2, printed p112 / PDF p141 |
+| fatalities | Persons killed in reported road accidents; people, not fatal crash counts | Annexure 3, printed p114 / PDF p143 |
+| injuries | Persons injured; people, not slight/serious class labels | Annexure 4, printed p116 / PDF p145 |
 
-Exact URLs and SHA256 digests are machine-readable in `backend/source-manifest.json`. Reproduction fails closed if the publisher revises the files; review such changes instead of blindly updating pins.
+All 36 regions are retained for each of three years (108 aggregate rows). The three tables were rendered and visually inspected before extraction. The pinned PDF is extracted with PyMuPDF; names join exactly after whitespace normalization. Known counts reconcile with each separately published national total. In 2023: 480,583 accidents, 172,890 persons killed, 462,825 persons injured.
 
-| File | Rows | SHA256 |
-| --- | ---: | --- |
-| collisions-2022.csv | 106,004 | b0a704f7826f53774472254cf0dd5c0d2ec3fef006622a10a2a15f31571d4e7a |
-| collisions-2023.csv | 104,258 | 0c01d4194b4e4c5e1b242a43c633bc30e22cf16e8becca698e63a37f71410cfa |
-| codebook.xlsx | code guide | 51b08606ef3dad1ae5d4c8726241b022fc8e4bbdc910ef0e5cc2fb92b054fc12 |
+The dash for Lakshadweep fatalities in 2023 is preserved as `null` plus `source_missing: {fatalities: "-"}`. It is displayed as not reported and exported as blank, never silently converted to zero. National totals come from the report's total rows, not an imputation. 2020 is excluded to avoid its missing separate Ladakh observation. Counts cannot estimate individual risk or be compared as exposure-adjusted safety rates. There are no crash coordinates, speed measurements or individual severity classes in these selected tables; no mph/km/h conversion is applicable.
 
-The source files are ignored by Git and excluded from deployment. The release includes the relevant codebook extract and aggregate checksums. The download script verifies every byte against the pins.
+## Reuse permission
 
-## Target, units and coverage
+[MoRTH copyright policy](https://morth.gov.in/website-policies/copyright-policy), read through its public [content API](https://morth.gov.in/backend/api/copyright-policy), permits free reproduction without specific permission provided it is accurate, not misleading, and prominently attributed. Third-party material is excluded. This is the applicable publisher permission, **not an assertion that this PDF has a GODL-India or UK OGL licence**. Attribution accompanies the UI and CSV source URL. No third-party imagery or government logo is redistributed. The policy verification checksum is recorded in `backend/source-manifest.json`.
 
-`collision_severity`: 1 = Fatal, 2 = Serious, 3 = Slight. These meanings come from this source's codebook, not the retired model's class IDs. The target refers to the most severely injured casualty, as documented in [DfT's quality report](https://www.gov.uk/government/publications/reported-road-casualty-statistics-background-quality-report/reported-road-casualty-statistics-background-quality-report).
+## Regional geometry
 
-- Fatal: injury death less than 30 days after the collision, excluding confirmed suicides.
-- Serious: non-fatal serious injury, including fractures, internal injuries or inpatient admission; includes injury deaths at 30 days or later. No casualty has a fatal injury in a serious collision.
-- Slight: minor injury such as bruising, a sprain or a minor cut; no serious or fatal injury in that collision.
+[geoBoundaries IND ADM1 metadata](https://www.geoboundaries.org/api/current/gbOpen/IND/ADM1/) identifies boundary ID `IND-ADM1-1811400`, source DataMeet India community / Election Commission of India. Pinned geometry: commit `9469f09`, file `geoBoundaries-IND-ADM1_simplified.geojson` ([download](https://media.githubusercontent.com/media/wmgeolab/geoBoundaries/9469f09/releaseData/gbOpen/IND/ADM1/geoBoundaries-IND-ADM1_simplified.geojson)). SHA256: `4c63fe43294a391e8f2de4e9f86f3edb60f8688275b9fee90c61fb2aa0c26061`.
 
-[STATS20 guidance](https://assets.publishing.service.gov.uk/media/6925a35433d088f6d5da2cf0/STATS20_2024_specification.pdf) establishes posted limits of 20, 30, 40, 50, 60 and 70 **mph**. This is not impact speed, observed vehicle speed, or km/h. The hour is parsed from `time` (HH:MM, local clock); it is not converted to UTC. Sunday is day 1, Saturday day 7.
+geoBoundaries publishes gbOpen under CC BY 4.0 and records this upstream release as CC BY 2.5 India. [DataMeet](https://github.com/datameet/maps) currently states CC BY 4.0 for its datasets. Credit both geoBoundaries and DataMeet; retain the pinned metadata's original licence statement. Geometry is WGS84 longitude/latitude in GeoJSON and is simplified by 0.015 degrees with topology preservation for display. Diacritics and '&' vs 'and' are normalized solely to join names; each geometry retains its source ID/name. All 36 regions match one-to-one.
 
-Population: police-recorded personal-injury crashes on public roads in Great Britain (England, Scotland, Wales). Damage-only incidents, non-crash journeys and unreported incidents are absent. There is no exposure denominator. Consequently, the model cannot estimate crash occurrence, danger per journey, or India performance.
+The metadata year says 2011 despite including Ladakh, Telangana and the merged UT. This inconsistency is disclosed: the map is illustrative regional geometry, not a certified boundary survey or verified 2023 boundary vintage. The app shows polygons only, with no crash points, city centroids, basemap or hotspot claims. Accessible tables support every small territory.
 
-## Input eligibility
+## Crash-level assessment and blocker
 
-Intended use is a hypothetical road environment immediately before a crash, conditional on that crash being recorded. Although the source is collected after incidents, the selected attributes describe conditions already present before impact. Measurement/reporting error remains possible.
+- [MoRTH recording/reporting formats](https://morth.gov.in/sites/default/files/circulars_document/Revised_Road_Accidents_Data_Recording_and_Reporting_Formats.pdf) distinguish individual records from aggregated reporting forms. Public state totals cannot be expanded into training examples.
+- [iRAD/eDAR official manual](https://irad.parivahan.gov.in/downloads/iRAD_MANUAL_May_2024.pdf) describes authenticated departmental access. No public multi-outcome record download with verified reuse permission was obtained.
+- IIT Delhi authors' [Media Reported Road Traffic Crash Data v7](https://data.mendeley.com/datasets/bc5sv6wnd9/7), DOI `10.17632/bc5sv6wnd9.7`, explicitly licenses the dataset CC BY 4.0. Its [data paper](https://pmc.ncbi.nlm.nih.gov/articles/PMC12098169/) documents 2,898 fatal crashes reported by Times of India in 2022-2023, with a data dictionary. It is legitimately published Indian crash-level data, but fatal-only selection and news reporting bias make it unsuitable for a fatal/serious/slight classifier. It was assessed, not used to train or populate this dashboard.
+- Synthetic and unknown-provenance 'Indian accident' repositories were excluded, as were all foreign records and models.
 
-| Input | Why eligible |
-| --- | --- |
-| Posted speed limit | Road restriction already in effect; not inferred impact speed |
-| Weather | Ambient conditions existing before impact |
-| Road surface | Surface state before impact; not vehicle damage |
-| Lighting | Daylight/street-light conditions before impact |
-| Road type | Existing road layout |
-| Urban/rural area | Existing road-area classification |
-| Local hour | Hypothetical time context derived from time only |
-| Weekday | Hypothetical calendar context |
-
-Excluded: casualty counts and injury records; adjusted/enhanced severity and injury-reporting flags; vehicle counts (a collision realization, not a pre-impact environment input); police attendance; contributory factors and post-crash assessments; IDs, police force, coordinates and administrative location codes. Driver/vehicle tables are not joined; thus no ambiguous selection of a driver or duplicate rows per collision.
-
-All eight inputs are categorically encoded. Missing or out-of-range source entries become -1, an explicit missing/unknown category. Known source `9` categories remain distinct where the guide defines them. `speed_limit=99` maps to unknown. Public requests accept only documented choices or -1 and reject unknown codes, booleans, fractions and extra fields. CSVs also accept readable choice labels. No imputation statistics are learned from test data.
-
-## Geography and analytics
-
-2023 observations use actual source `latitude`/`longitude`, never city centroids or model-generated points. Plausible Great Britain coordinate bounds are applied; missing or invalid coordinates are excluded and counts reported. Locations are aggregated to 0.1-degree cells using floor(latitude*10), floor(longitude*10); displayed markers are labelled cell centres. Cells with fewer than five records are suppressed. This is coarse display aggregation, not a formal anonymisation guarantee or risk heatmap. No geographic filters permit inference of suppressed individual locations.
-
-The original grid reference is British National Grid. Public longitude/latitude fields are used directly for the coarse map; see [DfT's coordinate-processing guidance](https://www.gov.uk/government/statistics/matching-stats19-collision-data-to-a-road-network-feasibility/matching-stats19-collisions-to-a-road-network-feasibility). Analytics show source counts, not model predictions. Reporting differences, road exposure, the transition to injury-based police recording, and year-to-year changes constrain comparisons.
+This is a documented search outcome, not a claim that suitable Indian records do not exist anywhere. The unresolved requirement for prediction is accessible licensed Indian crash-level observations with documented multiple outcomes, eligible pre-outcome inputs, geographic/temporal coverage and adequate class support.

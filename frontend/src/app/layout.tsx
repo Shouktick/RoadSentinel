@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: "%s | RoadSentinel",
   },
   description:
-    "Explore documented Great Britain injury severity estimates, road scenarios, source observations and model limitations.",
+    "Explore official Indian state and union territory road accident statistics, annual trends and regional maps. Severity prediction is unavailable.",
   icons: { icon: "/icon.svg", apple: "/icon.svg" },
   manifest: "/manifest.webmanifest",
 };

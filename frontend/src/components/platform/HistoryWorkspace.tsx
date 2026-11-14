@@ -1,144 +1,82 @@
 "use client";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Download, ExternalLink, Trash2 } from "lucide-react";
 import { z } from "zod";
 import { api, downloadText } from "@/lib/api";
-import { predictionSchema, inputLabel } from "@/lib/contracts";
+import { predictionSchema } from "@/lib/contracts";
 import PredictionResult from "./PredictionResult";
-import {
-  Empty,
-  Failure,
-  labels,
-  Limitation,
-  Loading,
-  PageTitle,
-  Panel,
-  useHealth,
-  useMetadata,
-} from "./ui";
-
-const historySchema = z.object({
+import { Empty, Failure, Limitation, Loading, PageTitle, Panel } from "./ui";
+const schema = z.object({
   items: z.array(predictionSchema),
   total: z.number(),
   page: z.number(),
   limit: z.number(),
 });
 export default function HistoryWorkspace() {
-  const [search, setSearch] = useState(""),
-    [filter, setFilter] = useState(""),
-    [order, setOrder] = useState("newest"),
-    [page, setPage] = useState(1);
-  const router = useRouter(),
-    params = useSearchParams(),
-    selected = params.get("id"),
-    cache = useQueryClient(),
-    health = useHealth(),
-    metadata = useMetadata();
+  const [page, setPage] = useState(1),
+    [search, setSearch] = useState(""),
+    [selected, setSelected] = useState<string | null>(null);
+  const cache = useQueryClient();
   const history = useQuery({
-    queryKey: ["history", search, filter, order, page],
+    queryKey: ["history", page, search],
     queryFn: () =>
       api(
-        `predictions?${new URLSearchParams({ search, label: filter, order, page: String(page), limit: "10" })}`,
-        historySchema,
+        `predictions?page=${page}&limit=10&search=${encodeURIComponent(search)}`,
+        schema,
       ),
-  });
-  const detail = useQuery({
-    queryKey: ["prediction", selected],
-    queryFn: () => api(`predictions/${selected}`, predictionSchema),
-    enabled: Boolean(selected),
   });
   const remove = useMutation({
     mutationFn: (id: string) =>
       api(`predictions/${id}`, z.null(), { method: "DELETE" }),
-    onSuccess: (_, id) => {
+    onSuccess: () => {
+      setSelected(null);
       void cache.invalidateQueries({ queryKey: ["history"] });
-      void cache.invalidateQueries({ queryKey: ["activity"] });
-      if (selected === id) router.replace("/history");
     },
   });
+  const record = history.data?.items.find((r) => r.id === selected);
   return (
     <div className="page-stack">
       <PageTitle
-        eyebrow="INTELLIGENCE / HISTORY"
-        title="A record of your model explorations."
-        description="Saved on the backend and scoped to this browser's unguessable session token. Clearing browser storage loses access to this session."
+        eyebrow="ARCHIVE / ORIGINAL RESULTS"
+        title="Historical records, original context."
+        description="Old records retain their source country, model version, labels and units. No new predictions can be saved."
       />
-      {!health.data?.history_durable && (
-        <Limitation>
-          History is temporary on this free backend. Records may be lost when
-          the service sleeps, restarts or redeploys. Export results you need to
-          retain.
-        </Limitation>
-      )}
+      <Limitation>
+        History is temporary on the existing free backend and may disappear on
+        restart or deployment. Records are isolated to this browser session. No
+        historical result is relabelled as Indian.
+      </Limitation>
       <Panel
-        title="Saved predictions"
-        subtitle="Original scenarios and actual model responses"
+        title="Saved historical predictions"
         action={
           <button
             className="button small"
             disabled={!history.data?.items.length}
             onClick={() =>
               downloadText(
-                "roadsentinel-history-page.json",
+                "roadsentinel-historical-records.json",
                 JSON.stringify(history.data, null, 2),
                 "application/json",
               )
             }
           >
-            <Download size={14} /> Export this page
+            Export this page
           </button>
         }
       >
-        <div className="filters" style={{ marginBottom: 24 }}>
-          <div className="field">
-            <label htmlFor="history-search">Search ID or model label</label>
-            <input
-              id="history-search"
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setPage(1);
-              }}
-              placeholder="Search saved records…"
-            />
-          </div>
-          <div className="field">
-            <label htmlFor="history-class">Injury outcome</label>
-            <select
-              id="history-class"
-              value={filter}
-              onChange={(e) => {
-                setFilter(e.target.value);
-                setPage(1);
-              }}
-            >
-              <option value="">All injury outcomes</option>
-              {metadata.data?.classes.map((c) => (
-                <option key={c.id} value={c.label}>
-                  {c.label}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="field">
-            <label htmlFor="history-sort">Sort</label>
-            <select
-              id="history-sort"
-              value={order}
-              onChange={(e) => {
-                setOrder(e.target.value);
-                setPage(1);
-              }}
-            >
-              <option value="newest">Newest first</option>
-              <option value="oldest">Oldest first</option>
-              <option value="confidence">
-                Estimated probability descending
-              </option>
-            </select>
-          </div>
+        <div className="field">
+          <label htmlFor="history-search">
+            Search ID or original output label
+          </label>
+          <input
+            id="history-search"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setPage(1);
+              setSelected(null);
+            }}
+          />
         </div>
         {history.isPending ? (
           <Loading />
@@ -150,46 +88,37 @@ export default function HistoryWorkspace() {
               <table>
                 <thead>
                   <tr>
-                    <th>Prediction ID</th>
+                    <th>Source country</th>
+                    <th>Original model</th>
+                    <th>Original output</th>
                     <th>Created</th>
-                    <th>Output</th>
-                    <th>Estimated probability</th>
-                    <th>Model version</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {history.data.items.map((row) => (
-                    <tr key={row.id}>
-                      <td className="mono">{row.id.slice(0, 8)}</td>
-                      <td>{new Date(row.created_at).toLocaleString()}</td>
-                      <td>{row.severity}</td>
-                      <td>{(row.confidence * 100).toFixed(1)}%</td>
-                      <td>{row.model_version}</td>
+                  {history.data.items.map((r) => (
+                    <tr key={r.id}>
+                      <td>{r.source_country}</td>
+                      <td>{r.model_version}</td>
+                      <td>{r.severity}</td>
+                      <td>{new Date(r.created_at).toLocaleDateString()}</td>
                       <td>
                         <div className="actions">
                           <button
                             className="button small"
-                            onClick={() =>
-                              router.replace(`/history?id=${row.id}`)
-                            }
+                            onClick={() => setSelected(r.id)}
                           >
-                            <ExternalLink size={13} /> Open
+                            Open record
                           </button>
                           <button
                             className="button small danger"
                             disabled={remove.isPending}
                             onClick={() => {
-                              if (
-                                window.confirm(
-                                  "Delete this saved prediction from the server? This cannot be undone.",
-                                )
-                              )
-                                remove.mutate(row.id);
+                              if (confirm("Delete this historical record?"))
+                                remove.mutate(r.id);
                             }}
-                            aria-label={`Delete prediction ${row.id.slice(0, 8)}`}
                           >
-                            <Trash2 size={13} />
+                            Delete record
                           </button>
                         </div>
                       </td>
@@ -199,91 +128,40 @@ export default function HistoryWorkspace() {
               </table>
             </div>
             <div className="pagination">
+              <button
+                className="button small"
+                disabled={page === 1}
+                onClick={() => {
+                  setPage(page - 1);
+                  setSelected(null);
+                }}
+              >
+                Previous
+              </button>
               <span>
-                {history.data.total} records · page {page}
+                Page {page} | {history.data.total} records
               </span>
-              <div className="actions">
-                <button
-                  className="button small"
-                  disabled={page === 1}
-                  onClick={() => setPage(page - 1)}
-                >
-                  Previous
-                </button>
-                <button
-                  className="button small"
-                  disabled={page * 10 >= history.data.total}
-                  onClick={() => setPage(page + 1)}
-                >
-                  Next
-                </button>
-              </div>
+              <button
+                className="button small"
+                disabled={page * 10 >= history.data.total}
+                onClick={() => {
+                  setPage(page + 1);
+                  setSelected(null);
+                }}
+              >
+                Next
+              </button>
             </div>
           </>
         ) : (
-          <Empty
-            title={
-              search || filter
-                ? "No matching records"
-                : "No saved predictions yet"
-            }
-            href="/predict"
-            action="Build a scenario"
-          >
-            Save a prediction to revisit its inputs, probabilities, and genuine
-            local explanation.
+          <Empty title="No historical records available">
+            New prediction storage is disabled. Existing temporary records may
+            have expired with a deployment.
           </Empty>
         )}
         {remove.error && <Failure error={remove.error} />}
       </Panel>
-      {selected && (
-        <>
-          <div className="actions">
-            <button
-              className="button small"
-              onClick={() => router.replace("/history")}
-            >
-              Close prediction details
-            </button>
-          </div>
-          {detail.isPending ? (
-            <Loading />
-          ) : detail.error ? (
-            <Failure error={detail.error} retry={() => void detail.refetch()} />
-          ) : (
-            detail.data && (
-              <div className="two-columns">
-                <Panel
-                  title="Saved input scenario"
-                  subtitle={`Created ${new Date(detail.data.created_at).toLocaleString()}`}
-                >
-                  <table className="feature-table">
-                    <tbody>
-                      {Object.entries(detail.data.scenario).map(
-                        ([key, value]) => (
-                          <tr key={key}>
-                            <td>
-                              {detail.data.schema_version === 2
-                                ? labels[key]
-                                : key}
-                            </td>
-                            <td className="mono">
-                              {detail.data.schema_version === 2
-                                ? inputLabel(key, value)
-                                : value}
-                            </td>
-                          </tr>
-                        ),
-                      )}
-                    </tbody>
-                  </table>
-                </Panel>
-                <PredictionResult prediction={detail.data} />
-              </div>
-            )
-          )}
-        </>
-      )}
+      {record && <PredictionResult prediction={record} />}
     </div>
   );
 }

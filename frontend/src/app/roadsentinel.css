@@ -1814,3 +1814,34 @@ input[type="checkbox"] {
     scroll-behavior: auto !important;
   }
 }
+
+/* India aggregate exploration */
+.india-map {
+  height: 520px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.india-hash {
+  overflow-wrap: anywhere;
+}
+.india-json {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 450px;
+  overflow: auto;
+  font-size: 12px;
+}
+@media (max-width: 640px) {
+  .india-map {
+    height: 420px;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.main-content p a:not(.button),
+.main-content .notice a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

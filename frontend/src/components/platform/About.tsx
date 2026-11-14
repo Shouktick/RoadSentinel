@@ -1,118 +1,69 @@
 import Link from "next/link";
-import { PageTitle, Panel } from "./ui";
+import { Limitation, PageTitle, Panel } from "./ui";
 export default function About() {
   return (
     <div className="page-stack">
       <PageTitle
-        eyebrow="RESOURCES / DOCUMENTATION"
-        title="How to use RoadSentinel."
-        description="An educational exploration of documented injury-severity patterns, with the limitations kept visible."
+        eyebrow="INDIA / DOCUMENTATION"
+        title="Explore the data responsibly."
+        description="RoadSentinel presents documented Indian state and union territory road accident statistics."
       />
-      <Panel title="Start with a scenario">
-        <div className="doc-content">
-          <ol>
-            <li>
-              Choose the posted speed limit in mph, road conditions, local hour
-              and weekday.
-            </li>
-            <li>
-              Run the model. The three percentages estimate the most severe
-              injury, conditional on a police-recorded injury crash.
-            </li>
-            <li>
-              Read all three probabilities and the model&apos;s performance
-              warning. The most likely label is not a safety verdict.
-            </li>
-            <li>
-              Open &ldquo;What influenced this estimate?&rdquo; for input
-              contributions. These explain the model; they do not prove what
-              causes injuries.
-            </li>
-            <li>
-              Save an estimate to temporary history or export JSON to retain its
-              inputs, labels, explanation and model version.
-            </li>
-          </ol>
-          <p>
-            Changing inputs clears the previous result. Shared links contain a
-            scenario, not a saved result.
-          </p>
-        </div>
-      </Panel>
-      <Panel title="Compare and upload">
+      <Panel title="Using the dashboard">
         <p>
-          Comparison evaluates two hypothetical road scenarios. Posted speed
-          exploration uses 20, 30, 40, 50, 60 and 70 mph; it does not use GPS or
-          actual driving speed.
+          Choose a calendar year, state or union territory, and measure.
+          Reported accidents count events; persons killed and persons injured
+          count people. The annual chart and accessible table update together.
         </p>
         <p>
-          Download the CSV template from Batch processing. Use readable choices
-          from the category guide, preview and map the columns, then process up
-          to 250 rows. Invalid rows are reported individually. Exports include
-          all probabilities and the model version.
+          Export selected CSV downloads exactly the displayed rows, including
+          India coverage, dataset version, count units and the source URL. Blank
+          fatality values preserve a dash in the original source; they are not
+          zeros.
         </p>
-      </Panel>
-      <Panel title="Coverage and evidence">
-        <p>
-          DfT STATS19 covers police-recorded injury crashes on public roads in
-          England, Scotland and Wales. This release uses 2022 for training and
-          2023 for testing and observations. It has no verified India coverage
-          and does not include non-crash journeys or damage-only incidents.
-        </p>
-        <p>
-          The model chooses slight injury for every test crash. It misses
-          serious and fatal outcomes as top predictions. Read the complete
-          evaluation before interpreting estimates.
-        </p>
-        <Link className="text-link" href="/model-card">
-          Model card and test results ↗
+        <Link className="button" href="/analytics">
+          Open Indian statistics
         </Link>
       </Panel>
-      <Panel title="History and service availability">
+      <Panel title="Reading the regional map">
         <p>
-          History is temporary on the free backend. It can be lost when the
-          service sleeps, restarts or redeploys. A random token in browser
-          storage isolates records; clearing that storage loses access. There
-          are no cross-device accounts. Export anything you need to keep.
+          The map shades state/UT boundaries by their published counts. It has
+          no individual accident markers, invented observations or hotspot
+          claims. Click a region or use the state selector to inspect its
+          figures. The table provides an accessible alternative for every
+          territory.
         </p>
         <p>
-          The free service may take about a minute to wake after inactivity.
-          Wait and use Retry connection if a request times out. Requests are not
-          silently resubmitted, which avoids duplicate saved predictions.
-        </p>
-        <p>
-          Old predictions keep their original model version and label meanings.
-          They are never relabelled as outcomes from the new model.
+          Boundary geometry is an illustrative geoBoundaries/DataMeet release,
+          simplified for display. It is not an authoritative boundary survey.
+          Road totals are from MoRTH, not from the boundary provider.
         </p>
       </Panel>
-      <Panel title="Source and reproducibility">
+      <Limitation>
+        Individual injury-severity prediction and explanations are unavailable
+        because suitable Indian crash-level training data have not been
+        verified. These aggregate statistics cannot estimate whether you will
+        crash or what injuries you would sustain.
+      </Limitation>
+      <Panel title="Sources, history and availability">
         <p>
-          Contains public sector information licensed under the{" "}
-          <a
-            className="text-link"
-            href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
-          >
-            Open Government Licence v3.0
-          </a>
-          . Source: Department for Transport. No official endorsement is
-          implied.
+          Statistics: Ministry of Road Transport and Highways, Government of
+          India, Road Accidents in India 2023, Annexures 2-4. This release
+          covers 2021-2023 and is not a real-time feed.
         </p>
         <p>
-          <a
-            className="text-link"
-            href="https://www.gov.uk/government/statistical-data-sets/road-safety-open-data"
-          >
-            Official data and codebook ↗
-          </a>
+          Existing history retains original country, labels and model versions.
+          Records are browser-session isolated and temporary on the free
+          backend; exporting is the way to retain a copy. No new predictions can
+          be created.
         </p>
         <p>
-          <a
-            className="text-link"
-            href="https://github.com/Shouktick/RoadSentinel"
-          >
-            Source code, pinned downloads, training commands and evaluation ↗
-          </a>
+          If the service is waking, wait about a minute and use Retry
+          connection. An unavailable API does not mean an observed count is
+          zero.
         </p>
+        <Link className="text-link" href="/model-card">
+          Read provenance, reuse terms and the data blocker
+        </Link>
       </Panel>
     </div>
   );

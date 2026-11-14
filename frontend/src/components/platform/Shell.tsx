@@ -3,17 +3,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
-  Activity,
   ArrowUpRight,
   BookOpen,
   ChartNoAxesCombined,
   ChevronRight,
   Command,
   FileBarChart2,
-  FlaskConical,
   Gauge,
   History,
-  Layers,
   MapPinned,
   Menu,
   MoonStar,
@@ -25,24 +22,26 @@ import {
 import { useHealth, Status } from "./ui";
 
 const navigation = [
-  { name: "Command center", href: "/", icon: Gauge, section: "WORKSPACE" },
-  { name: "Prediction", href: "/predict", icon: SlidersHorizontal },
-  { name: "Scenario comparison", href: "/what-if", icon: FlaskConical },
-  { name: "Batch processing", href: "/batch", icon: Layers },
   {
-    name: "Explanations",
-    href: "/explain",
-    icon: Activity,
-    section: "INTELLIGENCE",
+    name: "India overview",
+    href: "/",
+    icon: Gauge,
+    section: "INDIA ANALYTICS",
   },
-  { name: "Great Britain map", href: "/map", icon: MapPinned },
-  { name: "Analytics", href: "/analytics", icon: ChartNoAxesCombined },
-  { name: "Prediction history", href: "/history", icon: History },
+  { name: "State statistics", href: "/analytics", icon: ChartNoAxesCombined },
+  { name: "India regional map", href: "/map", icon: MapPinned },
   {
-    name: "Model card",
+    name: "Prediction unavailable",
+    href: "/predict",
+    icon: SlidersHorizontal,
+    section: "CAPABILITIES",
+  },
+  { name: "Historical records", href: "/history", icon: History },
+  {
+    name: "Data & model status",
     href: "/model-card",
     icon: FileBarChart2,
-    section: "RESOURCES",
+    section: "SOURCES",
   },
   { name: "Documentation", href: "/about", icon: BookOpen },
 ];
@@ -115,11 +114,11 @@ export default function Shell({ children }: { children: React.ReactNode }) {
         </nav>
         <div className="sidebar-bottom">
           <div className="model-mini">
-            <span className="eyebrow">MODEL INTEGRITY</span>
-            <strong>Documented STATS19 model</strong>
-            <p>Real inference. Transparent limits.</p>
+            <span className="eyebrow">INDIA ONLY</span>
+            <strong>Official Indian statistics</strong>
+            <p>Aggregate data. Clear limits.</p>
             <Link href="/model-card">
-              Inspect model card <ArrowUpRight size={14} />
+              Data & model status <ArrowUpRight size={14} />
             </Link>
           </div>
           <button
@@ -153,7 +152,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
               {health.isPending
                 ? "Connecting"
                 : health.data?.ready
-                  ? "Model online"
+                  ? "Data online"
                   : "API unavailable"}
             </Status>
             <button
@@ -186,13 +185,13 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           <span>
             <ShieldCheck size={13} /> RoadSentinel · Research & demonstration
           </span>
-          <span>Model estimates are not safety guarantees.</span>
+          <span>Reported counts are not personal risk estimates.</span>
         </footer>
       </div>
       <nav className="bottom-nav" aria-label="Mobile shortcuts">
         {navigation
           .filter((n) =>
-            ["/", "/predict", "/what-if", "/history"].includes(n.href),
+            ["/", "/analytics", "/map", "/history"].includes(n.href),
           )
           .map((item) => (
             <Link
@@ -202,13 +201,15 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             >
               <item.icon size={19} />
               <span>
-                {item.name === "Command center"
+                {item.name === "India overview"
                   ? "Overview"
-                  : item.name === "Scenario comparison"
-                    ? "Compare"
-                    : item.name === "Prediction history"
+                  : item.name === "State statistics"
+                    ? "Statistics"
+                    : item.name === "Historical records"
                       ? "History"
-                      : item.name}
+                      : item.name === "India regional map"
+                        ? "Map"
+                        : item.name}
               </span>
             </Link>
           ))}
@@ -257,21 +258,16 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           <ShieldCheck size={25} />
         </span>
         <p className="eyebrow">WELCOME TO ROADSENTINEL</p>
-        <h2>
-          Explore the model.
-          <br />
-          Understand its limits.
-        </h2>
+        <h2>Explore Indian road statistics.</h2>
         <p>
-          Build a road-condition scenario, compare injury severity estimates,
-          and explore what influenced them. Saved history is temporary.
+          Compare official state and union territory totals for 2021-2023. These
+          are historical aggregate counts, not live crashes.
         </p>
         <div className="notice">
           <div>
-            This model uses documented Great Britain collision records and mph
-            speed limits. It does not estimate the chance of a crash. It missed
-            all serious and fatal outcomes as top predictions in testing; never
-            use it to judge safety.
+            Individual severity prediction is disabled: suitable Indian
+            crash-level training data have not been verified. Foreign models and
+            synthetic accident records are not used.
           </div>
         </div>
         <button
@@ -281,7 +277,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             onboarding.current?.close();
           }}
         >
-          Open command center <ChevronRight size={16} />
+          Open India overview <ChevronRight size={16} />
         </button>
       </dialog>
     </div>

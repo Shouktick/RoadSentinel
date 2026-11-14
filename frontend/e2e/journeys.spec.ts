@@ -1,199 +1,140 @@
-﻿import { test, expect } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() =>
     localStorage.setItem("roadsentinel-onboarded", "true"),
   );
 });
-test("real prediction, explanations, stale results, comparison, batch export and history isolation", async ({
+test("real Indian aggregates, filters, CSV export and regional geometry", async ({
   page,
 }, testInfo) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto("/predict");
-  await expect(page.getByLabel("Posted speed limit (mph)")).toBeVisible();
-  await page.getByLabel(/Save to history/).check();
-  const responsePromise = page.waitForResponse(
-    (r) =>
-      r.url().endsWith("/api/service/predict") &&
-      r.request().method() === "POST",
-  );
-  await page.getByRole("button", { name: "Run model prediction" }).click();
-  const response = await responsePromise;
-  expect(response.ok()).toBe(true);
-  const result = await response.json();
-  expect(result.model_version).toBe("stats19-gb-2022-v1");
-  expect(result.artifact_sha256).toBe(
-    "e49395dcc9860c39980391616afb78b41fbf0dc8d14c69654484f2437cd71687",
-  );
-  expect(
-    result.probabilities.reduce(
-      (s: number, p: { probability: number }) => s + p.probability,
-      0,
-    ),
-  ).toBeCloseTo(1, 10);
-  expect(
-    result.explanation.base_value +
-      result.explanation.contributions.reduce(
-        (s: number, c: { contribution: number }) => s + c.contribution,
-        0,
-      ),
-  ).toBeCloseTo(result.confidence, 9);
-  await expect(
-    page.getByRole("heading", { name: "Most likely injury severity" }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "What influenced this estimate?" }),
-  ).toBeVisible();
-  await expect(
-    page.getByText("Slight injury", { exact: true }).first(),
-  ).toBeVisible();
-  await page.screenshot({
-    path: `../docs/screenshots/prediction-${testInfo.project.name}.png`,
-    fullPage: true,
-  });
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth + 1,
-    ),
-  ).toBe(true);
-  await page.getByRole("link", { name: "Open saved record" }).click();
-  await expect(
-    page.getByRole("heading", { name: "Saved input scenario" }),
-  ).toBeVisible();
-  await expect(page.getByText("30 mph", { exact: true }).first()).toBeVisible();
-  const isolated = await page.request.get(
-    `/api/service/predictions/${result.id}`,
-    { headers: { Authorization: `Bearer ${"b".repeat(64)}` } },
-  );
-  expect(isolated.status()).toBe(404);
-  await page.goto("/predict");
-  await page.getByRole("button", { name: "Run model prediction" }).click();
-  await expect(
-    page.getByRole("heading", { name: "Most likely injury severity" }),
-  ).toBeVisible();
-  await page.getByLabel("Weather", { exact: true }).selectOption("2");
-  await expect(
-    page.getByRole("heading", { name: "Most likely injury severity" }),
-  ).toHaveCount(0);
-  await page.goto("/what-if");
-  await page
-    .getByRole("button", { name: "Compare scenarios", exact: true })
-    .click();
-  await expect(
-    page.getByRole("heading", { name: "Comparison results" }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Explore speed limits" }).click();
-  await expect(
-    page.getByRole("img", {
-      name: /Estimated injury severity probability by posted/,
-    }),
-  ).toBeVisible();
-  await page.locator("#scenario-a-speed_limit").selectOption("40");
-  await expect(
-    page.getByRole("heading", { name: "Comparison results" }),
-  ).toHaveCount(0);
-  await expect(
-    page.getByRole("img", {
-      name: /Estimated injury severity probability by posted/,
-    }),
-  ).toHaveCount(0);
-  await page.goto("/batch");
-  const templateDownload = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Download template" }).click();
-  const template = await templateDownload;
-  const csv = await readFile((await template.path())!, "utf8");
-  expect(csv).toContain("30 mph");
-  const invalid = "999,1,1,1,6,1,12,2";
-  await page.getByLabel("Choose CSV file").setInputFiles({
-    name: "cases.csv",
-    mimeType: "text/csv",
-    buffer: Buffer.from(csv + invalid + "\n"),
-  });
-  await page.getByRole("button", { name: "Run 2 scenarios" }).click();
-  await expect(
-    page.getByRole("heading", { name: "03 / Processing results" }),
-  ).toBeVisible();
-  await expect(page.getByText("invalid", { exact: true })).toBeVisible();
-  const exportPromise = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Export all rows" }).click();
-  const exported = await exportPromise;
-  const exportedCsv = await readFile((await exported.path())!, "utf8");
-  expect(exportedCsv).toContain("stats19-gb-2022-v1");
-  expect(exportedCsv).toContain("result:probability_fatal");
-  expect(exportedCsv).toContain("Slight injury");
-  expect(exportedCsv).toContain("invalid");
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth + 1,
-    ),
-  ).toBe(true);
-  await page.goto("/explain");
-  await page.getByRole("button", { name: "Explain this estimate" }).click();
-  await expect(
-    page.getByRole("heading", { name: "What influenced this estimate?" }),
-  ).toBeVisible();
-  await page.goto("/map");
-  await expect(
-    page.getByRole("heading", { name: "Great Britain observations" }),
-  ).toBeVisible();
-  await expect(page.locator(".leaflet-container")).toBeVisible();
   await page.goto("/analytics");
   await expect(
-    page.getByRole("heading", { name: "Recorded injury severity" }),
+    page.getByRole("heading", { name: "Understand the reported counts." }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Road type", exact: true }).click();
   await expect(
-    page.getByRole("cell", { name: "Single carriageway", exact: true }).first(),
+    page.getByText("4,80,583", { exact: true }).first(),
   ).toBeVisible();
-  await page.goto("/model-card");
+  const overview = await page.request.get("/api/service/insights/overview");
+  expect(overview.ok()).toBe(true);
+  const data = await overview.json();
+  expect(data.country).toBe("India");
+  expect(data.dataset_version).toBe("india-morth-2023-v1");
+  expect(data.records).toHaveLength(108);
+  await page.getByLabel("State or union territory").selectOption("Tamil Nadu");
+  await page.getByLabel("Calendar year").selectOption("2022");
+  await expect(page.getByText("64,105", { exact: true }).first()).toBeVisible();
+  await page.getByLabel("Measure", { exact: true }).selectOption("fatalities");
+  await expect(page.getByText("17,884", { exact: true }).first()).toBeVisible();
+  const downloading = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Export selected CSV" }).click();
+  const file = await downloading;
+  const csv = await readFile((await file.path())!, "utf8");
+  expect(csv).toContain(
+    '"India","india-morth-2023-v1","Tamil Nadu","2022","64105","17884","67703"',
+  );
+  expect(csv).toContain("persons_killed_count");
+  expect(csv).not.toContain("mph");
+  expect(csv.split(/\r?\n/)).toHaveLength(2);
+  await page.getByLabel("State or union territory").selectOption("Lakshadweep");
+  await page.getByLabel("Calendar year").selectOption("2023");
   await expect(
-    page.getByRole("heading", { name: "Confusion matrix" }),
+    page.getByText("Not reported (source dash)", { exact: true }).first(),
   ).toBeVisible();
-  await expect(page.getByText("0.2880", { exact: true }).first()).toBeVisible();
+  await page.goto("/map");
+  await expect(page.locator(".leaflet-container")).toBeVisible();
+  await expect(page.locator(".leaflet-interactive")).toHaveCount(36);
+  const geo = await (await page.request.get("/api/service/hotspots")).json();
+  expect(geo.country).toBe("India");
+  expect(geo.kind).toBe("state_ut_boundaries");
+  expect(geo.geojson.features).toHaveLength(36);
+  await page.getByLabel("Calendar year").selectOption("2021");
+  await page.getByLabel("Measure", { exact: true }).selectOption("injuries");
+  await page.getByLabel("State or union territory").selectOption("Kerala");
+  await expect(page.getByText("36,775", { exact: true }).first()).toBeVisible();
+  await page.evaluate(() => scrollTo(0, 0));
+  await page.screenshot({
+    path: `../docs/screenshots/india-map-${testInfo.project.name}.png`,
+    fullPage: testInfo.project.name === "desktop",
+  });
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth + 1,
     ),
   ).toBe(true);
-  await page.goto(`/history?id=${result.id}`);
-  page.once("dialog", (d) => d.accept());
-  await page
-    .getByRole("button", { name: `Delete prediction ${result.id.slice(0, 8)}` })
-    .click();
-  await expect(
-    page.getByRole("button", {
-      name: `Delete prediction ${result.id.slice(0, 8)}`,
-    }),
-  ).toHaveCount(0);
   expect(errors).toEqual([]);
 });
-test("explicit backend outage and retry", async ({ page }) => {
-  await page.route("**/api/service/**", (route) =>
+test("all unsupported inference flows are disabled and history keeps its scope", async ({
+  page,
+}) => {
+  for (const path of [
+    "/predict",
+    "/what-if",
+    "/speed-monitor",
+    "/batch",
+    "/explain",
+  ]) {
+    await page.goto(path);
+    await expect(
+      page.getByRole("heading", {
+        name: "Severity prediction is unavailable.",
+      }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: /run model|compare scenarios|upload/i }),
+    ).toHaveCount(0);
+    await expect(page.getByRole("combobox")).toHaveCount(0);
+  }
+  for (const path of ["predict", "predict/batch", "explain/local"]) {
+    const r = await page.request.post(`/api/service/${path}`, { data: {} });
+    expect(r.status()).toBe(410);
+    expect((await r.json()).error.code).toBe("INDIA_MODEL_UNAVAILABLE");
+  }
+  await page.goto("/model-card");
+  await expect(
+    page.getByText(/not applicable: no Indian model was trained/),
+  ).toBeVisible();
+  await page.goto("/history");
+  await expect(
+    page.getByRole("heading", {
+      name: "Historical records, original context.",
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("No historical records available", { exact: true }),
+  ).toBeVisible();
+  const history = await page.request.get("/api/service/predictions");
+  expect(history.status()).toBe(401);
+  const h = await (await page.request.get("/api/service/health")).json();
+  expect(h.model_available).toBe(false);
+  expect(h.severity_ready).toBe(false);
+  expect(h.ready).toBe(true);
+  expect(h.model_version).toBeNull();
+});
+test("aggregate outage is visible and retry restores real data", async ({
+  page,
+}) => {
+  await page.route("**/api/service/insights/overview", (route) =>
     route.fulfill({
       status: 503,
       contentType: "application/json",
       body: JSON.stringify({
         error: {
           code: "BACKEND_UNAVAILABLE",
-          message:
-            "The free service may need about a minute to wake up. Please retry.",
+          message: "The free service may be waking up. Please retry.",
         },
       }),
     }),
   );
-  await page.goto("/predict");
-  await page.getByRole("button", { name: "Run model prediction" }).click();
+  await page.goto("/analytics");
   await expect(
     page.getByRole("alert").filter({ hasText: "Service unavailable" }),
-  ).toContainText("about a minute");
-  await expect(
-    page.getByRole("button", { name: "Retry connection" }),
   ).toBeVisible();
-  await expect(page.getByText("ACTUAL INFERENCE")).toHaveCount(0);
-  await page.unroute("**/api/service/**");
+  await page.unroute("**/api/service/insights/overview");
   await page.getByRole("button", { name: "Retry connection" }).click();
   await expect(
-    page.getByRole("heading", { name: "Most likely injury severity" }),
+    page.getByText("4,80,583", { exact: true }).first(),
   ).toBeVisible();
 });

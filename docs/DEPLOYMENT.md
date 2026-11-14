@@ -10,9 +10,9 @@ Retain these targets. The old Accident Atlas hosting is unrelated and unchanged.
 
 ## Runtime setup
 
-Render root: `backend`; Python 3.12.13. Build: `pip install -r requirements.txt` (includes the full pinned runtime lock). Start: `uvicorn main:app --host 0.0.0.0 --port $PORT --workers 1`. Health path `/health` returns 503 if the model or database is unavailable; otherwise 200. `SHAP_ENABLED=true` enables the exact local explanation implementation; the production SHAP package is no longer needed. `HISTORY_DURABLE=false`. Default database: temporary local SQLite. No durable datastore has been provisioned or verified.
+Render root: `backend`; Python 3.12.13. Build: `pip install -r requirements.txt` (includes the full pinned runtime lock). Start: `uvicorn main:app --host 0.0.0.0 --port $PORT --workers 1`. Health path `/health` returns 503 if verified Indian analytics or the database is unavailable; otherwise 200. Severity prediction is intentionally disabled. Former `SHAP_ENABLED` and model-path overrides are ignored. `HISTORY_DURABLE=false`. Default database: temporary local SQLite. No durable datastore has been provisioned or verified.
 
-The default model paths are `release/model.joblib` and `release/model_metadata.json`; remove any old custom artifact override when configuring a new environment. Source data remain ignored. Release artifacts and reports are checked into Git. No source download or fitting runs during builds/startup.
+The serving artifacts are `release/india-analytics.json`, `india-boundaries.json` and `india-manifest.json`. They contain Indian aggregate data and regional geometry, not a trained model. Source data remain ignored. Release artifacts and reports are checked into Git. No source download or fitting runs during builds/startup.
 
 Vercel root: `frontend`; Node 22; Next.js; `npm ci`; `npm run build`. Production and preview use `NEXT_PUBLIC_API_URL=https://roadsentinel-api.onrender.com`. The browser talks only to `/api/service/*`; the server gateway calls Render. Never put credentials in NEXT_PUBLIC variables. `.vercelignore` excludes backend, virtual environments, source data, docs and environment files from frontend uploads.
 
@@ -34,11 +34,11 @@ Do not deploy from `frontend` while the project root-directory setting already p
 
 ## Gates and constraints
 
-- Match `/health` code version to the Render deployment commit and model SHA256 to the checked-in artifact.
-- Verify provider states, public frontend access and real gateway prediction/explanation, comparison, CSV export and isolated history.
-- Verify all labels/units, changed-input result clearing, responsive navigation, source analytics and real-coordinate aggregates.
-- Scan recent runtime logs and measure hosted inference/memory. Local observations are not hosted guarantees.
-- GitHub warns above 50 MiB and blocks files above 100 MiB; the new model is 3.5 KiB and all release files together are below 1 MiB. Raw CSV downloads are not committed or uploaded.
-- Free Render service sleeps after inactivity; local changes are ephemeral. Explain the cold start and allow explicit retry. History is temporary and exports retain the model/version definitions.
+- Match `/health` code version to the Render deployment commit and aggregate SHA256 to the checked-in India manifest.
+- Verify provider states, public frontend access and real gateway analytics, regional map, CSV export, disabled inference and isolated history.
+- Verify count units, filter updates, responsive navigation, source analytics and licensed Indian state/UT polygons.
+- Scan recent runtime logs and measure hosted API latency/memory. Local observations are not hosted guarantees.
+- GitHub warns above 50 MiB and blocks files above 100 MiB; the India release JSON files are below 1 MiB in total. Raw CSV downloads are not committed or uploaded.
+- Free Render service sleeps after inactivity; local changes are ephemeral. Explain the cold start and allow explicit retry. History is temporary and historical exports retain original country/model definitions and aggregate exports retain the Indian dataset version.
 
 Observed deployment identifiers and production verification belong in [RELEASE.md](RELEASE.md), after the actual release has completed.

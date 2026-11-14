@@ -1,7 +1,5 @@
-﻿# RoadSentinel frontend
+# RoadSentinel India frontend
 
-See the repository [README](../README.md) for setup and [deployment guide](../docs/DEPLOYMENT.md) for the existing Vercel target.
+Run `npm ci`, configure the local untracked `NEXT_PUBLIC_API_URL`, then `npm run dev`. Production uses the same-origin Next.js gateway to the existing Render API. See the root README for quality checks and deployment.
 
-The app calls `/api/service/*`, whose server route uses `NEXT_PUBLIC_API_URL`. Production and preview point to the RoadSentinel Render API. Do not commit environment files. `npm ci`, `npm run lint`, `npm run typecheck`, `npm run test`, `npm run format:check`, `npm run build`, and `npm run test:e2e` are the quality gates. Set `BASE_URL` for public deployed browser verification.
-
-The model contract is the documented STATS19 replacement, not the old numeric-class model. Model/version, injury definitions and mph units are retained in results. Read the prominently displayed severe-injury performance limitation. History is temporary; maps display coarse source-coordinate aggregates for Great Britain.
+Active pages show Indian state/UT aggregates, trends, regional polygons and CSV export. Former inference routes show a disabled explanation. Historical payloads retain original country/version and cannot be rerun. No foreign model or numeric category mapping is bundled for active prediction.

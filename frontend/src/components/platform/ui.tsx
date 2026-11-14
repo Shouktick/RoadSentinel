@@ -176,4 +176,3 @@ export function Stat({
     </div>
   );
 }
-export { labels } from "@/lib/contracts";

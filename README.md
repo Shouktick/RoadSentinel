@@ -1,61 +1,51 @@
-﻿# RoadSentinel
+# RoadSentinel - India only
 
-[Live application](https://roadsentinel-ashy.vercel.app) · [Backend readiness](https://roadsentinel-api.onrender.com/health) · [Repository](https://github.com/Shouktick/RoadSentinel)
+Official Indian road accident analytics. **No severity prediction model is deployed.**
 
-RoadSentinel explores **injury severity conditional on a police-recorded injury crash in Great Britain**. It does not predict whether a crash will happen. The legacy undocumented model has been removed, not relabelled.
+- [Application](https://roadsentinel-ashy.vercel.app)
+- [Backend readiness](https://roadsentinel-api.onrender.com/health)
+- [Dataset and reuse terms](docs/DATASET.md)
+- [Capability and evaluation status](docs/MODEL_CARD.md)
+- [Release verification](docs/RELEASE.md)
 
-The replacement uses official DfT STATS19 collision data, documented categories and mph posted speed limits. It includes prediction, exact local explanations, scenario comparison, posted-limit exploration, validated CSV batches, temporary isolated history, source analytics and an aggregated Great Britain map.
+## Supported experience
 
-**Major limitation:** on 104,258 held-out 2023 crashes, the model chose slight injury every time. Serious and fatal recall are zero. Macro F1 is 0.2880 and balanced accuracy 0.3333. Probability estimates modestly improve on the class-frequency baseline (log loss 0.5904 vs 0.6054). This is an educational probability explorer, not a safety decision system. Overall accuracy of 76.06% reflects the majority class.
+Explore reported accidents, persons killed and persons injured across India's 36 states/union territories for 2021-2023. Filter by year/region/measure, compare annual counts, view a regional choropleth and accessible table, and export the displayed aggregate rows to CSV. Counts are historical police-reported observations, not real-time incidents or exposure-adjusted risk rates.
 
-## Data and model
+MoRTH's Road Accidents in India 2023, Annexures 2-4, supplies the statistics. Its copyright policy permits accurate reproduction with prominent attribution (third-party material excluded). Boundary geometry is from geoBoundaries/DataMeet, separately attributed. See the source checksums, missing-value handling and geographic caveats in [DATASET](docs/DATASET.md).
 
-- Source: [DfT road safety open data](https://www.gov.uk/government/statistical-data-sets/road-safety-open-data), 106,004 collisions in 2022 and 104,258 in 2023.
-- Coverage: England, Scotland and Wales; no validated India or Northern Ireland coverage.
-- Licence: [Open Government Licence v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/). Contains public sector information licensed under the Open Government Licence v3.0. No DfT endorsement is implied.
-- Target: recorded severity of the most severely injured casualty. Documented fatal, serious and slight injury labels.
-- Model: one-hot categorical preprocessing and multinomial logistic regression; `stats19-gb-2022-v1`.
-- Artifact: 3,569 bytes; SHA256 `e49395dcc9860c39980391616afb78b41fbf0dc8d14c69654484f2437cd71687`.
+Suitable licensed Indian crash-level data with multiple injury outcomes were not obtained. State totals cannot train an individual-crash classifier. A verified open media dataset contains fatal crashes only. Prediction, scenario comparison, speed exploration, batch inference and explanations therefore return a clear disabled state, including HTTP 410 at the API. No Indian accuracy, recall, F1 or confusion matrix is claimed.
 
-Read [dataset provenance and leakage review](docs/DATASET.md), [training instructions](docs/TRAINING.md), [evaluation](docs/EVALUATION.md), [model card](docs/MODEL_CARD.md), [API](docs/API.md) and [deployment guide](docs/DEPLOYMENT.md).
+The previous British model, map aggregates, category mappings and evaluation artifacts have been removed from the active release. Old saved payloads retain their original country and model version. Unknown legacy provenance remains unknown. See [the correction audit](docs/INDIA_AUDIT.md). History is temporary SQLite on the existing free Render service, not verified durable storage.
 
-## Run locally
+## Local development
 
-Python 3.12.13 and Node 22. The pinned release artifact is already included; startup never trains or downloads source data.
+Python 3.12.13 and Node 22. From the repository root:
 
 ```powershell
-uv venv --python 3.12.13 .venv
-uv pip install --python .venv/Scripts/python.exe -r backend/requirements-dev.txt
-.venv/Scripts/python.exe -m uvicorn main:app --app-dir backend --host 127.0.0.1 --port 8000
+python -m venv .venv
+.venv/Scripts/python -m pip install -r backend/requirements-dev.txt
+.venv/Scripts/python -m uvicorn main:app --app-dir backend --reload
 ```
 
-In another terminal:
+In another terminal, from `frontend`, run `npm ci`, set `NEXT_PUBLIC_API_URL=http://localhost:8000` in a local untracked environment file, then `npm run dev`. The browser calls `/api/service/*`; the Next.js gateway calls the backend. Optional backend variables: `DATABASE_URL`, `CORS_ORIGINS`, `HISTORY_DURABLE=false`. Never commit credentials or environment files. Obsolete model/dataset path overrides are no longer consumed.
+
+## Verification
 
 ```powershell
-cd frontend
-npm ci
-npm run dev
-```
-
-Development defaults the frontend gateway to localhost:8000. Production requires `NEXT_PUBLIC_API_URL=https://roadsentinel-api.onrender.com`.
-
-## Verify
-
-```powershell
-.venv/Scripts/python.exe -m pytest backend/tests -q
-.venv/Scripts/ruff.exe check backend/app backend/tests backend/scripts
-.venv/Scripts/ruff.exe format --check backend/app backend/tests backend/scripts
+.venv/Scripts/python -m pytest backend/tests -q
+.venv/Scripts/ruff check backend/app backend/tests backend/scripts
+.venv/Scripts/ruff format --check backend/app backend/tests backend/scripts
 cd frontend
 npm run lint
 npm run typecheck
 npm run test
 npm run format:check
 npm run build
+npm audit --omit=dev --audit-level=high
 npm run test:e2e
 ```
 
-The desktop/mobile journeys use genuine model inference. The separate outage test deliberately returns a 503, then removes the interception and retries against the real backend. Set `BASE_URL` to a deployed frontend to run the same tests there.
+Playwright starts the local production frontend and API. To verify the public site, set `BASE_URL=https://roadsentinel-ashy.vercel.app`; no local servers or successful data responses are mocked. Only the dedicated outage test injects one failure, followed by a real retry.
 
-## Operational limits
-
-Existing free Vercel/Render targets are retained. The backend may sleep and take about a minute to wake. History is temporary SQLite storage, scoped to an unguessable browser token, and can disappear on sleep/restart/redeploy. Export results to retain them. Old records keep their original labels, inputs, explanations and model versions. No durable datastore or paid resource has been provisioned.
+Data preparation is offline, deterministic and checksum-pinned: [commands](docs/TRAINING.md). Runtime startup performs neither downloading nor training. Deploy only to the [existing hosting targets](docs/DEPLOYMENT.md).
