@@ -120,8 +120,8 @@ def main():
     release = ROOT / "release"
     release.mkdir(exist_ok=True)
     for name, value in [("india-analytics.json", data), ("india-boundaries.json", geometry)]:
-        (release / name).write_text(
-            json.dumps(value, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8"
+        (release / name).write_bytes(
+            (json.dumps(value, ensure_ascii=False, separators=(",", ":")) + "\n").encode("utf-8")
         )
     manifest = {
         "dataset_version": VERSION,
@@ -132,7 +132,7 @@ def main():
             for name in ["india-analytics.json", "india-boundaries.json"]
         },
     }
-    (release / "india-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    (release / "india-manifest.json").write_bytes((json.dumps(manifest, indent=2) + "\n").encode("utf-8"))
     print(f"Prepared {len(records)} documented state/UT-year rows; no model trained.")
 
 
