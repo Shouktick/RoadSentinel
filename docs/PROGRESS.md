@@ -45,3 +45,9 @@ The user requested a fresh RoadSentinel GitHub repository and new Vercel/Render 
 Deployment preparation found that the old Render service pointed to a different repository owner than the code edited earlier. The new services will point directly to the new source. Full-forest SHAP also exceeded the free instance RAM budget locally; streaming artifact loading and exact per-tree SHAP averaging reduce measured peak memory to about 366 MiB and resident memory to about 288 MiB. Twenty backend tests, six frontend tests, lint/typecheck/format/build and six desktop/mobile browser tests pass after this change. A regression test verifies bounded SHAP equals full-forest SHAP. These are engineering checks, not fabricated held-out evaluation.
 
 Final new repository/deployment URLs and terminal verification status are recorded in DEPLOYMENT.md when observed.
+
+## Standalone production release verified
+
+Shouktick/RoadSentinel is pushed and its release CI is green. The new Render backend is LIVE at https://roadsentinel-api.onrender.com and the new Vercel frontend is READY and promoted at https://roadsentinel-ashy.vercel.app. All six desktop/mobile browser tests passed against that public production application. Deployed API checks confirmed actual inference, additive local SHAP, CSV validation and scoped saved-history behavior. The mobile CSV input overflow found during CI was fixed and verified locally, in GitHub CI and on production.
+
+The user selected completion without Vercel Git auto-deploy after its GitHub app access remained unavailable. Authenticated CLI deployments are documented in DEPLOYMENT.md. Temporary verification bypass access was revoked. Dataset/codebook-dependent claims and free-host persistence/cold-start limitations remain explicit.

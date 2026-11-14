@@ -2,6 +2,8 @@
 
 Source repository: [Shouktick/RoadSentinel](https://github.com/Shouktick/RoadSentinel).
 
+Live application: [RoadSentinel](https://roadsentinel-ashy.vercel.app) · [Backend health](https://roadsentinel-api.onrender.com/health).
+
 AI road accident model intelligence with real Random Forest inference, Tree SHAP explanations, scenario comparison, CSV processing, and transparent evidence limits.
 
 > The original training dataset and codebook are unavailable. Numeric class IDs are displayed without assigning unverified severity meanings. Speed units, held-out performance, India coverage, and severity-weighted risk remain unverified. No synthetic accident records or evaluation scores are presented as real.
