@@ -74,6 +74,12 @@ export default function IndiaExplorer({
   const ranking = [...rows].sort(
     (a, b) => (b[metric] ?? -1) - (a[metric] ?? -1),
   );
+  const previous = trend?.find((r) => r.year === year - 1)?.[metric];
+  const selected = current?.[metric];
+  const change =
+    previous != null && previous > 0 && selected != null
+      ? ((selected - previous) / previous) * 100
+      : null;
   return (
     <div className="page-stack">
       <PageTitle
@@ -157,6 +163,19 @@ export default function IndiaExplorer({
                 ))}
               </div>
             )}
+            <Panel title="At a glance" subtitle={`${state} · ${year}`}>
+              <p className="region-insight" aria-live="polite">
+                {selected == null
+                  ? "This measure was not reported for your selection."
+                  : `${state} reported ${formatCount(selected)} ${metricLabels[metric].toLowerCase()} in ${year}.`}
+                {change !== null &&
+                  ` That is ${Math.abs(change).toFixed(1)}% ${change >= 0 ? "higher" : "lower"} than ${year - 1}.`}
+              </p>
+              <p className="chart-annotation">
+                Change describes reported totals, not an individual travel risk.
+                Select another region or year to compare the evidence.
+              </p>
+            </Panel>
             {mode === "map" && (
               <Panel
                 title={`${metricLabels[metric]} by state/UT · ${year}`}

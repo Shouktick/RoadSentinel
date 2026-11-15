@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./roadsentinel.css";
+import "./journey.css";
 import Providers from "@/components/platform/Providers";
 import Shell from "@/components/platform/Shell";
 export const metadata: Metadata = {
