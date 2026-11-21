@@ -22,9 +22,9 @@ const tasks = [
   {
     href: "/speed-monitor",
     icon: Route,
-    title: "Understand stopping distance",
-    text: "See how speed and reaction time change the distance needed to stop.",
-    tag: "INTERACTIVE CALCULATOR",
+    title: "Monitor my ride",
+    text: "Check GPS speed, record road conditions and find emergency help.",
+    tag: "PASSENGER TOOLS",
   },
   {
     href: "/predict",

@@ -1,7 +1,7 @@
 "use client";
 import { motion, useReducedMotion } from "framer-motion";
 
-const angle = (speed: number) => -135 + (270 * speed) / 150;
+const angle = (fraction: number) => -135 + 270 * fraction;
 function point(degrees: number, radius: number) {
   const radians = (degrees * Math.PI) / 180;
   return [160 + radius * Math.sin(radians), 160 - radius * Math.cos(radians)];
@@ -11,6 +11,7 @@ const arc = `M ${start} A 145 145 0 1 1 ${end}`;
 
 export default function SpeedDial({ speed }: { speed: number | null }) {
   const reduced = useReducedMotion();
+  const maximum = 150 * Math.max(1, Math.ceil((speed ?? 0) / 150));
   return (
     <div
       className="speed-dial"
@@ -35,14 +36,14 @@ export default function SpeedDial({ speed }: { speed: number | null }) {
             fill="none"
             stroke="#bdea83"
             strokeWidth="5"
-            pathLength="150"
-            strokeDasharray={`${speed} 150`}
+            pathLength={maximum}
+            strokeDasharray={`${speed} ${maximum}`}
             strokeLinecap="round"
           />
         )}
         {Array.from({ length: 76 }, (_, i) => {
           const major = i % 5 === 0;
-          const a = angle(i * 2);
+          const a = angle(i / 75);
           const [x1, y1] = point(a, 137);
           const [x2, y2] = point(a, major ? 126 : 132);
           const [x, y] = point(a, 113);
@@ -62,7 +63,7 @@ export default function SpeedDial({ speed }: { speed: number | null }) {
                   fill="#c8d5dd"
                   fontSize="10"
                 >
-                  {i * 2}
+                  {(i * maximum) / 75}
                 </text>
               )}
             </g>
@@ -74,7 +75,7 @@ export default function SpeedDial({ speed }: { speed: number | null }) {
           className="speed-pointer"
           aria-hidden="true"
           initial={false}
-          animate={{ rotate: angle(speed) }}
+          animate={{ rotate: angle(speed / maximum) }}
           transition={
             reduced
               ? { duration: 0 }

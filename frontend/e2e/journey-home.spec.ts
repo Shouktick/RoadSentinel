@@ -20,12 +20,10 @@ test("journey shortcuts and interactive departure checklist", async ({
       () => document.documentElement.scrollWidth <= innerWidth + 1,
     ),
   ).toBe(true);
-  await page
-    .getByRole("link", { name: "Understand stopping distance" })
-    .click();
+  await page.getByRole("link", { name: "Monitor my ride" }).click();
   await expect(
     page.getByRole("heading", {
-      name: "Physics-Based Speed & Stopping Distance Explorer",
+      name: "Passenger road safety monitor",
     }),
   ).toBeVisible();
 });

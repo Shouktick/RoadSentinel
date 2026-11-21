@@ -192,7 +192,7 @@ test("CSV validation, batch prediction and exports", async ({ page }) => {
 test("speed physics, observed crash grid and genuine evaluation", async ({
   page,
 }) => {
-  await page.goto("/speed-monitor");
+  await page.goto("/stopping-distance");
   await page.getByLabel("Speed (km/h)", { exact: true }).fill("36");
   await page.getByLabel("Reaction time (s)").fill("2");
   await page.getByRole("button", { name: "Calculate speed effects" }).click();

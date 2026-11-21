@@ -1,4 +1,4 @@
-import SpeedWorkspace from "@/components/platform/SpeedWorkspace";
+import PassengerMonitor from "@/components/platform/PassengerMonitor";
 export default function Page() {
-  return <SpeedWorkspace />;
+  return <PassengerMonitor />;
 }

@@ -15,7 +15,7 @@ test("speed controls, moving needle and editable distance comparison", async ({
   page.on("console", (msg) => {
     if (msg.type() === "error") errors.push(msg.text());
   });
-  await page.goto("/speed-monitor");
+  await page.goto("/stopping-distance");
   const manual = page.getByLabel("Speed (km/h)", { exact: true });
   const slider = page.getByRole("slider");
   const needle = page.locator(".speed-pointer");
@@ -71,7 +71,7 @@ test("speed controls, moving needle and editable distance comparison", async ({
 test("live physics matches the exported calculation and rejects zero deceleration", async ({
   page,
 }) => {
-  await page.goto("/speed-monitor");
+  await page.goto("/stopping-distance");
   await page.getByLabel("Speed (km/h)", { exact: true }).fill("36");
   await page.getByLabel("Reaction time (s)").fill("2");
   await page.getByLabel("Constant deceleration (m/s²)").fill("4");
