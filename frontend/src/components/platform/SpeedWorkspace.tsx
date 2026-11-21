@@ -2,8 +2,14 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
+import { Gauge, Minus, Plus, RotateCcw } from "lucide-react";
 import { api, downloadText } from "@/lib/api";
-import { Failure, Limitation, Loading, PageTitle, Panel } from "./ui";
+import { assumptions, inRange, physics, speedRange } from "@/lib/speed-physics";
+import { Failure, PageTitle, Panel } from "./ui";
+import SpeedDial from "./SpeedDial";
+import SpeedComparison from "./SpeedComparison";
+import "./speed-explorer.css";
+
 const row = z.object({
   speed_kmh: z.number(),
   reaction_distance_m: z.number(),
@@ -20,120 +26,228 @@ const schema = z.object({
   explanation: z.string(),
 });
 export default function SpeedWorkspace() {
-  const [inputs, setInputs] = useState({
-    speed_kmh: 50,
-    reaction_seconds: 1.5,
-    deceleration_ms2: 5,
-    mass_kg: 1500,
+  const [speedText, setSpeed] = useState(String(speedRange.initial));
+  const [draft, setDraft] = useState({
+    reaction_seconds: "1.5",
+    deceleration_ms2: "5",
+    mass_kg: "1500",
   });
+  const inputs = {
+    reaction_seconds: Number(draft.reaction_seconds),
+    deceleration_ms2: Number(draft.deceleration_ms2),
+    mass_kg: Number(draft.mass_kg),
+  };
+  const speed = Number(speedText);
+  const validSpeed =
+    inRange(speed, speedRange.min, speedRange.max) && Number.isInteger(speed);
+  const result = validSpeed ? physics(speed, inputs) : null;
+  const request = { ...inputs, speed_kmh: speed };
   const run = useMutation({
-    mutationFn: () =>
+    mutationFn: (values: typeof request) =>
       api("predict/speed-sweep", schema, {
         method: "POST",
-        body: JSON.stringify(inputs),
+        body: JSON.stringify(values),
       }),
   });
-  const fields: [keyof typeof inputs, string, number, number, number][] = [
-    ["speed_kmh", "Speed (km/h)", 5, 150, 1],
-    ["reaction_seconds", "Assumed reaction time (seconds)", 0.5, 5, 0.1],
-    ["deceleration_ms2", "Assumed constant deceleration (m/s²)", 1, 10, 0.1],
-    ["mass_kg", "Vehicle mass (kg)", 50, 40000, 50],
-  ];
+  const sweep =
+    result &&
+    run.data &&
+    Object.entries(request).every(([key, v]) => run.data.assumptions[key] === v)
+      ? run.data
+      : null;
+  function adjust(delta: number) {
+    setSpeed(
+      String(
+        Math.min(
+          speedRange.max,
+          Math.max(
+            speedRange.min,
+            (validSpeed ? speed : speedRange.initial) + delta,
+          ),
+        ),
+      ),
+    );
+  }
   return (
-    <div className="page-stack">
+    <div className="page-stack speed-explorer">
       <PageTitle
         eyebrow="INDIA / SPEED EXPLORER"
-        title="See the physics of speed."
-        description="Explore reaction distance, braking distance and kinetic energy with explicit assumptions."
+        title="Physics-Based Speed & Stopping Distance Explorer"
+        description="This interactive calculator demonstrates how vehicle speed affects reaction distance, braking distance and kinetic energy under user-defined assumptions. It is independent of the RoadSentinel accident-severity prediction model."
       />
-      <Limitation>
-        The crash dataset contains no measured speed. This calculator is
-        separate from the severity model and does not estimate injury
-        probability or recommend a safe speed.
-      </Limitation>
-      <Panel title="Set the assumptions">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            run.mutate();
-          }}
-        >
-          <fieldset className="scenario-fieldset" disabled={run.isPending}>
-            <div className="india-filter-grid">
-              {fields.map(([key, label, min, max, step]) => (
-                <div className="field" key={key}>
-                  <label htmlFor={key}>{label}</label>
-                  <input
-                    id={key}
-                    type="number"
-                    min={min}
-                    max={max}
-                    step={step}
-                    required
-                    value={Number.isNaN(inputs[key]) ? "" : inputs[key]}
-                    onChange={(e) => {
-                      setInputs({ ...inputs, [key]: e.target.valueAsNumber });
-                      run.reset();
-                    }}
-                  />
-                </div>
-              ))}
+      <section
+        className="speed-cluster"
+        aria-label="Speed and stopping distance"
+      >
+        <div className="speed-instrument">
+          <h2>
+            <Gauge size={18} /> Vehicle speed
+          </h2>
+          <SpeedDial speed={validSpeed ? speed : null} />
+          <div className="speed-controls">
+            <label htmlFor="speed_kmh">Speed (km/h)</label>
+            <div className="speed-adjust">
+              <button
+                aria-label="Decrease speed by 1 km/h"
+                disabled={validSpeed && speed === 5}
+                onClick={() => adjust(-1)}
+              >
+                <Minus size={16} />
+              </button>
+              <input
+                id="speed_kmh"
+                type="number"
+                min="5"
+                max="150"
+                step="1"
+                value={speedText}
+                onChange={(e) => setSpeed(e.target.value)}
+                aria-invalid={!validSpeed}
+                aria-describedby={!validSpeed ? "speed-error" : undefined}
+              />
+              <button
+                aria-label="Increase speed by 1 km/h"
+                disabled={validSpeed && speed === 150}
+                onClick={() => adjust(1)}
+              >
+                <Plus size={16} />
+              </button>
             </div>
-            <button className="button primary" type="submit">
-              Calculate speed effects
+            <button
+              className="speed-reset"
+              onClick={() => setSpeed(String(speedRange.initial))}
+            >
+              <RotateCcw size={14} /> Reset speed
             </button>
-          </fieldset>
-        </form>
-        {run.isPending && <Loading />}
-        {run.error && <Failure error={run.error} />}
+            <input
+              aria-label="Adjust vehicle speed"
+              type="range"
+              min="5"
+              max="150"
+              step="1"
+              value={validSpeed ? speed : speedRange.min}
+              onChange={(e) => setSpeed(e.target.value)}
+            />
+            {!validSpeed && (
+              <p id="speed-error">Enter a whole speed from 5 to 150 km/h.</p>
+            )}
+          </div>
+        </div>
+        <div className="speed-readings">
+          <h2>Stopping distance</h2>
+          <div className="speed-total" data-testid="stopping">
+            {result?.stopping.toFixed(1) ?? "—"} <small>m</small>
+          </div>
+          <p>Distance travelled from noticing a hazard to coming to a stop.</p>
+          <div className="speed-segments" aria-hidden="true">
+            {result && (
+              <>
+                <i style={{ flex: result.reaction }} />
+                <b style={{ flex: result.braking }} />
+              </>
+            )}
+          </div>
+          <dl className="speed-metrics">
+            {(
+              [
+                [
+                  "Reaction distance",
+                  result?.reaction,
+                  "m",
+                  "Before braking begins",
+                ],
+                [
+                  "Braking distance",
+                  result?.braking,
+                  "m",
+                  "While the brakes are applied",
+                ],
+                [
+                  "Kinetic energy",
+                  result?.energy,
+                  "kJ",
+                  "Energy of the moving vehicle",
+                ],
+              ] as const
+            ).map(([label, value, unit, detail]) => (
+              <div key={label}>
+                <dt>
+                  {label}
+                  <small>{detail}</small>
+                </dt>
+                <dd>
+                  {value?.toFixed(1) ?? "—"} <small>{unit}</small>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+      <Panel
+        title="Calculation assumptions"
+        subtitle="All scenarios use these settings on level ground, with constant deceleration during braking."
+      >
+        <div className="speed-assumptions">
+          {assumptions.map(({ key, label, unit, min, max }) => {
+            const valid = inRange(inputs[key], min, max);
+            return (
+              <div className="field" key={key}>
+                <label htmlFor={key}>
+                  {label} ({unit})
+                </label>
+                <input
+                  id={key}
+                  type="number"
+                  min={min}
+                  max={max}
+                  step="any"
+                  value={draft[key]}
+                  aria-invalid={!valid}
+                  aria-describedby={!valid ? key + "-error" : undefined}
+                  onChange={(e) =>
+                    setDraft({ ...draft, [key]: e.target.value })
+                  }
+                />
+                {!valid && (
+                  <small id={key + "-error"}>
+                    Enter {min} to {max} {unit}.
+                  </small>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </Panel>
-      {run.data && (
-        <>
-          <Panel title={`At ${run.data.selected.speed_kmh} km/h`}>
-            <div className="india-stat-grid">
-              <div className="stat-card">
-                <span>Reaction distance</span>
-                <strong>
-                  {run.data.selected.reaction_distance_m.toFixed(1)} m
-                </strong>
-              </div>
-              <div className="stat-card">
-                <span>Braking distance</span>
-                <strong>
-                  {run.data.selected.braking_distance_m.toFixed(1)} m
-                </strong>
-              </div>
-              <div className="stat-card">
-                <span>Total stopping distance</span>
-                <strong>
-                  {run.data.selected.stopping_distance_m.toFixed(1)} m
-                </strong>
-              </div>
-            </div>
-            <p>{run.data.explanation}</p>
-            <p>
-              Kinetic energy: {run.data.selected.kinetic_energy_kj.toFixed(1)}{" "}
-              kJ. Doubling speed quadruples kinetic energy for the same mass.
-            </p>
-          </Panel>
-          <Panel
-            title="Speed sweep"
-            subtitle="Fixed assumptions from your calculation; distances in metres."
-            action={
+      <SpeedComparison inputs={inputs} />
+      <Panel
+        title="Full speed sweep"
+        subtitle="Calculate distances and energy from 10 to 150 km/h in 10 km/h steps."
+      >
+        <button
+          className="button primary"
+          disabled={!result || run.isPending}
+          onClick={() => run.mutate(request)}
+        >
+          {run.isPending ? "Calculating…" : "Calculate speed effects"}
+        </button>
+        {run.error && <Failure error={run.error} />}
+        {sweep && (
+          <>
+            <div className="speed-export">
+              <p>Selected speed: {sweep.selected.speed_kmh} km/h</p>
               <button
                 className="button small"
                 onClick={() =>
                   downloadText(
                     "roadsentinel-speed-physics.json",
-                    JSON.stringify(run.data, null, 2),
+                    JSON.stringify(sweep, null, 2),
                     "application/json",
                   )
                 }
               >
                 Export calculation
               </button>
-            }
-          >
+            </div>
             <div
               className="table-scroll"
               role="region"
@@ -143,34 +257,46 @@ export default function SpeedWorkspace() {
               <table>
                 <thead>
                   <tr>
-                    <th>Speed km/h</th>
-                    <th>Reaction m</th>
-                    <th>Braking m</th>
-                    <th>Stopping m</th>
-                    <th>Energy kJ</th>
+                    {[
+                      "Speed km/h",
+                      "Reaction m",
+                      "Braking m",
+                      "Stopping m",
+                      "Energy kJ",
+                    ].map((h) => (
+                      <th key={h}>{h}</th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {run.data.curve.map((r) => (
+                  {sweep.curve.map((r) => (
                     <tr key={r.speed_kmh}>
                       <th>{r.speed_kmh}</th>
-                      <td>{r.reaction_distance_m.toFixed(1)}</td>
-                      <td>{r.braking_distance_m.toFixed(1)}</td>
-                      <td>{r.stopping_distance_m.toFixed(1)}</td>
-                      <td>{r.kinetic_energy_kj.toFixed(1)}</td>
+                      {[
+                        r.reaction_distance_m,
+                        r.braking_distance_m,
+                        r.stopping_distance_m,
+                        r.kinetic_energy_kj,
+                      ].map((n, i) => (
+                        <td key={i}>{n.toFixed(1)}</td>
+                      ))}
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <p className="chart-annotation">
-              v = km/h ÷ 3.6; reaction = v × time; braking = v² ÷ (2 ×
-              deceleration); energy = ½ × mass × v². Constant deceleration and
-              level ground are idealizations.
-            </p>
-          </Panel>
-        </>
-      )}
+          </>
+        )}
+        <details className="speed-formulas">
+          <summary>Formulas and units</summary>
+          <p>
+            Speed in m/s = km/h ÷ 3.6. Reaction distance = speed × reaction
+            time. Braking distance = speed² ÷ (2 × deceleration). Total stopping
+            distance = reaction + braking distance. Kinetic energy in kJ = ½ ×
+            mass × speed² ÷ 1,000.
+          </p>
+        </details>
+      </Panel>
     </div>
   );
 }

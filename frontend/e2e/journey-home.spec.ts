@@ -24,6 +24,8 @@ test("journey shortcuts and interactive departure checklist", async ({
     .getByRole("link", { name: "Understand stopping distance" })
     .click();
   await expect(
-    page.getByRole("heading", { name: "See the physics of speed." }),
+    page.getByRole("heading", {
+      name: "Physics-Based Speed & Stopping Distance Explorer",
+    }),
   ).toBeVisible();
 });

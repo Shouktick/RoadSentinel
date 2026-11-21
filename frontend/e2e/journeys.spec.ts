@@ -194,11 +194,13 @@ test("speed physics, observed crash grid and genuine evaluation", async ({
 }) => {
   await page.goto("/speed-monitor");
   await page.getByLabel("Speed (km/h)", { exact: true }).fill("36");
-  await page.getByLabel("Assumed reaction time (seconds)").fill("2");
+  await page.getByLabel("Reaction time (s)").fill("2");
   await page.getByRole("button", { name: "Calculate speed effects" }).click();
   await expect(page.getByText("30.0 m", { exact: true })).toBeVisible();
   await expect(
-    page.getByText(/separate from the severity model/),
+    page.getByText(
+      /independent of the RoadSentinel accident-severity prediction model/,
+    ),
   ).toBeVisible();
   await page.goto("/crash-patterns");
   await expect(page.locator(".leaflet-container")).toBeVisible();
